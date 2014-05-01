@@ -27,7 +27,7 @@ public class CyActivator extends AbstractCyActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		
-		final String rsmetabppiver = "v1.10.7";
+		final String rsmetabppiver = "v1.11.1";
 		
 		// Get necessary Cytoscape services
 		CySwingApplication cytoscapeDesktopService
