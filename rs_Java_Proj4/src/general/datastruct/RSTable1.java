@@ -1,7 +1,9 @@
 package general.datastruct;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -36,8 +38,24 @@ public class RSTable1 {
 
 	}
 
-	public String[][] readtable_simple1(String filename, char sep){
+	public String[][] readtable_simple1(String filename, String sep){ // char
 		
+		BufferedReader br = null;
+		
+		try {
+			String sCurrentLine;
+ 
+			br = new BufferedReader(new FileReader(filename));
+ 
+			while ((sCurrentLine = br.readLine()) != null) {
+				// Do rstrip
+				String[] r = sCurrentLine.split(sep);
+				System.out.println(sCurrentLine);
+			}
+ 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		
 		
 	}
