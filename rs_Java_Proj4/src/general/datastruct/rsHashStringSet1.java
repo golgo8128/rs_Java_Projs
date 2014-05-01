@@ -1,4 +1,4 @@
-package general.set;
+package general.datastruct;
 
 import java.util.HashSet;
 
