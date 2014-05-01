@@ -3720,7 +3720,7 @@ class MetabPPI_NodeTable_Info1_3 {
             { "4008", "LMO7", "Protein", "hsa:4008", "LIM domain 7", "" },
             { "84938", "ATG4C", "Protein", "hsa:84938", "autophagy related 4C, cysteine peptidase", "" },
             { "4000", "LMNA", "Protein", "hsa:4000", "lamin A/C", "" },
-            { "HMDB15043", "Cocaine", "Metabolite", "cpd:C01416", "(���|)-cocaine;Benzoylmethylecgonine;beta-Cocain;Cocain;Kokain;Neurocaine", "" },
+            { "HMDB15043", "Cocaine", "Metabolite", "cpd:C01416", "(-)-cocaine;Benzoylmethylecgonine;beta-Cocain;Cocain;Kokain;Neurocaine", "" },
             { "4005", "LMO2", "Protein", "hsa:4005", "LIM domain only 2 (rhombotin-like 1)", "" },
             { "84936", "ZFYVE19", "Protein", "hsa:84936", "zinc finger, FYVE domain containing 19", "" },
             { "9894", "TELO2", "Protein", "hsa:9894", "TEL2, telomere maintenance 2, homolog (S. cerevisiae)", "" },
