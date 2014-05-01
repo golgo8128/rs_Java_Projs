@@ -22,7 +22,7 @@ public class RSTable1 {
 	private int nrows = 0;
 	private int ncols = 0;
 	
-	private Class[] coldattypes = null;
+	private Object[] coldatClasses = null;
 	
 	private HashMap rowlabel_to_idx_h = null;
 	private HashMap collabel_to_idx_h = null;
@@ -82,7 +82,13 @@ public class RSTable1 {
 			}
 		}
 
-		RSTable1.get_colval_types(rstable_test1.table[0]);
+		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(rstable_test1.table[0]);
+		Object[] collabels = colval_types_h.get("collabels");
+		Object[] klasses   = colval_types_h.get("Classes");
+		
+		for(int i = 0;i < collabels.length;i ++){
+			System.out.println((String)collabels[i] + "---" + klasses[i].toString());
+		}
 		
 	}
 
@@ -147,7 +153,7 @@ public class RSTable1 {
 	public String[][] testtable1(){
 		
 		String[][] teststr1 = {
-				{"",     "Col1", "Col2 (Integer)", "Col3"},
+				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)"},
 				{"Row1", "XXX1", "YYY2", "ZZZ3"},
 				{"Row2", "XxX1", "YyY2"        },
 				{"Row3", "XxX1", "YyY2", "ZzZ4"},
@@ -157,35 +163,67 @@ public class RSTable1 {
 		return teststr1;
 	}
 	
-	public static HashMap<String, Object> get_colval_types(Object[] icollabels_obj){
-		// Object is Class.
-		
+	public static HashMap<String, Object[]> get_colval_types(Object[] icollabels_obj){
+		// String: "collabels" -> String collabels[]
+		//         "Classes"   -> Class klasses[]
+				
 		String[] icollabels = new String[icollabels_obj.length];
 		for(int i = 0;i < icollabels_obj.length;i ++){
 			icollabels[i] = (String)icollabels_obj[i];
 		}
-		
-		HashMap<String, Object> collabels_to_type_h = new HashMap<String, Object>();
-		
-		String regex = "^(.*\\S)\\s*\\((\\S+)\\)$";
+			
+		String regex = "^(.*\\S)\\s*\\(([^\\s\\)]+)\\)$";
 		Pattern pat  = Pattern.compile(regex);
 		
-		for(String each_str: icollabels){
+		String[] icollbs     = new String[icollabels_obj.length];
+		Object[] icolClasses = new Object[icollabels_obj.length];
+		
+		for(int i = 0;i < icollabels_obj.length;i ++){
+			String each_str = icollabels[i];
 			Matcher m = pat.matcher(each_str);
 			String icollabel;
 			String classtype;
+			Object classtype_obj;
 			if(m.find()){
 				icollabel = m.group(1);
 				classtype = m.group(2);
+				
+				if(classtype.equals("String")){
+					classtype_obj = String.class;
+				}
+				else if(classtype.equals("Integer")){
+					classtype_obj = Integer.class;
+				}
+				else if(classtype.equals("Boolean")){
+					classtype_obj = Boolean.class;
+				}
+				else if(classtype.equals("Float")){
+					classtype_obj = Float.class;
+				}
+				else if(classtype.equals("Double")){
+					classtype_obj = Double.class;
+				}
+				else {
+					icollabel = each_str;
+					classtype = "String";					
+					classtype_obj = String.class;
+				}
+				
 			} else {
 				icollabel = each_str;
 				classtype = "String";
+				classtype_obj = String.class;
 			}
 			
-			System.out.println(icollabel + " - " + classtype);
-			
+			// System.out.println(icollabel + " - " + classtype);
+			icolClasses[i] = classtype_obj;
+			icollbs[i]     = icollabel;
 		}
+	
+		HashMap<String, Object[]> ret_h = new HashMap<String, Object[]>();		
+		ret_h.put("collabels", icollbs);
+		ret_h.put("Classes", icolClasses);
 		
-		return collabels_to_type_h;
+		return ret_h;
 	}
 }
