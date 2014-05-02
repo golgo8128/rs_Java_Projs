@@ -141,8 +141,16 @@ public class RSTable1 {
 
 		System.out.println("Table:");
 		for(Object[] each_row: table){
-			for(Object each_elem: each_row){
-				System.out.print((String)each_elem + " - ");
+			for(int j = 0;j < each_row.length;j ++){
+				Object each_elem = each_row[j];
+				if(each_elem == null){
+					System.out.print("NULL");
+				} else {
+					System.out.print(each_elem.toString());
+				}
+				if(j < each_row.length - 1){
+					System.out.print(" ; ");
+				}
 			}
 			System.out.println();
 		}
@@ -239,11 +247,11 @@ public class RSTable1 {
 	public String[][] testtable1(){
 		
 		String[][] teststr1 = {
-				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)"},
-				{"Row1", "R1C1", "12", "R1C3"},
-				{"Row2", "R2C1", "22"        },
-				{"Row3", "R3C1", "32", "R3C3"},
-				{"Row4", "R4C1", "42", "R4C3"},
+				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)", "Col4(Double)", "Col5(Float)"},
+				{"Row1", "R1C1", "12", "R1C3", "1.2", "2.3"  },
+				{"Row2", "R2C1", "22", "R2C3", ""   ,        },
+				{"Row3", "R3C1", "32", "R3C3", "2.1", "-1.2" },
+				{"Row4", "R4C1", "42", "R4C3", "3.5" },
 		};
 		
 		return teststr1;
