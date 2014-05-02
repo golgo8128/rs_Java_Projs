@@ -30,10 +30,7 @@ public class RSTable1 {
 	private Object[][] table = null;
 	
 	public RSTable1(){
-	
-		rowlabel_to_idx_h = new HashMap(); // //		
-		collabel_to_idx_h = new HashMap();
-		
+			
 	}
 	
 	public void read_table(String filename, String sep_regex, boolean rowlabels_flag, boolean collabels_flag){
@@ -65,19 +62,27 @@ public class RSTable1 {
 		}
 
 		rowlabels = new String[nrows];
-		for(int i = 0;i < nrows;i ++)
+		rowlabel_to_idx_h = new HashMap<String, Integer>();	
+		for(int i = 0;i < nrows;i ++){
 			if(rowlabels_flag)
 				rowlabels[i] = tbl2Dstr[i+start_i][0];
 			else
 				rowlabels[i] = String.format("Row:%d",i);
-	
+			rowlabel_to_idx_h.put(rowlabels[i], i);
+		}
+		
+		
 		collabels = new String[ncols];		
-		for(int j = 0;j < ncols;j ++)
+		collabel_to_idx_h = new HashMap<String, Integer>();
+		for(int j = 0;j < ncols;j ++){
 			if(collabels_flag)
 				collabels[j] = tbl2Dstr[0][j+start_j];
 			else
 				collabels[j] = String.format("Col:%d",j);
-		
+			collabel_to_idx_h.put(collabels[j], j);
+		}
+
+
 		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(collabels);
 		Object[] collabels_obj = colval_types_h.get("collabels");
 		Object[] klasses_obj   = colval_types_h.get("Classes");		
@@ -100,6 +105,37 @@ public class RSTable1 {
 		
 	}
 	
+	public void print_info(){
+		
+		System.out.println("Row labels: " + StringUtils.join(rowlabels, "\t"));
+		System.out.println("Col labels: " + StringUtils.join(collabels, "\t"));
+
+		System.out.println("Table:");
+		for(Object[] each_row: table){
+			for(Object each_elem: each_row){
+				System.out.print((String)each_elem + " - ");
+			}
+			System.out.println();
+		}
+		
+		System.out.println("Column value classes:");
+		for(int j = 0;j < coldatClasses.length;j ++){
+			System.out.println(collabels[j] + " -> " + coldatClasses[j].toString());
+		}
+
+
+		System.out.println("Row labels to indices:");
+		for(String rowlabel: rowlabel_to_idx_h.keySet()){
+			System.out.println(rowlabel + " ... " + rowlabel_to_idx_h.get(rowlabel));
+		}
+
+		System.out.println("Column labels to indices:");
+		for(String collabel: collabel_to_idx_h.keySet()){
+			System.out.println(collabel + " ... " + collabel_to_idx_h.get(collabel));
+		}		
+		
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -109,13 +145,7 @@ public class RSTable1 {
 		String testtable_file = rstable_test1.maketesttablefile();
 		
 		rstable_test1.read_table(testtable_file, "\\t", true, true);
-	
-		for(Object[] each_row: rstable_test1.table){
-			for(Object each_elem: each_row){
-				System.out.print((String)each_elem + " - ");
-			}
-			System.out.println();
-		}
+		rstable_test1.print_info();
 		
 	}
 
@@ -181,10 +211,10 @@ public class RSTable1 {
 		
 		String[][] teststr1 = {
 				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)"},
-				{"Row1", "XXX1", "YYY2", "ZZZ3"},
-				{"Row2", "XxX1", "YyY2"        },
-				{"Row3", "XxX1", "YyY2", "ZzZ4"},
-				{"Row4", "XxXx", "YyY1", "1111"},
+				{"Row1", "R1C1", "R1C2", "R1C3"},
+				{"Row2", "R2C1", "R2C2"        },
+				{"Row3", "R3C1", "R3C2", "R3C3"},
+				{"Row4", "R4C1", "R4C2", "R4C3"},
 		};
 		
 		return teststr1;
