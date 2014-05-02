@@ -66,28 +66,27 @@ public class RSTable1 {
 		
 		if(rowlabels_flag){
 			rowlabels = new String[nrows];
-			for(int i = start_i;i < nrows;i ++)
-				rowlabels[i - start_i] = tbl2Dstr[i][0];
+			for(int i = 0;i < nrows;i ++)
+				rowlabels[i] = tbl2Dstr[i+start_i][0];
 		}
 		
 		if(collabels_flag){
 			collabels = new String[ncols];
-			for(int j = start_j;j < ncols;j ++){
-				collabels[j - start_j] = tbl2Dstr[0][j];
+			for(int j = 0;j < ncols;j ++){
+				collabels[j] = tbl2Dstr[0][j+start_j];
 			}
 		}
 		
 		table = new Object[nrows][ncols];
 		
-		int i = 0;
-		for(String[] each_row: tbl2Dstr){
-			int j = 0;
-			for(String each_col: each_row){
-				table[i][j] = each_col;
-				j ++;
+		for(int i = 0;i < nrows;i ++){
+			for(int j = 0;j < ncols;j++){
+				if(j+start_j < tbl2Dstr[i+start_i].length)
+					table[i][j] = tbl2Dstr[i+start_i][j+start_j];
+				else
+					table[i][j] = null;
 			}
-			i ++;
-		}		
+		}
 		
 	}
 	
@@ -103,8 +102,9 @@ public class RSTable1 {
 	
 		for(Object[] each_row: rstable_test1.table){
 			for(Object each_elem: each_row){
-				System.out.println(each_elem);
+				System.out.print((String)each_elem + " - ");
 			}
+			System.out.println();
 		}
 
 		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(rstable_test1.table[0]);
