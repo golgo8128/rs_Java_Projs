@@ -63,20 +63,30 @@ public class RSTable1 {
 			start_i = 1;
 			nrows --;
 		}
-		
-		if(rowlabels_flag){
-			rowlabels = new String[nrows];
-			for(int i = 0;i < nrows;i ++)
+
+		rowlabels = new String[nrows];
+		for(int i = 0;i < nrows;i ++)
+			if(rowlabels_flag)
 				rowlabels[i] = tbl2Dstr[i+start_i][0];
-		}
-		
-		if(collabels_flag){
-			collabels = new String[ncols];
-			for(int j = 0;j < ncols;j ++){
+			else
+				rowlabels[i] = String.format("Row:%d",i);
+	
+		collabels = new String[ncols];		
+		for(int j = 0;j < ncols;j ++)
+			if(collabels_flag)
 				collabels[j] = tbl2Dstr[0][j+start_j];
-			}
-		}
+			else
+				collabels[j] = String.format("Col:%d",j);
 		
+		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(collabels);
+		Object[] collabels_obj = colval_types_h.get("collabels");
+		Object[] klasses_obj   = colval_types_h.get("Classes");		
+		coldatClasses = new Object[collabels.length];
+		for(int j = 0;j < collabels_obj.length;j ++){
+			collabels[j]     = (String)collabels_obj[j];
+			coldatClasses[j] = klasses_obj[j];
+		}
+					
 		table = new Object[nrows][ncols];
 		
 		for(int i = 0;i < nrows;i ++){
@@ -105,14 +115,6 @@ public class RSTable1 {
 				System.out.print((String)each_elem + " - ");
 			}
 			System.out.println();
-		}
-
-		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(rstable_test1.table[0]);
-		Object[] collabels = colval_types_h.get("collabels");
-		Object[] klasses   = colval_types_h.get("Classes");
-		
-		for(int i = 0;i < collabels.length;i ++){
-			System.out.println((String)collabels[i] + "---" + klasses[i].toString());
 		}
 		
 	}
