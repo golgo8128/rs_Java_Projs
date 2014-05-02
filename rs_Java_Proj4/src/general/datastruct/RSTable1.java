@@ -22,7 +22,7 @@ public class RSTable1 {
 	private int nrows = 0;
 	private int ncols = 0;
 	
-	private Object[] coldatClasses = null;
+	private Class<?>[] coldatClasses = null;
 	
 	private HashMap<String, Integer> rowlabel_to_idx_h = null;
 	private HashMap<String, Integer> collabel_to_idx_h = null;
@@ -86,10 +86,10 @@ public class RSTable1 {
 		HashMap<String, Object[]> colval_types_h = RSTable1.get_colval_types(collabels);
 		Object[] collabels_obj = colval_types_h.get("collabels");
 		Object[] klasses_obj   = colval_types_h.get("Classes");		
-		coldatClasses = new Object[collabels.length];
+		coldatClasses = new Class<?>[collabels.length];
 		for(int j = 0;j < collabels_obj.length;j ++){
 			collabels[j]     = (String)collabels_obj[j];
-			coldatClasses[j] = klasses_obj[j];
+			coldatClasses[j] = (Class<?>)klasses_obj[j];
 		}
 					
 		table = new Object[nrows][ncols];
@@ -103,16 +103,32 @@ public class RSTable1 {
 			}
 		}
 		
+		turn_colvaltypes();
+		
 	}
 	
 	public void turn_colvaltypes(){
 		// All the attribute variables must be set before running this method.
 		for(int j = 0;j < ncols;j ++){
-			Class<?> colvaltype = coldatClasses[j].getClass();
+			Class<?> colvaltype = coldatClasses[j];
 			for(int i = 0;i < nrows;i ++){
-				if(table[i][j] != null){
-					table[i][j] = colvaltype.cast(table[i][j]);
+				if(table[i][j] == null)continue;
+				if(colvaltype.equals(Integer.class)){
+					table[i][j] = Integer.parseInt((String)table[i][j]);
 				}
+				else if(colvaltype.equals(Float.class)){
+					table[i][j] = Float.parseFloat((String)table[i][j]);	
+				}
+				else if(colvaltype.equals(Double.class)){
+					table[i][j] = Double.parseDouble((String)table[i][j]);	
+				}			
+				else if(colvaltype.equals(Boolean.class)){
+					table[i][j] = Boolean.parseBoolean((String)table[i][j]);	
+				}
+				else if(!colvaltype.equals(String.class)){
+					throw new IllegalStateException(String.format("Incompatible class %s", colvaltype.toString()));
+				}
+				
 			}
 		}
 		
@@ -224,10 +240,10 @@ public class RSTable1 {
 		
 		String[][] teststr1 = {
 				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)"},
-				{"Row1", "R1C1", "R1C2", "R1C3"},
-				{"Row2", "R2C1", "R2C2"        },
-				{"Row3", "R3C1", "R3C2", "R3C3"},
-				{"Row4", "R4C1", "R4C2", "R4C3"},
+				{"Row1", "R1C1", "12", "R1C3"},
+				{"Row2", "R2C1", "22"        },
+				{"Row3", "R3C1", "32", "R3C3"},
+				{"Row4", "R4C1", "42", "R4C3"},
 		};
 		
 		return teststr1;
