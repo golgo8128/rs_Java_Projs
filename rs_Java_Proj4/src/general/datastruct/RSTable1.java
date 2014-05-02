@@ -52,6 +52,31 @@ public class RSTable1 {
 		
 		// System.out.println(nrows + " x " + ncols);
 	
+		int start_i = 0;
+		int start_j = 0;
+		
+		if(rowlabels_flag){
+			start_j = 1;
+			ncols --;
+		}
+		if(collabels_flag){
+			start_i = 1;
+			nrows --;
+		}
+		
+		if(rowlabels_flag){
+			rowlabels = new String[nrows];
+			for(int i = start_i;i < nrows;i ++)
+				rowlabels[i - start_i] = tbl2Dstr[i][0];
+		}
+		
+		if(collabels_flag){
+			collabels = new String[ncols];
+			for(int j = start_j;j < ncols;j ++){
+				collabels[j - start_j] = tbl2Dstr[0][j];
+			}
+		}
+		
 		table = new Object[nrows][ncols];
 		
 		int i = 0;
