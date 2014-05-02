@@ -24,8 +24,8 @@ public class RSTable1 {
 	
 	private Object[] coldatClasses = null;
 	
-	private HashMap rowlabel_to_idx_h = null;
-	private HashMap collabel_to_idx_h = null;
+	private HashMap<String, Integer> rowlabel_to_idx_h = null;
+	private HashMap<String, Integer> collabel_to_idx_h = null;
 	
 	private Object[][] table = null;
 	
@@ -92,7 +92,7 @@ public class RSTable1 {
 		
 	}
 
-	public String [][] readtablefile_simple1(String filename, String sep){ // char, String[][]
+	public String [][] readtablefile_simple1(String filename, String sep){ // char
 		
 
 		ArrayList<String[]> lines = new ArrayList<String[]>();
