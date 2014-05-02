@@ -105,6 +105,19 @@ public class RSTable1 {
 		
 	}
 	
+	public void turn_colvaltypes(){
+		// All the attribute variables must be set before running this method.
+		for(int j = 0;j < ncols;j ++){
+			Class<?> colvaltype = coldatClasses[j].getClass();
+			for(int i = 0;i < nrows;i ++){
+				if(table[i][j] != null){
+					table[i][j] = colvaltype.cast(table[i][j]);
+				}
+			}
+		}
+		
+	}
+	
 	public void print_info(){
 		
 		System.out.println("Row labels: " + StringUtils.join(rowlabels, "\t"));
