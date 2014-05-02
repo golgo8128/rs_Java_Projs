@@ -31,7 +31,7 @@ public class RSTable1 {
 	
 	public RSTable1(){
 	
-		rowlabel_to_idx_h = new HashMap(); //
+		rowlabel_to_idx_h = new HashMap(); // //		
 		collabel_to_idx_h = new HashMap();
 		
 	}
