@@ -2,6 +2,7 @@ package rsCyApp3.rsMetabPPI1_11.internal;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -56,6 +57,18 @@ public class rsCy3App_Usefuls1 {
 		
 	}
 
+	public static HashMap<String,CyNode> get_nodename_to_cynode_h(CyNetwork myNet){
+		
+		HashMap<String,CyNode> nodename_to_cynode_h = new HashMap<String,CyNode>();
+		
+		for(CyNode cynode: myNet.getNodeList()){
+			nodename_to_cynode_h.put(myNet.getRow(cynode).get(CyNetwork.NAME, String.class), cynode);
+		}
+			
+		return(nodename_to_cynode_h);
+		
+	}	
+	
 	public static CyNode[] get_cynodes_from_their_names(CyNetwork net1, String[] targetNodeNames){
 		
 		HashSet<String> targetNodeNameSet = new HashSet<String>(Arrays.asList(targetNodeNames));		
@@ -92,6 +105,5 @@ public class rsCy3App_Usefuls1 {
 		}
 		return nodes;
 	}		
-	
 	
 }

@@ -78,18 +78,6 @@ public final class Build_metabPPI1_4 {
 		
 	}
 	
-	public HashMap<String,CyNode> nodename_to_cynode(CyNetwork myNet){
-		
-		HashMap<String,CyNode> nodename_to_cynode_h = new HashMap<String,CyNode>();
-		
-		for(CyNode cynode: myNet.getNodeList()){
-			nodename_to_cynode_h.put(myNet.getRow(cynode).get(CyNetwork.NAME, String.class), cynode);
-		}
-			
-		return(nodename_to_cynode_h);
-		
-	}	
-	
 	public void make_node_table(CyNetwork myNet,
 			String[] classnames,
 			String[] colnames,
@@ -135,7 +123,7 @@ public final class Build_metabPPI1_4 {
 			// The first two columns should be pair of nodes.
 			){
 	
-		HashMap<String,CyNode> cynode_h = nodename_to_cynode(myNet);
+		HashMap<String,CyNode> cynode_h = rsCy3App_Usefuls1.get_nodename_to_cynode_h(myNet);
 		
 		CyEdge edges[] = new CyEdge[values.length];
 		for(int i = 0;i < values.length;i ++){
