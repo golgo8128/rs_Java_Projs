@@ -33,6 +33,32 @@ public class RSTable1 {
 			
 	}
 	
+	public int get_nrows(){
+		return nrows;
+	}
+
+	public int get_ncols(){
+		return ncols;
+	}
+	
+	public String[] get_rowlabels(){
+		return rowlabels;
+	}
+
+	public String[] get_collabels(){
+		return collabels;
+	}
+	
+	public Class<?>[] get_coldatClasses(){
+		return coldatClasses;
+	}
+	
+	public Object get_elem_by_idx(int i, int j){
+		// You can define Exception for index out of range error.
+		return table[i][j];
+	}
+	
+	
 	public void read_table(String filename, String sep_regex, boolean rowlabels_flag, boolean collabels_flag){
 	
 		String[][] tbl2Dstr = readtablefile_simple1(filename, sep_regex);
@@ -181,6 +207,8 @@ public class RSTable1 {
 		
 		String testtable_file = rstable_test1.maketesttablefile();
 		
+		System.out.println("Temp file : " + testtable_file);
+		
 		rstable_test1.read_table(testtable_file, "\\t", true, true);
 		rstable_test1.print_info();
 		
@@ -222,7 +250,6 @@ public class RSTable1 {
 		try{
 
 			tmpFile = File.createTempFile("tmp", ".txt"); 
-			System.out.println("Temp file : " + tmpFile.getAbsolutePath());
 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(tmpFile));
 			
@@ -250,7 +277,7 @@ public class RSTable1 {
 				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)", "Col4(Double)", "Col5(Float)"},
 				{"Row1", "R1C1", "12", "R1C3", "1.2", "2.3"  },
 				{"Row2", "R2C1", "22", "R2C3", ""   ,        },
-				{"Row3", "R3C1", "32", "R3C3", "2.1", "-1.2" },
+				{"Row3", "true", "32", "R3C3", "2.1", "-1.2" },
 				{"Row4", "R4C1", "42", "R4C3", "3.5" },
 		};
 		
