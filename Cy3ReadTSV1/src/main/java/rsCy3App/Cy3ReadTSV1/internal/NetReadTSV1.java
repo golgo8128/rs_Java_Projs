@@ -33,11 +33,13 @@ public final class NetReadTSV1 {
 			myNet.getDefaultNodeTable().createColumn(rstbl.get_collabels()[j], rstbl.get_coldatClasses()[j], false);
 			
 			for(int i = 0;i < rstbl.get_nrows();i ++){
-				if(!(values[i][j] instanceof Double) || !(Double.isNaN((Double) values[i][j]))){
-					myNet.getRow(nodes[i]).set(colnames[j], rstbl.get_elem_by_idx(i, j));
+				
+				if(!(rstbl.get_coldatClasses()[j].equals(Double.class))
+						|| !(Double.isNaN((Double) rstbl.get_elem_by_idx(i, j)))){
+					myNet.getRow(nodes[i]).set(rstbl.get_collabels()[j], rstbl.get_elem_by_idx(i, j));
 				}
 				if(j == 0){
-					myNet.getRow(nodes[i]).set(CyNetwork.NAME, values[i][j]);
+					myNet.getRow(nodes[i]).set(CyNetwork.NAME, rstbl.get_elem_by_idx(i, j));
 					// Node attributes in the first column will automatically be set to CyNetwork.NAME
 				}
 			}			
@@ -48,43 +50,31 @@ public final class NetReadTSV1 {
 		
 	}	
 	
-	public void make_edge_table(CyNetwork myNet,
-			String[] classnames,
-			String[] colnames,
-			Object[][] values
-			// The first two columns should be pair of nodes.
-			){
-	
+	public void make_edge_table(CyNetwork myNet, RSTable1 rstbl){
+		// The first two columns should be pair of nodes.
+		
 		HashMap<String,CyNode> cynode_h = rsCy3App_Usefuls1.get_nodename_to_cynode_h(myNet);
 		
-		CyEdge edges[] = new CyEdge[values.length];
-		for(int i = 0;i < values.length;i ++){
-			edges[i] = myNet.addEdge(cynode_h.get(values[i][0]),
-					                 cynode_h.get(values[i][1]),
+		CyEdge edges[] = new CyEdge[rstbl.get_nrows()];
+		for(int i = 0;i < rstbl.get_nrows();i ++)
+			edges[i] = myNet.addEdge(cynode_h.get(rstbl.get_elem_by_idx(i,0)),
+					                 cynode_h.get(rstbl.get_elem_by_idx(i,1)),
 					                 true);	
-		}	
 		
-		for(int j = 2;j < colnames.length;j ++){
+		for(int j = 2;j < rstbl.get_ncols();j ++){
+			if(!rstbl.get_collabels()[j].equals("interaction"))
+				myNet.getDefaultEdgeTable().createColumn(rstbl.get_collabels()[j], rstbl.get_coldatClasses()[j], false);
 			
-			if(classnames[j].equals("String")){
-				if(!colnames[j].equals("interaction")){
-					myNet.getDefaultEdgeTable().createColumn(colnames[j], String.class, false);
-				}
-			}
-			else if(classnames[j].equals("Double")){
-				myNet.getDefaultEdgeTable().createColumn(colnames[j], Double.class, false);			
-			}
-			else if(classnames[j].equals("Integer")){
-				myNet.getDefaultEdgeTable().createColumn(colnames[j], Integer.class, false);			
-			}
-			
-			for(int i = 0;i < values.length;i ++){
-				if(!(values[i][j] instanceof Double) || !(Double.isNaN((Double) values[i][j]))){
-					myNet.getRow(edges[i]).set(colnames[j], values[i][j]);
-					if(colnames[j].equals("interaction")){
+			for(int i = 0;i < rstbl.get_nrows();i ++){
+				if(!(rstbl.get_coldatClasses()[j].equals(Double.class))
+						|| !(Double.isNaN((Double) rstbl.get_elem_by_idx(i, j)))){
+					myNet.getRow(edges[i]).set(rstbl.get_collabels()[j], rstbl.get_elem_by_idx(i, j));
+					if(rstbl.get_collabels()[j].equals("interaction")){
 						myNet.getRow(edges[i]).set(CyNetwork.NAME,
 								String.format("%s (%s) %s",
-										      values[i][0], values[i][j], values[i][1]));
+										rstbl.get_elem_by_idx(i, 0),
+										rstbl.get_elem_by_idx(i, j),
+										rstbl.get_elem_by_idx(i, 1)));
 					}
 				}
 			}			
