@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
-import org.cytoscape.application.CyApplicationManager;
 import org.cytoscape.application.swing.AbstractCyAction;
 
 
@@ -14,10 +13,14 @@ import org.cytoscape.application.swing.AbstractCyAction;
  */
 public class MenuAction extends AbstractCyAction {
 
-	public MenuAction(CyApplicationManager cyApplicationManager, final String menuTitle) {
+	private final RegServiceBag1_4 rSB;
+	
+	public MenuAction(RegServiceBag1_4 regServiceBag, final String menuTitle) {
 		
-		super(menuTitle, cyApplicationManager, null, null);
+		super(menuTitle, regServiceBag.cyApplicationManager, null, null);
 		setPreferredMenu("Apps");
+	
+		rSB = regServiceBag;
 		
 	}
 
@@ -25,7 +28,7 @@ public class MenuAction extends AbstractCyAction {
 
 		// Write your own function here.
 		JOptionPane.showMessageDialog(null, "Hello Cytoscape World!");
-		setName("Hii!!!");
+		setName("Changed name title"); // This will change menu title.
 		
 	}
 }
