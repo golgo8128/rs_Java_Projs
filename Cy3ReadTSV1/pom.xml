@@ -178,14 +178,13 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<dependency>
-		    <groupId>org.apache</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.3.2</version>
-		    <scope>system</scope>
-		    <systemPath>${project.basedir}/lib/commons-lang3-3.3.2.jar</systemPath>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
 		</dependency>
+
+
 
 	</dependencies>
 
