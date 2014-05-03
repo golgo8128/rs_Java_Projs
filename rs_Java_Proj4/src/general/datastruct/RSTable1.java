@@ -205,7 +205,7 @@ public class RSTable1 {
 
 		RSTable1 rstable_test1 = new RSTable1();
 		
-		String testtable_file = rstable_test1.maketesttablefile();
+		String testtable_file = rstable_test1.maketesttablefile(1);
 		
 		System.out.println("Temp file : " + testtable_file);
 		
@@ -243,7 +243,7 @@ public class RSTable1 {
 		
 	}
 	
-	public String maketesttablefile(){
+	public String maketesttablefile(int testtbl_num){
 			
 		File tmpFile = null;
 		
@@ -253,7 +253,12 @@ public class RSTable1 {
 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(tmpFile));
 			
-			String[][] teststr1 = testtable1();
+			String[][] teststr1 = null;
+			switch(testtbl_num){
+				case 1: teststr1 = testtable1_1();break;
+				case 2: teststr1 = testtable1_2();break;
+			}
+			
 			for(String[] strarray: teststr1){
 				bw.write(StringUtils.join(strarray, "\t"));
 				bw.newLine();			
@@ -271,7 +276,7 @@ public class RSTable1 {
 	}
 	
 	
-	public String[][] testtable1(){
+	public String[][] testtable1_1(){
 		
 		String[][] teststr1 = {
 				{"",     "Col1 (X) (Boolean)", "Col2 (Integer)", "Col3 (XXX)", "Col4(Double)", "Col5(Float)"},
@@ -283,6 +288,22 @@ public class RSTable1 {
 		
 		return teststr1;
 	}
+	
+	
+	public String[][] testtable1_2(){
+		
+		String[][] teststr1 = {
+				{"Node name",   "Node type", "heat (Double)"},
+				{"Node_A", "Blue", "+1.2" },
+				{"Node_B", "Blue", "-3.2" },
+				{"Node_C", "Pink", "-3.2" },
+				{"Node_D", "Pink", "+5.5" },
+				{"Node_E", "Pink", "-1.2" }
+		};
+		
+		return teststr1;
+	}	
+	
 	
 	public static HashMap<String, Object[]> get_colval_types(Object[] icollabels_obj){
 		// String: "collabels" -> String collabels[]
