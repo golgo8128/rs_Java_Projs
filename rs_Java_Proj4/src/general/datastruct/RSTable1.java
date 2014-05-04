@@ -259,6 +259,7 @@ public class RSTable1 {
 			switch(testtbl_num){
 				case 1: teststr1 = testtable1_1();break;
 				case 2: teststr1 = testtable1_2();break;
+				case 3: teststr1 = testtable1_3();break;
 			}
 			
 			for(String[] strarray: teststr1){
@@ -295,12 +296,27 @@ public class RSTable1 {
 	public String[][] testtable1_2(){
 		
 		String[][] teststr1 = {
-				{"Node name",   "Node type", "heat (Double)"},
+				{"Node ID",   "Node type", "heat (Double)"},
 				{"Node_A", "Blue", "+1.2" },
-				{"Node_B", "Blue", "-3.2" },
+				{"Node_B", "Blue", "-3.1" },
 				{"Node_C", "Pink", "-3.2" },
 				{"Node_D", "Pink", "+5.5" },
 				{"Node_E", "Pink", "-1.2" }
+		};
+		
+		return teststr1;
+	}	
+	
+	public String[][] testtable1_3(){
+		
+		String[][] teststr1 = {
+				{"Node ID1",   "Node ID2", "interaction", "Categ", "heat (Double)"},
+				{"Node_A", "Node_B", "Friend", "Blue",  "+1.0" },
+				{"Node_A", "Node_C", "Friend", "Blue",  "+1.7" },
+				{"Node_A", "Node_D", "Friend", "Blue",  "-1.2" },
+				{"Node_B", "Node_D", "Enemy",  "Blue",  "+1.3" },
+				{"Node_D", "Node_E", "Enemy",  "Green", "+1.4" },
+				{"Node_E", "Node_B", "Enemy",  "Red",   "+1.6" }
 		};
 		
 		return teststr1;
