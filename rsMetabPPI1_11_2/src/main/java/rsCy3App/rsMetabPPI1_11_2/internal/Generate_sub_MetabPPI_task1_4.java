@@ -35,8 +35,8 @@ public class Generate_sub_MetabPPI_task1_4 extends AbstractTask {
 		
 		taskMonitor.setStatusMessage("Building rsMetabPPI network ...");
 		
-		Build_metabPPI1_4 build_metabPPI = Build_metabPPI1_4.getInstance(rSB);
-		CyNetwork metabPPI_cynet         = build_metabPPI.build_net();
+		Build_metabPPI1_5 build_metabPPI = Build_metabPPI1_5.getInstance(rSB);
+		CyNetwork metabPPI_cynet         = build_metabPPI.build_net(taskMonitor);
 
 		taskMonitor.setStatusMessage("Selecting given nodes ...");
 		
@@ -76,13 +76,13 @@ stacked-node-layout
 		metabPPI_vizmap.apply_VStyle_I(newnetview.getModel());	
 		
 		TaskIterator taskIterator = new TaskIterator();
-		if(!Build_metabPPI1_4.done_layout_mboard){
+		if(!Build_metabPPI1_5.done_layout_mboard){
 			taskIterator.append(
 					layout_grid.createTaskIterator(
 							rsCy3App_Usefuls1.take_first_view(rSB, metabPPI_cynet),
 							layout_grid.getDefaultLayoutContext(),
 							CyLayoutAlgorithm.ALL_NODE_VIEWS, null));
-			Build_metabPPI1_4.done_layout_mboard = true;
+			Build_metabPPI1_5.done_layout_mboard = true;
 		} else {
 			rsCy3App_Usefuls1.take_first_view(rSB, metabPPI_cynet).updateView();
 		}

@@ -1,84 +1,28 @@
 package rsCy3App.rsMetabPPI1_11_2.internal;
 
-
 import java.util.HashMap;
 
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
-import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.work.TaskMonitor;
 
+public class MakeCyNetfromTables1 {
 
-// This class should be singleton.
-public final class Build_metabPPI1_4 {
-
-	private static Build_metabPPI1_4 instance;	
-	private static RegServiceBag1_4 rSB;
-	private static CyNetwork gen_cynet;
+	private final RegServiceBag1_4 rSB;
+	private CyNetwork myNet;
+	private TaskMonitor tM;
 	
-	public static boolean done_layout_mboard = false;
-	
-	private Build_metabPPI1_4(){}; 
-	
-	public static synchronized Build_metabPPI1_4 getInstance(RegServiceBag1_4 rSB){
-		if(instance == null){
-			instance = new Build_metabPPI1_4();
-			Build_metabPPI1_4.rSB = rSB;
-		}
-		else if(!rSB.equals(Build_metabPPI1_4.rSB)){
-			throw new IllegalStateException("Service bag already set for building MetabPPI network");	
-		}
+	public MakeCyNetfromTables1(RegServiceBag1_4 rSB,
+			CyNetwork myNet,
+			TaskMonitor taskMonitor){
 		
-		return instance;
-	}	
-	
-	public static synchronized Build_metabPPI1_4 getInstance(){
-		 if(instance == null){ 
-			 throw new IllegalStateException("Service bag must be stated.");
-	     }
-		 
-		 return instance;
-	}	
-	
-	public CyNetwork build_net() {
-			
-		if(gen_cynet == null || !rsCy3App_Usefuls1.getNetNames(rSB).contains(MetabPPIPanel1_2.NETWORKNAME)){
-
-			// Create a new network
-			gen_cynet = rSB.cyNetworkFactory.createNetwork();
-	
-			
-		    // Set name for network
-		    gen_cynet.getRow(gen_cynet).set(CyNetwork.NAME, MetabPPIPanel1_2.NETWORKNAME);
-	        
-		    make_node_table(gen_cynet,
-		    		MetabPPI_NodeTable_Info1_3.clsnam_nodeattr,
-		    		MetabPPI_NodeTable_Info1_3.colnam_nodeattr,
-		    		MetabPPI_NodeTable_Info1_3.assemble_ObjArrayParts());
-		    	    
-		    make_edge_table(gen_cynet,
-		    		MetabPPI_EdgeTable_Info1_3.clsnam_edgeattr,
-		    		MetabPPI_EdgeTable_Info1_3.colnam_edgeattr,
-		    		MetabPPI_EdgeTable_Info1_3.assemble_ObjArrayParts());	   
-	
-		    
-		    // Add the network to Cytoscape
-		    rSB.cyNetworkManager.addNetwork(gen_cynet);		
-		
-		}
-		
-		if(rSB.networkViewManager.getNetworkViews(gen_cynet).isEmpty()){
-			CyNetworkView netview = rSB.networkViewFactory.createNetworkView(gen_cynet);
-			// netview.updateView();
-			rSB.networkViewManager.addNetworkView(netview);
-			done_layout_mboard = false;
-		}
-			
-		return gen_cynet;
-		
+		this.myNet = myNet;
+		this.rSB   = rSB;
+		this.tM    = taskMonitor;
 	}
 	
-	public void make_node_table(CyNetwork myNet,
+	public void make_node_table(
 			String[] classnames,
 			String[] colnames,
 			Object[][] values){
@@ -116,7 +60,7 @@ public final class Build_metabPPI1_4 {
 		
 	}	
 	
-	public void make_edge_table(CyNetwork myNet,
+	public void make_edge_table(
 			String[] classnames,
 			String[] colnames,
 			Object[][] values
@@ -162,5 +106,6 @@ public final class Build_metabPPI1_4 {
 		rSB.eventHelper.flushPayloadEvents();
 		
 	}
+	
 	
 }
