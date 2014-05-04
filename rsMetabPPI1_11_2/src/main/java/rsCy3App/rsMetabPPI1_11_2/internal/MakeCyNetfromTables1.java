@@ -32,8 +32,10 @@ public class MakeCyNetfromTables1 {
 			nodes[i] = myNet.addNode();			
 		}		
 		
+		tM.setStatusMessage("Adding nodes");
+		
 		for(int j = 0;j < colnames.length;j ++){
-						
+			
 			if(classnames[j].equals("String")){
 				myNet.getDefaultNodeTable().createColumn(colnames[j], String.class, false);
 			}
@@ -53,7 +55,9 @@ public class MakeCyNetfromTables1 {
 					// Node attributes in the first column will automatically be set to CyNetwork.NAME
 				}
 			}			
-
+		
+			tM.setProgress(1.0*j / colnames.length);
+			
 		}
 		
 		rSB.eventHelper.flushPayloadEvents();
@@ -75,6 +79,8 @@ public class MakeCyNetfromTables1 {
 					                 cynode_h.get(values[i][1]),
 					                 true);	
 		}	
+		
+		tM.setStatusMessage("Adding edges");
 		
 		for(int j = 2;j < colnames.length;j ++){
 			
@@ -101,6 +107,8 @@ public class MakeCyNetfromTables1 {
 				}
 			}			
 
+			tM.setProgress(1.0*j / colnames.length);
+			
 		}			
 	
 		rSB.eventHelper.flushPayloadEvents();

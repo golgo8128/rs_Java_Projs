@@ -21,7 +21,7 @@ public class SelectNeiNodes1_2 {
 		
 	public HashSet<CyNode> doit(String[] lines){
 
-		CyNetwork  metabPPI_cynet        = Build_metabPPI1_5.getInstance().build_net();
+		CyNetwork  metabPPI_cynet        = Build_metabPPI1_5.getInstance().build_net(null);
 		// CyNetworkView metabPPI_cynetview = rsCy3App_Usefuls1.take_first_view(rSB, metabPPI_cynet);
 
 		Set<CyNode> metabnodeset  = rsCy3App_Usefuls1.getNodesWithValue(

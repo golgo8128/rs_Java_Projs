@@ -47,6 +47,8 @@
 					<source>1.6</source>
 					<target>1.6</target>
 					<optimize>true</optimize>
+					<fork>true</fork>
+					<maxmem>1024m</maxmem>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
 					<compilerArguments>

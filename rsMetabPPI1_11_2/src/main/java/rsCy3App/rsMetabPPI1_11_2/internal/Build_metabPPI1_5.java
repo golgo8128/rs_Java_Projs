@@ -1,11 +1,7 @@
 package rsCy3App.rsMetabPPI1_11_2.internal;
 
 
-import java.util.HashMap;
-
-import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
-import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.TaskMonitor;
 
