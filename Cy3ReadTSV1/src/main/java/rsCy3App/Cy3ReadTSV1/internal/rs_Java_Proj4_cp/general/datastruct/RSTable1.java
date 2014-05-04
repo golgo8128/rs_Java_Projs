@@ -1,5 +1,7 @@
 package general.datastruct;
 
+import general.strproc.StrUtil1;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,7 +13,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
+// import org.apache.commons.lang3.StringUtils;
 
 
 public class RSTable1 {
@@ -162,8 +164,8 @@ public class RSTable1 {
 	
 	public void print_info(){
 		
-		System.out.println("Row labels: " + StringUtils.join(rowlabels, "\t"));
-		System.out.println("Col labels: " + StringUtils.join(collabels, "\t"));
+		System.out.println("Row labels: " + StrUtil1.strjoin(rowlabels, "\t")); // StringUtils.join(rowlabels, "\t"));
+		System.out.println("Col labels: " + StrUtil1.strjoin(collabels, "\t")); // StringUtils.join(collabels, "\t"));
 
 		System.out.println("Table:");
 		for(Object[] each_row: table){
@@ -260,7 +262,7 @@ public class RSTable1 {
 			}
 			
 			for(String[] strarray: teststr1){
-				bw.write(StringUtils.join(strarray, "\t"));
+				bw.write(StrUtil1.strjoin(strarray, "\t")); // StringUtils.join(strarray, "\t"));
 				bw.newLine();			
 			}
 			
