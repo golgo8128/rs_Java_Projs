@@ -33,9 +33,9 @@ public class MenuAction extends AbstractCyAction {
 		JOptionPane.showMessageDialog(null, "NetReadTSV test...");
 		setName("Changed name title"); // This will change menu title.
 		
-		CyNetwork new_cynet = rSB.cyNetworkFactory.createNetwork();
-		new_cynet.getRow(new_cynet).set(CyNetwork.NAME, "Destroy me");		
-		rSB.cyNetworkManager.addNetwork(new_cynet);			
+		CyNetwork cynet = rSB.cyNetworkFactory.createNetwork();
+		cynet.getRow(cynet).set(CyNetwork.NAME, "Destroy me");		
+		rSB.cyNetworkManager.addNetwork(cynet);			
 		
 		RSTable1 rstbl_nodes = new RSTable1();
 		rstbl_nodes.read_table(rstbl_nodes.maketesttablefile(2), "\\t", false, true);
@@ -44,8 +44,8 @@ public class MenuAction extends AbstractCyAction {
 		rstbl_edges.read_table(rstbl_nodes.maketesttablefile(3), "\\t", false, true);
 		
 		NetReadTSV1 netreadtsv = new NetReadTSV1(rSB);
-		netreadtsv.make_node_table(new_cynet, rstbl_nodes);
-		netreadtsv.make_edge_table(new_cynet, rstbl_edges);
+		netreadtsv.make_node_table(cynet, rstbl_nodes);
+		netreadtsv.make_edge_table(cynet, rstbl_edges);
 		
 	}
 }
