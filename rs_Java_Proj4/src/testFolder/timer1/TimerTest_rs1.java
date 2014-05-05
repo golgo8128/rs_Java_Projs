@@ -45,9 +45,9 @@ public class TimerTest_rs1 extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		label.setText(sec + " sec");
 		if(sec % 2 == 0)
-			label.setBackground(Color.BLUE);
+			label.setBackground(Color.YELLOW);
 		else
-			label.setBackground(Color.CYAN);
+			label.setBackground(Color.GRAY);
 		
 		if (sec >= 10){
 			timer.stop();
