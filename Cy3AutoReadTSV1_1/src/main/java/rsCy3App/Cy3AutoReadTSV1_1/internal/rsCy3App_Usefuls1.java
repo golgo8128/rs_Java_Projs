@@ -12,6 +12,7 @@ import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.view.vizmap.VisualStyle;
 
 public class rsCy3App_Usefuls1 {
 
@@ -29,6 +30,21 @@ public class rsCy3App_Usefuls1 {
 		
 	}	
 
+	
+	public static HashSet<String> getVisualStyleNames(RegServiceBag1_4 rSB){
+		
+		Set<VisualStyle>vsSet = rSB.vmmServiceRef.getAllVisualStyles();	
+		HashSet<String> vsNameSet = new HashSet<String>();
+	
+		for(VisualStyle vs:vsSet){
+			vsNameSet.add(vs.getTitle());
+		}
+		
+		return vsNameSet;
+		
+	}		
+	
+	
 	public static CyNetworkView take_first_view(RegServiceBag1_4 rSB, CyNetwork net1){
 	
 		CyNetworkView[] netviews
