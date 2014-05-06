@@ -26,6 +26,8 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 
 	private static final SwingPoller1 instance = new SwingPoller1();
 	
+	private static final int sec_rythm = 3;
+	
 	private static Timer polltimer;
 	private static JLabel indic_label;
 	private static int secdbl_from_start;
@@ -54,7 +56,7 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 
 		getContentPane().add(mainPanel, BorderLayout.CENTER);		
 		
-		polltimer = new Timer(500 , this);		
+		polltimer = new Timer(sec_rythm*1000 , this);		
 		polltimer.setActionCommand("PollTimer");
 		secdbl_from_start = 0;
 		
@@ -78,8 +80,8 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 	
 	private void set_frame1(){
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 150, 100);
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setBounds(100, 50, 150, 100);
 		setTitle("AutoTSVR");
 		
 	}
@@ -110,16 +112,18 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 
 			polltimer.stop();
 			
-			indic_label.setText(String.format("Polling (%d sec.)", secdbl_from_start / 2));
-			
-			if(secdbl_from_start % 2 == 0)
-				indic_label.setBackground(Color.YELLOW);
-			else
-				indic_label.setBackground(Color.GRAY);
-			secdbl_from_start++;
-		
 			NewFileAutoRead1 newfileautoread = NewFileAutoRead1.getInstance(rSB);
-			newfileautoread.scan_and_read();
+			int num_new_net = newfileautoread.scan_and_read();
+			
+			indic_label.setText(String.format("Polling (%d sec.)", secdbl_from_start));
+			
+			if(num_new_net > 0)
+				indic_label.setBackground(Color.RED);
+			else if((secdbl_from_start / sec_rythm) % 2 ==0)
+				indic_label.setBackground(Color.LIGHT_GRAY);
+			else
+				indic_label.setBackground(Color.YELLOW);
+			secdbl_from_start += sec_rythm;			
 			
 			polltimer.start();
 			

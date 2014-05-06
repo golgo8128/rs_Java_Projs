@@ -20,7 +20,7 @@ public final class NewFileAutoRead1 {
 	private static NewFileAddedWatcher1_2 newfileaddedwatcher;
 	private static String[] tpn_path_split    = {".rs_Progs_data", "Cytoscape", "TPN", "attribs"};	
 	private static final String[] filnam_ends = {"_ok.txt", "_nodes.tsv", "_edges.tsv"}; // Must be in this order.
-	// *_ok.txt must be created at last step.
+	// *_ok.txt must be created at last step. Note that *_ok.txt may not be complete at the time of polling.
 	
 	private static RegServiceBag1_4 rSB = null;
 	
