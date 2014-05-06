@@ -34,29 +34,6 @@ public class MenuAction extends AbstractCyAction {
 		JOptionPane.showMessageDialog(null, "NetReadTSV test ...");
 		setName("NetTSVFile Auto On"); // This will change menu title.
 		
-		CyNetwork cynet = rSB.cyNetworkFactory.createNetwork();
-		cynet.getRow(cynet).set(CyNetwork.NAME, "Destroy me");		
-		rSB.cyNetworkManager.addNetwork(cynet);			
-		
-		CyNetworkView cynetview = rSB.networkViewFactory.createNetworkView(cynet);
-		rSB.networkViewManager.addNetworkView(cynetview);
-	
-		
-		RSTable1 rstbl_nodes = new RSTable1();
-		rstbl_nodes.read_table(rstbl_nodes.maketesttablefile(2), "\\t", false, true);
-
-		RSTable1 rstbl_edges = new RSTable1();
-		rstbl_edges.read_table(rstbl_nodes.maketesttablefile(3), "\\t", false, true);
-		
-		NetReadTSV1 netreadtsv = new NetReadTSV1(rSB);
-		netreadtsv.make_node_table(cynet, rstbl_nodes);
-		netreadtsv.make_edge_table(cynet, rstbl_edges);
-		
-		VizMap1_3_II vizmap = VizMap1_3_II.getInstance(rSB);
-		vizmap.apply_VStyle_I(cynet);
-		
-		cynetview.updateView();
-
 		SwingPoller1 swingpoller = SwingPoller1.getInstance(rSB);
 		swingpoller.turn_on();
 		
