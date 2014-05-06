@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 public class NewFileAddedWatcher1_2 {
 
-	private final String[] filnam_ends; // *_info.txt, *_nodes.tsv (First check), *_edges.tsv ; make *_info.txt at the end.
+	private final String[] filnam_ends; // ex. *_info.txt, *_nodes.tsv (First check), *_edges.tsv ; make *_info.txt at the end.
 	private final File check_folder;
 	private HashMap<File, Long>last_poll_time;
 	
