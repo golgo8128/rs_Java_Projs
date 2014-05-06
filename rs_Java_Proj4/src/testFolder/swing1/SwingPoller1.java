@@ -1,6 +1,6 @@
 // This is from http://www.javadrive.jp/tutorial/timer/index1.html
 
-package rsCy3App.Cy3AutoReadTSV1_1.internal;
+package testFolder.swing1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,7 +31,7 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 	private static int secdbl_from_start;
 	private static JButton quit_button;
 		
-	private static RegServiceBag1_4 rSB = null;
+	// private static RegServiceBag1_4 rSB = null;
 	
 	private SwingPoller1(){
 		
@@ -51,26 +51,31 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 		mainPanel.add(indic_label);
 		mainPanel.add(Box.createRigidArea(new Dimension(1,10)));
 		mainPanel.add(quit_button);
-
-		getContentPane().add(mainPanel, BorderLayout.CENTER);		
-		
-		polltimer = new Timer(500 , this);		
+				
+		polltimer = new Timer(500 , this);
 		polltimer.setActionCommand("PollTimer");
+		
+		getContentPane().add(mainPanel, BorderLayout.CENTER);
+
 		secdbl_from_start = 0;
 		
 	}; 	
-		
+	
+	/*
 	public static SwingPoller1 getInstance(RegServiceBag1_4 rSB){
 
 		SwingPoller1.rSB = rSB;
 		return SwingPoller1.instance;
-	}		
+	}
+	*/		
 	
 	public static SwingPoller1 getInstance(){
 		
+		/*
 		 if(rSB == null){ 
 			 throw new IllegalStateException("Service bag must be stated.");
 	     }
+	     */
 		 
 		 return SwingPoller1.instance;
 		
@@ -93,9 +98,7 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 	
 	public static void main(String[] args){
 		
-		RegServiceBag1_4 rSB = null;
-		
-		SwingPoller1 frame = SwingPoller1.getInstance(rSB);
+		SwingPoller1 frame = SwingPoller1.getInstance();
 		frame.turn_on();
 	}
 

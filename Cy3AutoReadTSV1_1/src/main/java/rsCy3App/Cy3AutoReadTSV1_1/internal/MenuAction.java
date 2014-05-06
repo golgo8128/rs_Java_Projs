@@ -57,7 +57,7 @@ public class MenuAction extends AbstractCyAction {
 		
 		cynetview.updateView();
 
-		SwingPoller1 swingpoller = SwingPoller1.getInstance();
+		SwingPoller1 swingpoller = SwingPoller1.getInstance(rSB);
 		swingpoller.turn_on();
 		
 	}
