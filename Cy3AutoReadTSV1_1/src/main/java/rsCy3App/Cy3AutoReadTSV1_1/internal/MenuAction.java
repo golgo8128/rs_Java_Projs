@@ -32,7 +32,7 @@ public class MenuAction extends AbstractCyAction {
 
 		// Write your own function here.
 		JOptionPane.showMessageDialog(null, "NetReadTSV test ...");
-		setName("Changed name title"); // This will change menu title.
+		setName("NetTSVFile Auto On"); // This will change menu title.
 		
 		CyNetwork cynet = rSB.cyNetworkFactory.createNetwork();
 		cynet.getRow(cynet).set(CyNetwork.NAME, "Destroy me");		
