@@ -118,7 +118,7 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 				indic_label.setBackground(Color.GRAY);
 			secdbl_from_start++;
 		
-			NewFileAutoRead1 newfileautoread = NewFileAutoRead1.getInstance();
+			NewFileAutoRead1 newfileautoread = NewFileAutoRead1.getInstance(rSB);
 			newfileautoread.scan_and_read();
 			
 			polltimer.start();
