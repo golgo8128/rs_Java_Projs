@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.HashSet;
 
 import org.cytoscape.model.CyNetwork;
+import org.cytoscape.view.layout.CyLayoutAlgorithm;
 import org.cytoscape.view.model.CyNetworkView;
+import org.cytoscape.work.TaskIterator;
 
 import rsCy3App.Cy3AutoReadTSV1_1.internal.rs_Java_Proj4_cp.general.datastruct.RSTable1;
 import rsCy3App.Cy3AutoReadTSV1_1.internal.rs_Java_Proj4_cp.general.fileproc.NewFileAddedWatcher1_2;
@@ -93,7 +95,20 @@ public final class NewFileAutoRead1 {
 			vizmap.apply_VStyle_I(newCynet);
 			
 			
-			cyNetView.updateView();				
+			// Layout
+			CyLayoutAlgorithm layout_force_directed = rSB.cyLayoutManager.getLayout("force-directed");
+			TaskIterator taskIterator = new TaskIterator();
+
+			taskIterator.append(
+				    layout_force_directed.createTaskIterator(
+				    		cyNetView,
+							layout_force_directed.getDefaultLayoutContext(),
+							CyLayoutAlgorithm.ALL_NODE_VIEWS, null));
+
+			rSB.taskManager.execute(taskIterator);			
+			
+			
+			// cyNetView.updateView();				
 
 		}
 			
