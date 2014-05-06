@@ -32,33 +32,36 @@ public class NewFileAddedWatcher1 {
 	
 	public HashSet<String> patmatch_files_wo_ends(){
 		// Returns valid file paths without ends specified by this.filnam_ends[1]
-		
-		String prim_end_pat = filnam_ends[0];
-		HashSet<File> prim_files = new HashSet<File>();
 
 		HashSet<String>valid_headmids_path = new HashSet<String>();
+
+		if(check_folder.exists()){
 		
-		for(File ifile: check_folder.listFiles())
-			if(ifile.getAbsolutePath().endsWith(prim_end_pat))
-				prim_files.add(ifile);
+			HashSet<File> prim_files = new HashSet<File>();
+			String prim_end_pat = filnam_ends[0];
 			
-		for(File prim_file: prim_files){
-			String target_filpath_headmid
-				= prim_file.getAbsolutePath().substring(0, prim_file.getAbsolutePath().length() - prim_end_pat.length());
-			boolean all_necessary_files_exist = true;
-			for(int i = 1;i < filnam_ends.length;i ++){ // i = 0 is used for primary file name.
-				File check_file = new File(target_filpath_headmid + filnam_ends[i]);
-				if(!check_file.exists() || !check_file.isFile()){
-					all_necessary_files_exist = false;
-					break;
+			for(File ifile: check_folder.listFiles())
+				if(ifile.getAbsolutePath().endsWith(prim_end_pat))
+					prim_files.add(ifile);
+				
+			for(File prim_file: prim_files){
+				String target_filpath_headmid
+					= prim_file.getAbsolutePath().substring(0, prim_file.getAbsolutePath().length() - prim_end_pat.length());
+				boolean all_necessary_files_exist = true;
+				for(int i = 1;i < filnam_ends.length;i ++){ // i = 0 is used for primary file name.
+					File check_file = new File(target_filpath_headmid + filnam_ends[i]);
+					if(!check_file.exists() || !check_file.isFile()){
+						all_necessary_files_exist = false;
+						break;
+					}
 				}
+				if(all_necessary_files_exist){
+					valid_headmids_path.add(target_filpath_headmid);
+				}
+				
 			}
-			if(all_necessary_files_exist){
-				valid_headmids_path.add(target_filpath_headmid);
-			}
-			
 		}
-		
+			
 		return valid_headmids_path;
 		
 	}
