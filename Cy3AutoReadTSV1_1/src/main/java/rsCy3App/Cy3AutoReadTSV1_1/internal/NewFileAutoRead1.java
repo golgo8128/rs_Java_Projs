@@ -9,15 +9,10 @@ import rsCy3App.Cy3AutoReadTSV1_1.internal.rs_Java_Proj4_cp.general.strproc.StrU
 
 public final class NewFileAutoRead1 {
 
-	private static final NewFileAutoRead1 instance = new NewFileAutoRead1();
+	private static NewFileAutoRead1 instance = null;
 	private static NewFileAddedWatcher1 newfileaddedwatcher;
 	private static String[] tpn_path_split = {".rs_Progs_data", "Cytoscape", "TPN", "attribs"};	
 	
-	
-	public static NewFileAutoRead1 getInstance(){
-		return NewFileAutoRead1.instance;
-	}
-
 	private NewFileAutoRead1(){
 		
 		String[] filnam_ends = {"_info.txt", "_nodes.tsv", "_edges.tsv"};
@@ -27,6 +22,17 @@ public final class NewFileAutoRead1 {
 		
 	}	
 
+	
+	public static synchronized NewFileAutoRead1 getInstance(){
+		
+		if(instance == null){
+			instance = new NewFileAutoRead1();
+		}
+		
+		return NewFileAutoRead1.instance;
+	}
+	
+	
 	public int scan_and_read(){
 	
 		HashSet<String> newfiles_wo_ends = newfileaddedwatcher.get_new_file_paths_wo_ends();
