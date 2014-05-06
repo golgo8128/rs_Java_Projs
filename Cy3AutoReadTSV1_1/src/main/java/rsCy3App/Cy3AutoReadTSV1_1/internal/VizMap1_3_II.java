@@ -75,7 +75,7 @@ public final class VizMap1_3_II {
 			
 		// Apply the visual style to a NetworkView
 		rSB.vmmServiceRef.setCurrentVisualStyle(vstyle);
-		vstyle.apply(netview);
+		vstyle.apply(netview); // Is this working?
 		// netview.updateView();	
 		
 	}
