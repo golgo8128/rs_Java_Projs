@@ -106,7 +106,9 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 			// dispose();
 			
 		} else if (e.getActionCommand().equals("PollTimer")){
-		
+
+			polltimer.stop();
+			
 			indic_label.setText(String.format("Polling (%d sec.)", secdbl_from_start / 2));
 			
 			if(secdbl_from_start % 2 == 0)
@@ -114,6 +116,12 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 			else
 				indic_label.setBackground(Color.GRAY);
 			secdbl_from_start++;
+		
+			NewFileAutoRead1 newfileautoread = NewFileAutoRead1.getInstance();
+			newfileautoread.scan_and_read();
+			
+			polltimer.start();
+			
 		}		
 	}
 }
