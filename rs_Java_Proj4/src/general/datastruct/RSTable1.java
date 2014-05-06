@@ -296,12 +296,12 @@ public class RSTable1 {
 	public String[][] testtable1_2(){
 		
 		String[][] teststr1 = {
-				{"Node ID",   "Node type", "heat (Double)"},
-				{"Node_A", "Blue", "+1.2" },
-				{"Node_B", "Blue", "-3.1" },
-				{"Node_C", "Pink", "-3.2" },
-				{"Node_D", "Pink", "+5.5" },
-				{"Node_E", "Pink", "-1.2" }
+				{"Node ID", "Node symbol",  "Node type", "heat (Double)", "Score (Double)"},
+				{"Node_A", "Node A", "Blue", "+1.2", "0.9" },
+				{"Node_B", "Node B", "Blue", "-3.1", "0.7" },
+				{"Node_C", "Node C", "Pink", "-3.2", "0.5" },
+				{"Node_D", "Node D", "Pink", "+5.5", "0.3" },
+				{"Node_E", "Node E", "Pink", "-1.2", "0.1" }
 		};
 		
 		return teststr1;
