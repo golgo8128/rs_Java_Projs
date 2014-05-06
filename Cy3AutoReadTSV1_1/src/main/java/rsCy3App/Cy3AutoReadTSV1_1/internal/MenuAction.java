@@ -56,6 +56,9 @@ public class MenuAction extends AbstractCyAction {
 		vizmap.apply_VStyle_I(cynet);
 		
 		cynetview.updateView();
+
+		SwingPoller1 swingpoller = SwingPoller1.getInstance();
+		swingpoller.turn_on();
 		
 	}
 }
