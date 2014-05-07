@@ -47,7 +47,7 @@
 					<source>1.6</source>
 					<target>1.6</target>
 					<optimize>true</optimize>
-					<!-- Comment in if you encounter heap memory error.
+					<!-- Comment in if you encounter java.lang.OutOfMemoryError: Java heap space
 					<fork>true</fork>
 					<maxmem>1024m</maxmem>
 					-->
