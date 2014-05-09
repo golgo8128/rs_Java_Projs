@@ -94,7 +94,7 @@ public final class SwingPoller1 extends JFrame implements ActionListener{
 	private void set_frame1(){
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 50, 200, 100);
+		setBounds(100, 50, 230, 100);
 		setTitle("Net TSV Import");
 		
 	}
