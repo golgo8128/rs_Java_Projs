@@ -2,8 +2,6 @@ package rsCy3App.Cy3NetTSVAutoImport1_2.internal;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JOptionPane;
-
 import org.cytoscape.application.swing.AbstractCyAction;
 
 
@@ -13,6 +11,11 @@ import org.cytoscape.application.swing.AbstractCyAction;
  */
 public class MenuAction extends AbstractCyAction {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private final RegServiceBag1_4 rSB;
 	
 	public MenuAction(RegServiceBag1_4 regServiceBag, final String menuTitle) {
@@ -30,8 +33,10 @@ public class MenuAction extends AbstractCyAction {
 		// JOptionPane.showMessageDialog(null, "NetReadTSV test ...");
 		setName("Cy3NetTSVAutoImport On"); // This will change menu title.
 		
-		SwingPoller1 swingpoller = SwingPoller1.getInstance(rSB);
+		SwingPoller1_2 swingpoller = SwingPoller1_2.getInstance(rSB);
 		swingpoller.turn_on();
+
+	
 		
 	}
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.work.TaskMonitor;
 
 import rsCy3App.Cy3NetTSVAutoImport1_2.internal.rs_Java_Proj4.general.datastruct.RSTable1;
 
@@ -13,6 +14,7 @@ import rsCy3App.Cy3NetTSVAutoImport1_2.internal.rs_Java_Proj4.general.datastruct
 public final class NetReadTSV1 {
 
 	private RegServiceBag1_4 rSB;
+	private TaskMonitor taskMonitor = null;
 	
 	public NetReadTSV1(RegServiceBag1_4 rSB){
 		
@@ -20,6 +22,12 @@ public final class NetReadTSV1 {
 		
 	}; 
 
+	public void set_taskMonitor(TaskMonitor taskMonitor){
+		
+		this.taskMonitor = taskMonitor;
+		
+	}
+	
 	public void make_node_table(CyNetwork myNet, RSTable1 rstbl){
 			
 		CyNode nodes[] = new CyNode[rstbl.get_nrows()];
