@@ -33,8 +33,10 @@ public class NewFileAutoRead_task1 extends AbstractTask {
 	public void run(TaskMonitor taskMonitor) throws Exception {
 		// TODO Auto-generated method stub
 
+		SwingPoller1_2.polltimer.stop();
 		this.taskMonitor = taskMonitor;
 		import_nettsv();
+		SwingPoller1_2.polltimer.start();
 		
 	}
 
@@ -96,8 +98,6 @@ public class NewFileAutoRead_task1 extends AbstractTask {
 			// cyNetView.updateView();				
 
 		}
-
-		SwingPoller1_2.polltimer.start();
 
 	}
 

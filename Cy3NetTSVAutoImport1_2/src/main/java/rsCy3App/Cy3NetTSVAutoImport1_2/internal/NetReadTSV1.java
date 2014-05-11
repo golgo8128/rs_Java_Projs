@@ -51,6 +51,8 @@ public final class NetReadTSV1 {
 				}
 			}			
 
+			this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
+			
 		}
 		
 		rSB.eventHelper.flushPayloadEvents();
@@ -85,7 +87,9 @@ public final class NetReadTSV1 {
 										rstbl.get_elem_by_idx(i, 1)));
 					}
 				}
-			}			
+			}
+			
+			this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
 
 		}			
 	
