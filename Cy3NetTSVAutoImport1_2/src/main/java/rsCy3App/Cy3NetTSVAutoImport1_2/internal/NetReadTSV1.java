@@ -30,6 +30,9 @@ public final class NetReadTSV1 {
 	
 	public void make_node_table(CyNetwork myNet, RSTable1 rstbl){
 			
+		if(this.taskMonitor != null)
+			taskMonitor.setStatusMessage("Adding nodes to the network ...");	
+		
 		CyNode nodes[] = new CyNode[rstbl.get_nrows()];
 		for(int i = 0;i < rstbl.get_nrows();i ++){
 			nodes[i] = myNet.addNode();			
@@ -51,7 +54,8 @@ public final class NetReadTSV1 {
 				}
 			}			
 
-			this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
+			if(this.taskMonitor != null)
+				this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
 			
 		}
 		
@@ -62,6 +66,9 @@ public final class NetReadTSV1 {
 
 	public void make_edge_table(CyNetwork myNet, RSTable1 rstbl){
 		// The first two columns should be pair of nodes.
+	
+		if(this.taskMonitor != null)
+			taskMonitor.setStatusMessage("Adding edges to the network ...");			
 		
 		HashMap<String,CyNode> cynode_h = rsCy3App_Usefuls1.get_nodename_to_cynode_h(myNet);
 		
@@ -89,7 +96,8 @@ public final class NetReadTSV1 {
 				}
 			}
 			
-			this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
+			if(this.taskMonitor != null)
+				this.taskMonitor.setProgress(1.0*j / rstbl.get_ncols());
 
 		}			
 	

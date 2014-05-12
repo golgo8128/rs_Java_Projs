@@ -46,8 +46,10 @@ public class NewFileAutoRead_task1 extends AbstractTask {
 		SwingPoller1_2.polltimer.stop();	
 		SwingPoller1_2.indic_label.setBackground(Color.RED);
 		
+		taskMonitor.setTitle("Auto Reading of CyNetTSV File");
+		
 		for(String istr:newfiles_wo_ends){
-			System.out.println(istr);
+			// System.out.println(istr);
 
 			String bsname_wo_ends = (new File(istr)).getName();
 

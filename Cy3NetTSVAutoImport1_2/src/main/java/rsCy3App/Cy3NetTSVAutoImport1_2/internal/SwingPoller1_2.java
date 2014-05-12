@@ -32,8 +32,9 @@ public final class SwingPoller1_2 extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final SwingPoller1_2 instance = new SwingPoller1_2();
-		
+	private static SwingPoller1_2 instance = null;
+	public static RegServiceBag1_4 rSB     = null;
+	
 	public static Timer polltimer;
 	
 	private static JPanel mainPanel;
@@ -43,8 +44,6 @@ public final class SwingPoller1_2 extends JFrame implements ActionListener{
 	private static int secdbl_from_start;
 	private static final int sec_rythm = 3;
 	
-	public static RegServiceBag1_4 rSB = null;
-
 	public static NewFileAddedWatcher1_2 newfileaddedwatcher;
 	public static final String[] tpn_path_split = {".rs_Progs_data", "Cytoscape", "TPN", "attribs"};	
 	public static final String[] filnam_ends = {"_ok.txt", "_nodes.tsv", "_edges.tsv"}; // Must be in this order.
@@ -90,13 +89,20 @@ public final class SwingPoller1_2 extends JFrame implements ActionListener{
 		
 	}; 	
 		
-	public static SwingPoller1_2 getInstance(RegServiceBag1_4 rSB){
+	public static synchronized SwingPoller1_2 getInstance(RegServiceBag1_4 rSB){
 
-		SwingPoller1_2.rSB = rSB;
+		if(SwingPoller1_2.instance == null){
+			SwingPoller1_2.rSB = rSB;
+			SwingPoller1_2.instance = new SwingPoller1_2();
+		} else if(!SwingPoller1_2.rSB.equals(rSB)){
+			throw new IllegalStateException("Inconsistent service bag given.");
+		}
+
 		return SwingPoller1_2.instance;
+	
 	}		
 	
-	public static SwingPoller1_2 getInstance(){
+	public static synchronized SwingPoller1_2 getInstance(){
 		
 		 if(rSB == null){ 
 			 throw new IllegalStateException("Service bag must be stated.");
@@ -109,7 +115,7 @@ public final class SwingPoller1_2 extends JFrame implements ActionListener{
 	private void set_frame1(){
 		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 50, 200, 120);
+		setBounds(100, 50, 200, 110);
 		setTitle("Net TSV Import");
 		
 	}
