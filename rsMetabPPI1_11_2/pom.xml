@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>rsCy3App</groupId>
 	<artifactId>rsMetabPPI1_11_2</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-EvalOnly</version>
 
 			<name>${bundle.symbolicName}</name>
 	

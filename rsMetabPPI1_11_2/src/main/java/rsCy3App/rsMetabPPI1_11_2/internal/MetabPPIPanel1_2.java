@@ -45,12 +45,13 @@ public class MetabPPIPanel1_2 extends JPanel implements CytoPanelComponent, Acti
 		  "HMDB00094\n" +
 		  "HMDB00223\n" +
 		  "\n\n" + 
-		  "!!WARNING!!\n" +
-		  "Use this App for the manuscript review purpose only. " +
-		  "Do not use this App for researches. Do not distribute this App. " +
-		  "Please delete this App after the manuscrip review is finished " +
+		  "!! WARNING !!\n" +
+		  "- Use this App for the manuscript review purpose only.\n" +
+		  "- Do not use this App for researches.\n" +
+		  "- Do not distribute this App.\n" +
+		  "- Please delete this App after the manuscrip review is finished " +
 		  "in order to avoid KEGG license issues.\n" +
-		  "Thank you!";
+		  "\nThank you!\n";
 	
 	
 	private final RegServiceBag1_4 rSB;
