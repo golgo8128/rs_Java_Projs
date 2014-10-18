@@ -24,29 +24,33 @@ public class AddHygecdf_pvals1 {
 		List<CyNode>neighb_netsub = netsub.getNeighborList(protnode, CyEdge.Type.ANY);
 
 		CyTable nodetable_netall = netall.getDefaultNodeTable();
-		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
 		
 		int num_enz_netall = 0;
 		int num_enz_netsub = 0;
+		int num_enz_target_netall = 0;
+		int num_enz_target_netsub = 0;
 		
-		for(CyNode node: netall.getNodeList()){
+		for(CyNode node: neighb_netall){
+			
+			Boolean intrx_bit = netall.containsEdge(protnode, node);
 			
 			String nodetype = nodetable_netall.getRow(node).get("Node type", String.class);
 			if(nodetype.equals("Enzyme")){
 				num_enz_netall ++;
-				if(netsub.containsNode(node)){
+				num_enz_target_netall += intrx_bit.compareTo(true);
+				if(neighb_netsub.contains(node)){
 					num_enz_netsub ++;
+					num_enz_target_netsub += intrx_bit.compareTo(true);
 				}
 			}
-
+			
 		}
 		
 		HypergeometricDistribution hyged =
 				new HypergeometricDistribution(num_enz_netall,
-						num_target_netall, num_enz_netsub);
+						num_enz_target_netall, num_enz_netsub);
 		
-		System.out.println(hyged.upperCumulativeProbability(5));
-
+		return(hyged.upperCumulativeProbability(num_enz_target_netsub));
 		
 	}	
 	
