@@ -7,6 +7,7 @@ import javax.swing.JButton;
 
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
+import org.cytoscape.model.CyTable;
 import org.cytoscape.view.layout.CyLayoutAlgorithm;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.AbstractTask;
@@ -48,6 +49,22 @@ public class Generate_sub_MetabPPI_task1_4 extends AbstractTask {
 		NewNetSelNodesAllEdges1_2 newNetSel = new NewNetSelNodesAllEdges1_2(rSB);
 		CyNetworkView newnetview = newNetSel.CreateNewNetandView(metabPPI_cynet, selnode_set, SubnetName);
 
+		taskMonitor.setStatusMessage("Calculating p-values for proteins ...");
+		
+		CyTable nodetable_netsub = newnetview.getModel().getDefaultNodeTable();
+		
+		AddHygecdf_pvals1 addhygepvals = new AddHygecdf_pvals1(rSB);
+		for(CyNode inode: newnetview.getModel().getNodeList()){
+			String nodetype = nodetable_netsub.getRow(inode.getSUID()).get("Node type", String.class);
+			// System.out.printf("%s: %s\n", inode.toString(), nodetype);
+				if(nodetype.equals("Protein")){
+					System.out.printf("%s: %f\n", inode.toString(),
+						addhygepvals.calc_hygecdf_pval(inode, metabPPI_cynet, newnetview.getModel()));
+			}
+		}
+		
+		taskMonitor.setStatusMessage("Creating network layout ...");	
+		
 		CyLayoutAlgorithm layout_grid = rSB.cyLayoutManager.getLayout("grid");			
 		CyLayoutAlgorithm layout_force_directed = rSB.cyLayoutManager.getLayout("force-directed");		
 

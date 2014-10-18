@@ -34,7 +34,7 @@ public class AddHygecdf_pvals1 {
 			
 			Boolean intrx_bit = netall.containsEdge(protnode, node);
 			
-			String nodetype = nodetable_netall.getRow(node).get("Node type", String.class);
+			String nodetype = nodetable_netall.getRow(node.getSUID()).get("Node type", String.class);
 			if(nodetype.equals("Enzyme")){
 				num_enz_netall ++;
 				num_enz_target_netall += intrx_bit.compareTo(true);
