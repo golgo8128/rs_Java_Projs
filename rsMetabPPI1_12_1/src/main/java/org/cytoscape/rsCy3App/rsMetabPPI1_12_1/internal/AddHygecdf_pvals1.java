@@ -12,14 +12,38 @@ import org.cytoscape.model.CyTable;
 public class AddHygecdf_pvals1 {
 
 	private RegServiceBag1_4 rSB;
+	private CyNetwork netall;
+	private CyNetwork netsub;
+	private int num_enz_netall = 0;
+	private int num_enz_netsub = 0;
 	
-	public AddHygecdf_pvals1(RegServiceBag1_4 regServiceBag){	
+	public AddHygecdf_pvals1(RegServiceBag1_4 regServiceBag, 
+			CyNetwork netall, CyNetwork netsub){	
 	
-		this.rSB   = regServiceBag;
+		this.rSB    = regServiceBag;
+		this.netall = netall;
+		this.netsub = netsub;
+		
+		CyTable nodetable_netall = netall.getDefaultNodeTable();
+		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
+		
+		for(CyNode node_netall: netall.getNodeList()){
+			String nodetype = nodetable_netall.getRow(node_netall.getSUID()).get("Node type", String.class);
+			if(nodetype.equals("Enzyme")){
+				num_enz_netall ++;
+			}
+		}
+		
+		for(CyNode node_netsub: netsub.getNodeList()){
+			String nodetype = nodetable_netsub.getRow(node_netsub.getSUID()).get("Node type", String.class);
+			if(nodetype.equals("Enzyme")){
+				num_enz_netsub ++;
+			}
+		}	
+		
 	}
 	
-	public double calc_hygecdf_pval(CyNode protnode_netsub,
-			CyNetwork netall, CyNetwork netsub){
+	public double calc_hygecdf_pval(CyNode protnode_netsub){
 		
 		HashMap<String,CyNode> nodename2cynode_netall_h = rsCy3App_Usefuls1.get_nodename_to_cynode_h(netall);		
 		HashMap<String,CyNode> nodename2cynode_netsub_h = rsCy3App_Usefuls1.get_nodename_to_cynode_h(netsub);		
@@ -38,32 +62,22 @@ public class AddHygecdf_pvals1 {
 		List<CyNode>neighb_netall = netall.getNeighborList(protnode_netall, CyEdge.Type.ANY);
 		List<CyNode>neighb_netsub = netsub.getNeighborList(protnode_netsub, CyEdge.Type.ANY);
 		
-		int num_enz_netall = 0;
-		int num_enz_netsub = 0;
 		int num_enz_target_netall = 0;
 		int num_enz_target_netsub = 0;
 		
 		for(CyNode node_netall: neighb_netall){
 
-			String nodename = nodetable_netall.getRow(node_netall.getSUID()).get(CyNetwork.NAME, String.class);
-			Boolean intrx_bit = netall.containsEdge(protnode_netall, node_netall);
-			
+			String nodename = nodetable_netall.getRow(node_netall.getSUID()).get(CyNetwork.NAME, String.class);			
 			String nodetype = nodetable_netall.getRow(node_netall.getSUID()).get("Node type", String.class);
+			
 			if(nodetype.equals("Enzyme")){
-				num_enz_netall ++;
-				if(intrx_bit){
-					num_enz_target_netall += 1;
-				}
+				num_enz_target_netall ++;
 				
 				CyNode cynode_in_netsub = nodename2cynode_netsub_h.get(nodename);
 				if(neighb_netsub.contains(cynode_in_netsub)){
-					num_enz_netsub ++;
-					if(intrx_bit){
-						num_enz_target_netsub += 1;
-					}
+					num_enz_target_netsub += 1;
 				}
 			}
-			
 		}
 		
 		System.out.printf("%s: %d %d %d\n", protnode_netsub.toString(), 
@@ -75,6 +89,6 @@ public class AddHygecdf_pvals1 {
 		
 		return(hyged.upperCumulativeProbability(num_enz_target_netsub));
 		
-	}	
+	}
 	
 }

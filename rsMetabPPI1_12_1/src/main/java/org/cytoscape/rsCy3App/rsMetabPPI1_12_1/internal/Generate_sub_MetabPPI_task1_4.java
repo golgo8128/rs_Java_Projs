@@ -53,14 +53,13 @@ public class Generate_sub_MetabPPI_task1_4 extends AbstractTask {
 		
 		CyTable nodetable_netsub = newnetview.getModel().getDefaultNodeTable();
 		
-		AddHygecdf_pvals1 addhygepvals = new AddHygecdf_pvals1(rSB);
+		AddHygecdf_pvals1 addhygepvals = new AddHygecdf_pvals1(rSB, metabPPI_cynet, newnetview.getModel());
 		for(CyNode inode: newnetview.getModel().getNodeList()){
 			String nodetype = nodetable_netsub.getRow(inode.getSUID()).get("Node type", String.class);
 			// String nodename = nodetable_netsub.getRow(inode.getSUID()).get(CyNetwork.NAME, String.class);
 			// System.out.printf("%s: %s\n", nodename, nodetype);
 			if(nodetype.equals("Protein")){
-				System.out.printf("%s: %f\n", inode.toString(),
-						addhygepvals.calc_hygecdf_pval(inode, metabPPI_cynet, newnetview.getModel()));
+				System.out.printf("%s: %f\n", inode.toString(), addhygepvals.calc_hygecdf_pval(inode));
 			}
 		}
 		
