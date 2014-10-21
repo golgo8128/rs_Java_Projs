@@ -55,10 +55,7 @@ public class AddHygecdf_pvals1 {
 				nodetable_netsub.getRow(protnode_netsub.getSUID()).get(CyNetwork.NAME, String.class);
 		
 		CyNode protnode_netall = nodename2cynode_netall_h.get(protnodename);
-		
-		System.out.printf("%s: %s %s\n", protnodename, 
-						  protnode_netall.toString(), protnode_netsub.toString());
-		
+				
 		List<CyNode>neighb_netall = netall.getNeighborList(protnode_netall, CyEdge.Type.ANY);
 		List<CyNode>neighb_netsub = netsub.getNeighborList(protnode_netsub, CyEdge.Type.ANY);
 		
@@ -80,8 +77,9 @@ public class AddHygecdf_pvals1 {
 			}
 		}
 		
-		System.out.printf("%s: %d %d %d\n", protnode_netsub.toString(), 
-						  num_enz_netall, num_enz_target_netall, num_enz_netsub);
+		System.out.printf("%s: %d %d %d %d\n", protnodename, 
+						  num_enz_netall, num_enz_target_netall,
+						  num_enz_netsub, num_enz_target_netsub);
 		
 		HypergeometricDistribution hyged =
 				new HypergeometricDistribution(num_enz_netall,
