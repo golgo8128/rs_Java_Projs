@@ -50,9 +50,7 @@ public class Generate_sub_MetabPPI_task1_4 extends AbstractTask {
 		CyNetworkView newnetview = newNetSel.CreateNewNetandView(metabPPI_cynet, selnode_set, SubnetName);
 
 		taskMonitor.setStatusMessage("Calculating p-values for proteins ...");
-		
-		CyTable nodetable_netsub = newnetview.getModel().getDefaultNodeTable();
-		
+				
 		AddHygecdf_pvals1 addhygepvals = new AddHygecdf_pvals1(rSB, metabPPI_cynet, newnetview.getModel());
 		addhygepvals.write_hygecdf_pvals();
 		

@@ -47,15 +47,20 @@ public class AddHygecdf_pvals1 {
 		
 		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
 		
+		nodetable_netsub.createColumn("Prot2Enz p-val", Double.class, true);
+		nodetable_netsub.createColumn("Prot2Enz BH p-val", Double.class, true);				
+		
 		for(CyNode inode: netsub.getNodeList()){
 			String nodetype = nodetable_netsub.getRow(inode.getSUID()).get("Node type", String.class);
 			// String nodename = nodetable_netsub.getRow(inode.getSUID()).get(CyNetwork.NAME, String.class);
 			// System.out.printf("%s: %s\n", nodename, nodetype);
-			if(nodetype.equals("Protein")){
-				System.out.printf("%s: %f\n", inode.toString(), calc_hygecdf_pval(inode));
+			if(nodetype.equals("Protein")){		
+				double pval = calc_hygecdf_pval(inode);
+				nodetable_netsub.getRow(inode.getSUID()).set("Prot2Enz p-val", pval);
+				System.out.printf("%s: %f\n", inode.toString(), pval);
 			}
-		}
-		
+		}		
+
 	}
 	
 	public double calc_hygecdf_pval(CyNode protnode_netsub){
