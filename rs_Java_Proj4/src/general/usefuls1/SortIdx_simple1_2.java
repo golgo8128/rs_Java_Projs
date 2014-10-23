@@ -26,6 +26,18 @@ public class SortIdx_simple1_2 {
 				
 	}
 	
+	public int[] getSortIdx_raw(){
+		
+		int[] oidx = new int[ivalues.length];
+		
+		for(int i = 0;i < ivalues.length;i ++){
+			oidx[i] = (int)(indices[i]);
+		}
+		
+		return oidx;
+		
+	}
+	
 	
 	public int[] getSortIdx(){
 				

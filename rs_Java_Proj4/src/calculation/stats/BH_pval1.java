@@ -10,9 +10,30 @@ public class BH_pval1 {
 		
 		this.pvals = pvals;
 		
+		double[] obh_pvals = new double[pvals.length];
+		
+		for(int i = 0;i < pvals.length;i ++){
+			obh_pvals[i] = Double.NaN;
+		}
+		
 		SortIdx_simple1_2 sidx = new SortIdx_simple1_2(pvals);
 		
 		int[] rank = sidx.getRank();
+		
+		double[] p_div_rk = new double[pvals.length];
+		
+		for(int i = 0;i < pvals.length;i ++){
+			p_div_rk[i] = pvals[i] * rank[i] / pvals.length;
+		}
+		
+		SortIdx_simple1_2 p_div_rk_sidx = new SortIdx_simple1_2(p_div_rk);
+		int[] p_div_rk_sindices = p_div_rk_sidx.getSortIdx_raw();
+		
+		for(int i = 0;i < pvals.length;i ++){
+			int careidx = p_div_rk_sindices[i];
+			
+			
+		}
 		
 	}
 	
