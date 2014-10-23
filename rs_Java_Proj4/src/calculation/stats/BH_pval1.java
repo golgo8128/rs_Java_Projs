@@ -23,24 +23,24 @@ public class BH_pval1 {
 		SortIdx_simple1_2 sidx = new SortIdx_simple1_2(pvals);
 		
 		int[] sindices_raw = sidx.getSortIdx_raw();
-		int[] rank = sidx.getRank();
+		int[] rank = sidx.getRank_TieLower();
 		
-		double[] p_div_rk = new double[pvals.length];
+		double[] p_mlt_rk = new double[pvals.length];
 		
 		for(int i = 0;i < pvals.length;i ++){
-			p_div_rk[i] = pvals[i] * rank[i] / pvals.length;
+			p_mlt_rk[i] = pvals[i] / rank[i] * pvals.length;
 		}
 		
-		SortIdx_simple1_2 p_div_rk_sidx = new SortIdx_simple1_2(p_div_rk);
-		int[] p_div_rk_sindices = p_div_rk_sidx.getSortIdx_raw();
+		SortIdx_simple1_2 p_mlt_rk_sidx = new SortIdx_simple1_2(p_mlt_rk);
+		int[] p_mlt_rk_sindices = p_mlt_rk_sidx.getSortIdx_raw();
 		
 		
 		for(int i = 0;i < pvals.length;i ++){
-			int careidx = p_div_rk_sindices[i];
-			for(int j = 0;j < i;j ++){
+			int careidx = p_mlt_rk_sindices[i];
+			for(int j = 0;j <= i;j ++){
 				int caresub_idx = sindices_raw[j];
-				if(!Double.isNaN(obh_pvals[caresub_idx])){
-					obh_pvals[caresub_idx] = p_div_rk[careidx];
+				if(Double.isNaN(obh_pvals[caresub_idx])){
+					obh_pvals[caresub_idx] = p_mlt_rk[careidx];
 				}
 
 			}
