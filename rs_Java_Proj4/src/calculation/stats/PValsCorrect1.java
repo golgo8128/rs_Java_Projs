@@ -2,17 +2,17 @@ package calculation.stats;
 
 import general.usefuls1.SortIdx_simple1_2;
 
-public class BH_pval1 {
+public class PValsCorrect1 {
 
 	private double[] pvals;
 	
-	public BH_pval1(double[] pvals){
+	public PValsCorrect1(double[] pvals){
 		
 		this.pvals = pvals;
 		
 	}
 	
-	public double[] calc_bh_pvals(){
+	public double[] calc_BH_pvals(){
 	
 		double[] obh_pvals = new double[pvals.length];
 		
@@ -37,7 +37,7 @@ public class BH_pval1 {
 		
 		for(int i = 0;i < pvals.length;i ++){
 			int careidx = p_mlt_rk_sindices[i];
-			for(int j = 0;j <= i;j ++){
+			for(int j = 0;j < rank[careidx];j ++){
 				int caresub_idx = sindices_raw[j];
 				if(Double.isNaN(obh_pvals[caresub_idx])){
 					obh_pvals[caresub_idx] = p_mlt_rk[careidx];
@@ -54,11 +54,12 @@ public class BH_pval1 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		double[] pvalue_ex1 = { 0.3, 0.4, 0.5, 0.2, 0.4,  0.3, 0.1, 0.4, 0.9, 0.1 };
+		double[] pvalue_ex1 = { 0.3, 0.4, 0.5, 0.2, 0.4,  0.3, 0.1, 0.4, 0.9, 0.1,
+				                0.7, 0.4, 0.1, 0.3, 0.2,  0.2, 0.2, 0.2, 0.7, 0.7 };
 		
-		BH_pval1 bhp1 = new BH_pval1(pvalue_ex1);
+		PValsCorrect1 bhp1 = new PValsCorrect1(pvalue_ex1);
 		
-		double[] bh_pvalues1 = bhp1.calc_bh_pvals();
+		double[] bh_pvalues1 = bhp1.calc_BH_pvals();
 		
 		for(double pval: bh_pvalues1){
 			System.out.printf("%f\n", pval);
