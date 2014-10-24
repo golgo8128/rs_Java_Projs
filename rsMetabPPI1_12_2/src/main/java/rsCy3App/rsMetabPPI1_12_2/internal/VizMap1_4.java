@@ -114,6 +114,20 @@ public final class VizMap1_4 {
 
 		vstyle.addVisualMappingFunction(nodeColorMapping); 		
 
+		/* Node size mapping : Continuous */
+		
+		ContinuousMapping<Double, Double> nodeSizeMapping
+		= (ContinuousMapping<Double, Double>)rSB.vmfFactoryC
+		.createVisualMappingFunction("-log10 Prot2Enz BH p-val", Double.class, BasicVisualLexicon.NODE_SIZE);		
+
+		final BoundaryRangeValues<Double> bvns0 = new BoundaryRangeValues<Double>(  0.5d,   0.5d,   0.5d);
+		final BoundaryRangeValues<Double> bvns1 = new BoundaryRangeValues<Double>(100.0d, 100.0d, 100.0d);
+
+		nodeSizeMapping.addPoint(1.0d, bvns0);
+		nodeSizeMapping.addPoint(3.0d, bvns1);
+		vstyle.addVisualMappingFunction(nodeSizeMapping);		
+		
+		
 		
 		/* Node Border Color: Discrete
 		 * (based on node selection)
