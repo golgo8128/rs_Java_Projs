@@ -1,4 +1,4 @@
-package org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal;
+package rsCy3App.rsMetabPPI1_12_1.internal;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,8 +10,9 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyTable;
-import org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.strproc.SumUpUntilAvail1;
 import org.cytoscape.view.model.CyNetworkView;
+
+import rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.strproc.SumUpUntilAvail1;
 
 public class NewNetSelNodesAllEdges1_2 {
 

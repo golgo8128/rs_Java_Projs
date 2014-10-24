@@ -1,4 +1,4 @@
-package org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal;
+package rsCy3App.rsMetabPPI1_12_1.internal;
 
 import java.util.HashMap;
 

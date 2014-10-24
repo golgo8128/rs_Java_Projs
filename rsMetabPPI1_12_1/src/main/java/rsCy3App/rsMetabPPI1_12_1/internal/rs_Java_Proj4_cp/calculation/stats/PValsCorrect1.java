@@ -1,6 +1,6 @@
-package org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.calculation.stats;
+package rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.calculation.stats;
 
-import org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.usefuls1.SortIdx_simple1_2;
+import rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.usefuls1.SortIdx_simple1_2;
 
 public class PValsCorrect1 {
 

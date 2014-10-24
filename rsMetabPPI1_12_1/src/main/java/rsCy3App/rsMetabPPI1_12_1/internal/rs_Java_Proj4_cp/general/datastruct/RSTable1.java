@@ -1,4 +1,4 @@
-package org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.datastruct;
+package rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.datastruct;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.strproc.StrUtil1;
+import rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.strproc.StrUtil1;
 
 // import org.apache.commons.lang3.StringUtils;
 
