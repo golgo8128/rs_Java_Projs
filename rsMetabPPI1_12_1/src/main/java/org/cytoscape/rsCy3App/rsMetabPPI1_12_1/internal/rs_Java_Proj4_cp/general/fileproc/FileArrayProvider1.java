@@ -1,4 +1,4 @@
-package general.fileproc;
+package org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.fileproc;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

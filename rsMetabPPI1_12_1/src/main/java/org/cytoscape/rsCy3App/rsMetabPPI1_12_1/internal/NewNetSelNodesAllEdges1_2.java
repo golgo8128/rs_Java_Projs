@@ -10,7 +10,7 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyTable;
-import org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.general.strproc.SumUpUntilAvail1;
+import org.cytoscape.rsCy3App.rsMetabPPI1_12_1.internal.rs_Java_Proj4_cp.general.strproc.SumUpUntilAvail1;
 import org.cytoscape.view.model.CyNetworkView;
 
 public class NewNetSelNodesAllEdges1_2 {

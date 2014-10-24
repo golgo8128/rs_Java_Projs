@@ -20,4 +20,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>internal</name>
+			<type>2</type>
+			<location>/home/rsaito/rs_Progs/rs_Java/git/rs_Java_Projs/rsMetabPPI1_12_1/src/main/java/org/cytoscape/rsCy3App/rsMetabPPI1_12_1/internal</location>
+		</link>
+	</linkedResources>
 </projectDescription>
