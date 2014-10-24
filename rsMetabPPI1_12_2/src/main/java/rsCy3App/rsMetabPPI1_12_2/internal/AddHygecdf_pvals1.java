@@ -1,5 +1,6 @@
 package rsCy3App.rsMetabPPI1_12_2.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,8 @@ import org.cytoscape.model.CyEdge;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyTable;
+
+import rsCy3App.rsMetabPPI1_12_2.internal.rs_Java_Proj4_cp.calculation.stats.PValsCorrect1;
 
 public class AddHygecdf_pvals1 {
 
@@ -48,19 +51,42 @@ public class AddHygecdf_pvals1 {
 		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
 		
 		nodetable_netsub.createColumn("Prot2Enz p-val", Double.class, true);
-		nodetable_netsub.createColumn("Prot2Enz BH p-val", Double.class, true);				
+		nodetable_netsub.createColumn("Prot2Enz BH p-val", Double.class, true);
+		nodetable_netsub.createColumn("-log10 Prot2Enz BH p-val", Double.class, true);				
+		
+		List<CyNode> netsub_protlist  = new ArrayList<CyNode>();
+		List<Double> netsub_protpvals = new ArrayList<Double>();
 		
 		for(CyNode inode: netsub.getNodeList()){
 			String nodetype = nodetable_netsub.getRow(inode.getSUID()).get("Node type", String.class);
 			// String nodename = nodetable_netsub.getRow(inode.getSUID()).get(CyNetwork.NAME, String.class);
 			// System.out.printf("%s: %s\n", nodename, nodetype);
-			if(nodetype.equals("Protein")){		
+			if(nodetype.equals("Protein")){
+				netsub_protlist.add(inode);
 				double pval = calc_hygecdf_pval(inode);
-				nodetable_netsub.getRow(inode.getSUID()).set("Prot2Enz p-val", pval);
-				System.out.printf("%s: %f\n", inode.toString(), pval);
+				netsub_protpvals.add(pval);
 			}
 		}		
 
+		Double[] netsub_protpvals_tmp1 = netsub_protpvals.toArray(new Double[0]);
+		double[] netsub_protpvals_arr = new double[netsub_protpvals_tmp1.length];
+		for(int i = 0;i < netsub_protpvals_tmp1.length;i ++){
+			netsub_protpvals_arr[i] = (double)netsub_protpvals_tmp1[i];
+		}
+		
+		PValsCorrect1 bhp1 = new PValsCorrect1(netsub_protpvals_arr);
+		double[] bh_pvalues1 = bhp1.calc_BH_pvals();
+		
+		for(int i = 0;i < netsub_protpvals_arr.length;i ++){
+			CyNode prot    = netsub_protlist.get(i);
+			double pval    = netsub_protpvals_arr[i];
+			double pval_bh = bh_pvalues1[i];
+			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz p-val", pval);
+			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz BH p-val", pval_bh);
+			nodetable_netsub.getRow(prot.getSUID()).set("-log10 Prot2Enz BH p-val", -Math.log10(pval_bh));
+			System.out.printf("%s: %f\n", prot.toString(), pval);
+		}
+		
 	}
 	
 	public double calc_hygecdf_pval(CyNode protnode_netsub){
