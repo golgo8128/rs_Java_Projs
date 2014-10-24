@@ -78,7 +78,7 @@ stacked-node-layout
 */			
 		
 		taskMonitor.setStatusMessage("Visual style control ...");
-		VizMap1_3 metabPPI_vizmap        = VizMap1_3.getInstance(rSB);
+		VizMap1_4 metabPPI_vizmap        = VizMap1_4.getInstance(rSB);
 		metabPPI_vizmap.apply_VStyle_I(metabPPI_cynet);		
 		metabPPI_vizmap.apply_VStyle_I(newnetview.getModel());	
 		

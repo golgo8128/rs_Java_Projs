@@ -15,37 +15,37 @@ import org.cytoscape.view.vizmap.mappings.DiscreteMapping;
 import org.cytoscape.view.vizmap.mappings.PassthroughMapping;
 
 // This class should be dealt as singleton.
-public final class VizMap1_3 {
+public final class VizMap1_4 {
 
 	
-	private static VizMap1_3 instance   = null;	
+	private static VizMap1_4 instance   = null;	
 	private static VisualStyle vstyle   = null;
 	private static RegServiceBag1_4 rSB = null;
 	
-	private VizMap1_3(RegServiceBag1_4 rSB){
+	private VizMap1_4(RegServiceBag1_4 rSB){
 
-		VizMap1_3.rSB = rSB;
+		VizMap1_4.rSB = rSB;
 		vstyle = rSB.visualStyleFactoryServiceRef
-				.createVisualStyle("MPPI VStyle #1");	// Creates a new VisualStyle object
+				.createVisualStyle("MPPI VStyle v1.2");	// Creates a new VisualStyle object
 		set_VStyle_I();
 		
 	}
 	
 	public static VisualStyle get_vstyle(){
-		return VizMap1_3.vstyle;
+		return VizMap1_4.vstyle;
 	}
 	
-	public static synchronized VizMap1_3 getInstance(RegServiceBag1_4 rSB){
+	public static synchronized VizMap1_4 getInstance(RegServiceBag1_4 rSB){
 		
 		if(instance == null){ 
-			instance = new VizMap1_3(rSB);
+			instance = new VizMap1_4(rSB);
 		}
 		
 		return instance;
 	}	
 	
 	
-	public static synchronized VizMap1_3 getInstance(){
+	public static synchronized VizMap1_4 getInstance(){
 		
 		 if(instance == null){ 
 			 throw new IllegalStateException("Service bag must be stated.");
@@ -57,7 +57,7 @@ public final class VizMap1_3 {
 
 	public void apply_VStyle_I(CyNetwork net1){
 
-		RegServiceBag1_4 rSB = VizMap1_3.rSB;
+		RegServiceBag1_4 rSB = VizMap1_4.rSB;
 		
 		// System.out.println("Called apply_VStyle_I");
 		
