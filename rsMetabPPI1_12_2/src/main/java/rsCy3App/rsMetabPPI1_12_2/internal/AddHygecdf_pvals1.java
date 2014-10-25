@@ -49,6 +49,7 @@ public class AddHygecdf_pvals1 {
 	public void write_hygecdf_pvals(){
 		
 		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
+		CyTable edgetable_netsub = netsub.getDefaultEdgeTable();
 		
 		nodetable_netsub.createColumn("Prot2Enz p-val", Double.class, true);
 		nodetable_netsub.createColumn("Prot2Enz BH p-val", Double.class, true);
@@ -84,7 +85,17 @@ public class AddHygecdf_pvals1 {
 			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz p-val", pval);
 			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz BH p-val", pval_bh);
 			nodetable_netsub.getRow(prot.getSUID()).set("-log10 Prot2Enz BH p-val", -Math.log10(pval_bh));
-			System.out.printf("%s: %f\n", prot.toString(), pval);
+			// System.out.printf("%s: %f\n", prot.toString(), pval);
+		}
+
+		for(int i = 0;i < netsub_protpvals_arr.length;i ++){		
+			CyNode prot    = netsub_protlist.get(i);
+			double pval_bh = bh_pvalues1[i];
+			if(pval_bh < 0.05){
+				for(CyEdge ppi: netsub.getAdjacentEdgeIterable(prot, CyEdge.Type.ANY)){
+					edgetable_netsub.getRow(ppi.getSUID()).set("interaction", "PPI (significant)");
+				}
+			}
 		}
 		
 	}
