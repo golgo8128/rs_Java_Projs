@@ -51,7 +51,7 @@ public class Generate_sub_MetabPPI_task1_4 extends AbstractTask {
 		taskMonitor.setStatusMessage("Calculating p-values for proteins ...");
 				
 		AddHygecdf_pvals1 addhygepvals = new AddHygecdf_pvals1(rSB, metabPPI_cynet, newnetview.getModel());
-		addhygepvals.write_hygecdf_pvals();
+		addhygepvals.write_hygecdf_pvals(0.05);
 		
 		taskMonitor.setStatusMessage("Creating network layout ...");	
 		

@@ -46,7 +46,7 @@ public class AddHygecdf_pvals1 {
 		
 	}
 	
-	public void write_hygecdf_pvals(){
+	public void write_hygecdf_pvals(double bh_pval_thres){
 		
 		CyTable nodetable_netsub = netsub.getDefaultNodeTable();	
 		CyTable edgetable_netsub = netsub.getDefaultEdgeTable();
@@ -77,6 +77,7 @@ public class AddHygecdf_pvals1 {
 		
 		PValsCorrect1 bhp1 = new PValsCorrect1(netsub_protpvals_arr);
 		double[] bh_pvalues1 = bhp1.calc_BH_pvals();
+		HashMap<CyNode, Double> cynode_to_bhpval_h = new HashMap<CyNode, Double>();
 		
 		for(int i = 0;i < netsub_protpvals_arr.length;i ++){
 			CyNode prot    = netsub_protlist.get(i);
@@ -85,19 +86,25 @@ public class AddHygecdf_pvals1 {
 			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz p-val", pval);
 			nodetable_netsub.getRow(prot.getSUID()).set("Prot2Enz BH p-val", pval_bh);
 			nodetable_netsub.getRow(prot.getSUID()).set("-log10 Prot2Enz BH p-val", -Math.log10(pval_bh));
+			cynode_to_bhpval_h.put(prot, pval_bh);
 			// System.out.printf("%s: %f\n", prot.toString(), pval);
 		}
 
 		for(int i = 0;i < netsub_protpvals_arr.length;i ++){		
 			CyNode prot    = netsub_protlist.get(i);
 			double pval_bh = bh_pvalues1[i];
-			if(pval_bh < 0.05){
+			if(pval_bh < bh_pval_thres){
 				for(CyEdge ppi: netsub.getAdjacentEdgeIterable(prot, CyEdge.Type.ANY)){
+					if((!cynode_to_bhpval_h.containsKey(ppi.getSource()) ||
+							cynode_to_bhpval_h.get(ppi.getSource()) < bh_pval_thres) &&
+  					   (!cynode_to_bhpval_h.containsKey(ppi.getTarget()) ||
+									cynode_to_bhpval_h.get(ppi.getTarget()) < bh_pval_thres)){					
 					edgetable_netsub.getRow(ppi.getSUID()).set("interaction", "PPI (significant)");
+					}
 				}
 			}
 		}
-		
+	
 	}
 	
 	public double calc_hygecdf_pval(CyNode protnode_netsub){
@@ -134,9 +141,9 @@ public class AddHygecdf_pvals1 {
 			}
 		}
 		
-		System.out.printf("%s: %d %d %d %d\n", protnodename, 
-						  num_enz_netall, num_enz_target_netall,
-						  num_enz_netsub, num_enz_target_netsub);
+		// System.out.printf("%s: %d %d %d %d\n", protnodename, 
+		//	 	 		     num_enz_netall, num_enz_target_netall,
+		//				     num_enz_netsub, num_enz_target_netsub);
 		
 		HypergeometricDistribution hyged =
 				new HypergeometricDistribution(num_enz_netall,

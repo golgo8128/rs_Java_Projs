@@ -162,8 +162,9 @@ public final class VizMap1_4 {
 				.createVisualMappingFunction("interaction", String.class, BasicVisualLexicon.EDGE_STROKE_UNSELECTED_PAINT);
 		edgeColorMapping.putMapValue("Metabolism", new Color(0xd0,0x00,0xd0));
 		edgeColorMapping.putMapValue("Metabolism (Curated)", new Color(0xd0,0x00,0x00));  
-		edgeColorMapping.putMapValue("PPI", new Color(0x00,0x66,0xff));         	
-
+		edgeColorMapping.putMapValue("PPI (significant)", new Color(0x00,0x66,0xff));         	
+		edgeColorMapping.putMapValue("PPI", new Color(0xA0,0xA0,0xA0));   
+		
 		vstyle.addVisualMappingFunction(edgeColorMapping); 		
 		
 		
