@@ -4,7 +4,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+//
 
 class MetabPPI_NodeTable_Info1_3 {
 
@@ -2600,7 +2600,7 @@ class MetabPPI_NodeTable_Info1_3 {
             { "9743", "ARHGAP32", "Protein", "hsa:9743", "Rho GTPase activating protein 32", "" },
             { "8985", "PLOD3", "Protein", "hsa:8985", "procollagen-lysine, 2-oxoglutarate 5-dioxygenase 3", "" },
             { "55361", "PI4K2A", "Enzyme", "hsa:55361", "phosphatidylinositol 4-kinase type 2 alpha", "" },
-            { "HMDB15043", "Cocaine", "Metabolite", "cpd:C01416", "(−)-cocaine;Benzoylmethylecgonine;beta-Cocain;Cocain;Kokain;Neurocaine", "" },
+            { "HMDB15043", "Cocaine", "Metabolite", "cpd:C01416", "(竏�-cocaine;Benzoylmethylecgonine;beta-Cocain;Cocain;Kokain;Neurocaine", "" },
             { "10915", "TCERG1", "Protein", "hsa:10915", "transcription elongation regulator 1", "" },
             { "HMDB00101", "Deoxyadenosine", "Metabolite", "cpd:C00559", "1-(6-Amino-9H-purin-9-yl)-1,2-dideoxy-b-D-Ribofuranose;1-(6-Amino-9H-purin-9-yl)-1,2-dideoxy-beta-D-Ribofuranose;1-(6-Amino-9H-purin-9-yl)-1,2-dideoxy-beta-delta-Ribofuranose;2'-Deoxyadenosine;2-Deoxyadenosine;9-(2-Deoxy-b-D-erythro-pentofuranosyl)-9H-Purin-6-amine;9-(2-Deoxy-b-D-erythro-pentofuranosyl)adenine;9-(2-Deoxy-b-D-ribofuranosyl)-9H-Purin-6-amine;9-(2-Deoxy-beta-D-erythro-pentofuranosyl)-9H-Purin-6-amine;9-(2-Deoxy-beta-D-erythro-pentofuranosyl)adenine;9-(2-Deoxy-beta-D-ribofuranosyl)-9H-Purin-6-amine;9-(2-Deoxy-beta-delta-erythro-pentofuranosyl)-9H-Purin-6-amine;9-(2-Deoxy-beta-delta-erythro-pentofuranosyl)adenine;9-(2-Deoxy-beta-delta-ribofuranosyl)-9H-Purin-6-amine;Adenine deoxyribonucleoside;Adenine deoxyribose;Adenine-9 2-deoxy-b-D-erythro-Pentofuranoside;Adenine-9 2-deoxy-beta-D-erythro-Pentofuranoside;Adenine-9 2-deoxy-beta-delta-erythro-Pentofuranoside;Adenyldeoxyriboside;DA;Deoxyadenosine;Desoxyadenosine", "Purine Metabolism" },
             { "8660", "IRS2", "Protein", "hsa:8660", "insulin receptor substrate 2", "" },
