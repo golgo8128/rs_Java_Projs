@@ -161,9 +161,9 @@ public final class VizMap1_4 {
 			= (DiscreteMapping<String, Paint>)rSB.vmfFactoryD
 				.createVisualMappingFunction("interaction", String.class, BasicVisualLexicon.EDGE_STROKE_UNSELECTED_PAINT);
 		edgeColorMapping.putMapValue("Metabolism", new Color(0xd0,0x00,0xd0));
-		edgeColorMapping.putMapValue("Metabolism (Curated)", new Color(0xd0,0x00,0x00));  
-		edgeColorMapping.putMapValue("PPI (significant)", new Color(0x00,0x66,0xff));  
-		edgeColorMapping.putMapValue("PPI (EnzEnz)", new Color(0x00,0x66,0xff));         	
+		edgeColorMapping.putMapValue("Metabolism (Curated)", new Color(0xd0,0x00,0x00));
+		edgeColorMapping.putMapValue("PPI (EnzEnz)", new Color(0x00,0xff,0xff));   
+		edgeColorMapping.putMapValue("PPI (significant)", new Color(0x00,0x66,0xff));      	
 		edgeColorMapping.putMapValue("PPI", new Color(0xCC,0xCC,0xCC));   
 		
 		vstyle.addVisualMappingFunction(edgeColorMapping); 		
