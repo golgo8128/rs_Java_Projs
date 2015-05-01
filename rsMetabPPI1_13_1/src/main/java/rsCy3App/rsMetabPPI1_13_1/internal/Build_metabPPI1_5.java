@@ -5,6 +5,9 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.view.model.CyNetworkView;
 import org.cytoscape.work.TaskMonitor;
 
+import rsCy3App.rsMetabPPI1_13_1.internal.dataEmbedded.MetabPPI_EdgeTable_Info1_3;
+import rsCy3App.rsMetabPPI1_13_1.internal.dataEmbedded.MetabPPI_NodeTable_Info1_3;
+
 
 // This class should be singleton.
 public final class Build_metabPPI1_5 {
