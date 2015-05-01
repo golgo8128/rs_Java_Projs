@@ -12,7 +12,7 @@ import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyTable;
 import org.cytoscape.view.model.CyNetworkView;
 
-import rsCy3App.rsMetabPPI1_12_2.internal.rs_Java_Proj4_cp.general.strproc.SumUpUntilAvail1;
+import rsCy3App.rsMetabPPI1_13_1.internal.rs_Java_Proj4_cp.general.strproc.SumUpUntilAvail1;
 
 public class NewNetSelNodesAllEdges1_2 {
 
