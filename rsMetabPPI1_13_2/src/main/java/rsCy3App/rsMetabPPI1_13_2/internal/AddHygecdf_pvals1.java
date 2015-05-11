@@ -10,7 +10,7 @@ import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyTable;
 
-import calculation.stats.PValsCorrect1;
+import rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.calculation.stats.PValsCorrect1;
 
 public class AddHygecdf_pvals1 {
 

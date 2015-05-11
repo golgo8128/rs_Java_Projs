@@ -1,9 +1,5 @@
 package rsCy3App.rsMetabPPI1_13_2.internal;
 
-import general.fileproc.FileArrayProvider1;
-import general.strproc.LineSplit1;
-import general.strproc.StrJoin1;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -27,6 +23,10 @@ import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.application.swing.CytoPanelName;
 import org.cytoscape.work.Task;
 import org.cytoscape.work.TaskIterator;
+
+import rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.fileproc.FileArrayProvider1;
+import rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.strproc.LineSplit1;
+import rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.strproc.StrJoin1;
 
 
 

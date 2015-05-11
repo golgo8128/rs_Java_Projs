@@ -1,6 +1,4 @@
-package general.datastruct;
-
-import general.strproc.StrUtil1;
+package rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.datastruct;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.strproc.StrUtil1;
 
 // import org.apache.commons.lang3.StringUtils;
 

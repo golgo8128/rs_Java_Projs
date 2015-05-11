@@ -1,28 +1,36 @@
-package general.fileproc;
+package rsCy3App.rsMetabPPI1_13_2.internal.rs_Java_Proj4_cp.general.fileproc;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
 
-public class NewFileAddedWatcher1_2 {
+public class NewFileAddedWatcher1 {
 
-	private final String[] filnam_ends; // ex. *_info.txt, *_nodes.tsv (First check), *_edges.tsv ; make *_info.txt at the end.
+	private final String[] filnam_ends; // *_ok.txt, *_nodes.tsv (First check), *_edges.tsv, 
 	private final File check_folder;
-	private HashMap<File, Long>last_poll_time;
 	
+	private HashSet<String> ignore_file_path_wo_ends;
 	
-	public NewFileAddedWatcher1_2(File check_folder, String[] filnam_ends){
+	public NewFileAddedWatcher1(File check_folder, String[] filnam_ends){
 	
-		this.check_folder   = check_folder;
-		this.filnam_ends    = filnam_ends;
-		this.last_poll_time = new HashMap<File, Long>(); // Primary file only.
-				
-		get_new_file_paths_wo_ends();
+		this.check_folder = check_folder;
+		this.filnam_ends  = filnam_ends;
+		
+		this.ignore_file_path_wo_ends = patmatch_files_wo_ends();
+		// Already existing files are ignored.
 		
 	}
 	
-	
 	public HashSet<String> get_new_file_paths_wo_ends(){
+	
+		HashSet<String> new_paths_wo_ends = new HashSet<String>(patmatch_files_wo_ends());
+		new_paths_wo_ends.removeAll(ignore_file_path_wo_ends);
+		this.ignore_file_path_wo_ends.addAll(new_paths_wo_ends);
+		
+		return new_paths_wo_ends;
+		
+	}
+	
+	public HashSet<String> patmatch_files_wo_ends(){
 		// Returns valid file paths without ends specified by this.filnam_ends[1]
 
 		HashSet<String>valid_headmids_path = new HashSet<String>();
@@ -32,11 +40,9 @@ public class NewFileAddedWatcher1_2 {
 			HashSet<File> prim_files = new HashSet<File>();
 			String prim_end_pat = filnam_ends[0];
 			
-			for(File ifile: check_folder.listFiles())			
-				if(ifile.getAbsolutePath().endsWith(prim_end_pat) && 
-						(!last_poll_time.containsKey(ifile) || ifile.lastModified() > last_poll_time.get(ifile)))
-					prim_files.add(ifile); // Only last modification time for primary file is checked.
-
+			for(File ifile: check_folder.listFiles())
+				if(ifile.getAbsolutePath().endsWith(prim_end_pat))
+					prim_files.add(ifile);
 				
 			for(File prim_file: prim_files){
 				String target_filpath_headmid
@@ -51,7 +57,6 @@ public class NewFileAddedWatcher1_2 {
 				}
 				if(all_necessary_files_exist){
 					valid_headmids_path.add(target_filpath_headmid);
-					last_poll_time.put(prim_file, prim_file.lastModified());
 				}
 				
 			}
@@ -63,9 +68,9 @@ public class NewFileAddedWatcher1_2 {
 	
 	public static void main(String[] args) {
 
-		String[] filnam_ends = {"_info.txt", "_nodes.tsv", "_edges.tsv" };
+		String[] filnam_ends = {"_OK.txt", "_nodes.tsv", "_edges.tsv" };
 		
-		NewFileAddedWatcher1_2 nfaw = new NewFileAddedWatcher1_2(new File("E:\\WinAppl2\\cygwin\\home\\rsaito\\TMP"),
+		NewFileAddedWatcher1 nfaw = new NewFileAddedWatcher1(new File("E:\\WinAppl2\\cygwin\\home\\rsaito\\TMP"),
 				filnam_ends);
 
 		for(int i = 0;i < 900;i ++){
