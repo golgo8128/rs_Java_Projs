@@ -10,10 +10,10 @@ public class MassSpec_simple1 {
 	public void output_to_file(DataOutputStream fw) throws IOException {
 
 		for(float mz : this.mzs) {
-				fw.writeFloat(mz);
+				fw.writeFloat(mz); // Big endian
 		}
 		for(int intsty : this.intsties) {
-				fw.writeInt(intsty);
+				fw.writeInt(intsty); // Big endian
 		}
 		
 	}

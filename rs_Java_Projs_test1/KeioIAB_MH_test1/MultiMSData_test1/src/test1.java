@@ -1,9 +1,5 @@
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-// import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -36,28 +32,16 @@ public class test1 {
 		ms2.mzs = mz2;
 		ms2.intsties = intsty2;
 		
-		MultiMS_simple1 multi_ms = new MultiMS_simple1();
+		MultiMS_simple1 multi_ms = new MultiMS_simple1(3);
 		
-		multi_ms.mspecs = new MassSpec_simple1[3];
-		multi_ms.mspecs[ 0 ] = ms0;
-		multi_ms.mspecs[ 1 ] = ms1;		
-		multi_ms.mspecs[ 2 ] = ms2;
-		multi_ms.mtimes = mts;
+		multi_ms.add_ms(mts[ 0 ], ms0);
+		multi_ms.add_ms(mts[ 1 ], ms1);
+		multi_ms.add_ms(mts[ 2 ], ms2);
 		
-		Path tmpdir = 
+		Path tmpfile = 
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rsMultiMSDat");
-		Path tmpfile = tmpdir.resolve("test1.rsmmsd");
-		
-		Files.createDirectories(tmpdir);
-		
-		DataOutputStream fw = new DataOutputStream(
-				new BufferedOutputStream(new FileOutputStream(tmpfile.toString())));
-		
-		ms0.output_to_file(fw);
-		ms1.output_to_file(fw);
-		
-		fw.close();
+					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
+		multi_ms.output_to_file(tmpfile);
 		
 		System.out.println(tmpfile);
 		
