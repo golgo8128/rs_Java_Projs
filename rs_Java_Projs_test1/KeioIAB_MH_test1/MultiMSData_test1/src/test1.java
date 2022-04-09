@@ -1,3 +1,5 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class test1 {
 
@@ -5,13 +7,13 @@ public class test1 {
 		// TODO Auto-generated method stub
 
 		float[] mz0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
-		int[] intsty0 = { 1, 2, 3, 4, 5 };
+		int[] intsty0 = { 1, 7, 3, 4, 5 };
 
-		float[] mz1 = { 1.2f, 2.3f, 3.4f, 4.5f, 5.6f, 6.5f };
-		int[] intsty1 = { 1, 2, 3, 4, 5, 7 };
+		float[] mz1 = { 1.2f, 2.3f, 3.4f, 4.5f, 5.6f, 6.5f, 6.7f };
+		int[] intsty1 = { 6, 2, 3, 4, 5, 7, 6 };
 
 		float[] mz2 = {  0.2f, 2.5f, 3.4f };
-		int[] intsty2 = { 1, 2, 4 };
+		int[] intsty2 = { 2, 3, 1 };
 		
 		float[] mts = { 0.1f, 0.2f, 0.3f };
 		
@@ -36,7 +38,11 @@ public class test1 {
 		multi_ms.mspecs[ 2 ] = ms2;
 		multi_ms.mtimes = mts;
 		
-		System.out.println("Hello!");
+		Path tmpfile = 
+				Paths.get(System.getenv("RS_TMP_DIR")).
+					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
+		
+		System.out.println(tmpfile);
 		
 	}
 
