@@ -18,6 +18,62 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 		
 	}
 	
+	
+	public int bytesize_mzs() 
+		throws IllegalArgumentException {
+
+		int oval;
+		
+		if(this.mzs.length > 0) {
+			T_mz mz1st = this.mzs[0];
+
+			if(Integer.class.isInstance(mz1st)){
+				oval = 4 * this.mzs.length;
+			} else if (Float.class.isInstance(mz1st)) {
+				oval = 4 * this.mzs.length;
+			} else if (Double.class.isInstance(mz1st)) {
+				oval = 8 * this.mzs.length;
+			} else {
+				throw new IllegalArgumentException("Illegal data type for m/z's.");
+			}
+		}
+		
+		else {
+			oval = 0;
+		}
+			
+		return(oval);
+		
+	}
+
+	public int bytesize_intsts() 
+			throws IllegalArgumentException {
+
+			int oval;
+			
+			if(this.intsts.length > 0) {
+				T_intst intsts1st = this.intsts[0];
+
+				if(Integer.class.isInstance(intsts1st)){
+					oval = 4 * this.intsts.length;
+				} else if (Float.class.isInstance(intsts1st)) {
+					oval = 4 * this.intsts.length;
+				} else if (Double.class.isInstance(intsts1st)) {
+					oval = 8 * this.intsts.length;
+				} else {
+					throw new IllegalArgumentException("Illegal data type for intensities.");
+				}
+			}
+			
+			else {
+				oval = 0;
+			}
+				
+			return(oval);
+			
+		}	
+	
+	
 	public void output_to_file_each_mz (
 			DataOutputStream fw,
 			T_mz val)

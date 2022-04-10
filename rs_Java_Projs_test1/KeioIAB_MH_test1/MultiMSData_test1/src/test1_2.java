@@ -18,27 +18,9 @@ public class test1_2 {
 		Integer[] intsts2 = { 2, 3, 1 };
 		
 		Float[] mts = { 0.1f, 0.2f, 0.3f };
-		
-		// MassSpec_simple1_2<Float, Integer> ms0 = new MassSpec_simple1_2<Float, Integer>();
-		// MassSpec_simple1_2<Float, Integer> ms1 = new MassSpec_simple1_2<Float, Integer>();
-		// MassSpec_simple1_2<Float, Integer> ms2 = new MassSpec_simple1_2<Float, Integer>();
-		
-		// ms0.mzs = mz0;
-		// ms0.intsts = intsty0;
 				
-		// ms1.mzs = mz1;
-		// ms1.intsts = intsty1;
-
-		// ms2.mzs = mz2;
-		// ms2.intsts = intsty2;
-		
 		MultiMS_simple1_2<Float, Float, Integer> multi_ms
 			= new MultiMS_simple1_2<Float, Float, Integer>();
-		
-		// multi_ms.add_ms(mts[ 0 ], ms0);
-		// multi_ms.add_ms(mts[ 1 ], ms1);
-		// multi_ms.add_ms(mts[ 2 ], ms2);
-		
 		
 		multi_ms.add_ms(mts[ 0 ], mzs0, intsts0);
 		multi_ms.add_ms(mts[ 1 ], mzs1, intsts1);		
@@ -49,7 +31,7 @@ public class test1_2 {
 					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
 		multi_ms.output_to_file(tmpfile);
 		
-		int tmp11[] = multi_ms.relpos_sizes_intsts();
+		int tmp11[] = multi_ms.sizes_intsts();
 		System.out.println(tmpfile);
 		
 	}
