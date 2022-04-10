@@ -52,4 +52,18 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 	}
 	
+	public int[] relpos_sizes_mspec() {
+		
+		int[] osizes = new int[ this.mtimes.size() ];
+		int p = 0;
+		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+			ms.intsts.length;
+			this.mspecs[0].mzs.BYTES;
+			
+			p ++;
+		}
+		
+		return(osizes);
+	}
+	
 }
