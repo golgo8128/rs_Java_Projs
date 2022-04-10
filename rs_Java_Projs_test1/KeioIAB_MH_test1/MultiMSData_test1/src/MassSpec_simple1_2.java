@@ -19,6 +19,13 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 	}
 	
 	
+	public int bytesize_ms() {
+		
+		return this.bytesize_mzs() + this.bytesize_intsts();
+		
+	}
+	
+	
 	public int bytesize_mzs() 
 		throws IllegalArgumentException {
 
