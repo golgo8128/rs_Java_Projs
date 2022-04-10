@@ -49,6 +49,7 @@ public class test1_2 {
 					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
 		multi_ms.output_to_file(tmpfile);
 		
+		int tmp11[] = multi_ms.relpos_sizes_intsts();
 		System.out.println(tmpfile);
 		
 	}
