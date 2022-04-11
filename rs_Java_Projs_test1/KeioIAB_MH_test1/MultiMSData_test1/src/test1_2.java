@@ -11,18 +11,18 @@ public class test1_2 {
 		// TODO Auto-generated method stub
 
 		Float[] mzs0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
-		Integer[] intsts0 = { 1, 7, 3, 4, 5 };
+		Long[] intsts0 = { 1L, 7L, 3L, 4L, 5L };
 
 		Float[] mzs1 = { 1.2f, 2.3f, 3.4f, 4.5f, 5.6f, 6.5f, 6.7f };
-		Integer[] intsts1 = { 6, 2, 3, 4, 5, 7, 6 };
+		Long[] intsts1 = { 6L, 2L, 3L, 4L, 5L, 7L, 6L };
 
 		Float[] mzs2 = {  0.2f, 2.5f, 3.4f };
-		Integer[] intsts2 = { 2, 3, 1 };
+		Long[] intsts2 = { 2L, 3L, 1L };
 		
 		Float[] mts = { 0.1f, 0.2f, 0.3f };
 				
-		MultiMS_simple1_2<Float, Float, Integer> multi_ms
-			= new MultiMS_simple1_2<Float, Float, Integer>();
+		MultiMS_simple1_2<Float, Float, Long> multi_ms
+			= new MultiMS_simple1_2<Float, Float, Long>();
 		
 		multi_ms.add_ms(mts[ 0 ], mzs0, intsts0);
 		multi_ms.add_ms(mts[ 1 ], mzs1, intsts1);		
