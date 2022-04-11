@@ -2,7 +2,7 @@
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class MassSpec_simple1_2 <T_mz, T_intst>{
+public class MassSpecrum_simple1_2 <T_mz, T_intst>{
 
 	public T_mz[] mzs;
 	public T_intst[] intsts;

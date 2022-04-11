@@ -18,19 +18,27 @@ public class test1_2 {
 
 		Float[] mzs2 = {  0.2f, 2.5f, 3.4f };
 		Long[] intsts2 = { 2L, 3L, 1L };
+
+		Float[] mzs3 = {  0.2f, 2.1f, 3.6f };
+		Long[] intsts3 = { 2L, 6L, 4L };
 		
-		Float[] mts = { 0.1f, 0.2f, 0.3f };
+		Float[] mzs4 = {  0.2f, 2.5f, 3.4f, 3.5f, 3.8f };
+		Long[] intsts4 = { 2L, 3L, 1L, 3L, 7L };
+		
+		Float[] mts = { 0.1f, 0.2f, 0.3f, 0.5f, 0.9f };
 				
-		MultiMS_simple1_2<Float, Float, Long> multi_ms
-			= new MultiMS_simple1_2<Float, Float, Long>();
+		RS_MassSpectra_simple1_2<Float, Float, Long> multi_ms
+			= new RS_MassSpectra_simple1_2<Float, Float, Long>();
 		
 		multi_ms.add_ms(mts[ 0 ], mzs0, intsts0);
 		multi_ms.add_ms(mts[ 1 ], mzs1, intsts1);		
 		multi_ms.add_ms(mts[ 2 ], mzs2, intsts2);
+		multi_ms.add_ms(mts[ 3 ], mzs3, intsts3);
+		multi_ms.add_ms(mts[ 4 ], mzs4, intsts4);
 		
 		Path tmpfile = 
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rsMultiMSDat").resolve("test2.rsmmsd");
+					resolve("rs_MSpectra").resolve("test3.rsmspra");
 		multi_ms.output_to_file(tmpfile, 256);
 				
 		int relposs_mzs_starts[] = multi_ms.relposs_mzs_starts();

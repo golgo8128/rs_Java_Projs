@@ -6,19 +6,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
+public class RS_MassSpectra_simple1_2 <T_mtime, T_mz, T_intst>{
 
 	public ArrayList<T_mtime> mtimes;
-	public ArrayList<MassSpec_simple1_2<T_mz, T_intst>> mspecs;
+	public ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>> mspecs;
 	
-	public MultiMS_simple1_2() {
+	public RS_MassSpectra_simple1_2() {
 		
 		this.mtimes   = new ArrayList<T_mtime>();
-		this.mspecs   = new ArrayList<MassSpec_simple1_2<T_mz, T_intst>>();
+		this.mspecs   = new ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>>();
 		
 	}	
 
-	public void add_ms(T_mtime imt, MassSpec_simple1_2<T_mz, T_intst> ms){
+	public void add_ms(T_mtime imt, MassSpecrum_simple1_2<T_mz, T_intst> ms){
 		
 		this.mtimes.add(imt);
 		this.mspecs.add(ms);
@@ -30,7 +30,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 		this.mtimes.add(imt);
 		
-		MassSpec_simple1_2<T_mz, T_intst> ms = new MassSpec_simple1_2<T_mz, T_intst>();
+		MassSpecrum_simple1_2<T_mz, T_intst> ms = new MassSpecrum_simple1_2<T_mz, T_intst>();
 		ms.mzs    = mzs;
 		ms.intsts = intsts;
 		this.mspecs.add(ms);
@@ -49,7 +49,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		fw.writeInt(this.mtimes.size());
 		this.write_header_to_file(fw, foffset_byte_size);
 		
-		for(MassSpec_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
+		for(MassSpecrum_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
 			mspec.output_to_file(fw);			
 		}
 		
@@ -206,7 +206,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		int[] osizes = new int[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_ms();	
 			p ++;
 		}
@@ -220,7 +220,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		int[] osizes = new int[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_mzs();	
 			p ++;
 		}
@@ -234,7 +234,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		int[] osizes = new int[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_intsts();			
 			p ++;
 		}
