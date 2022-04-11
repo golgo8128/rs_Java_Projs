@@ -30,8 +30,8 @@ public class test1_2 {
 		
 		Path tmpfile = 
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
-		multi_ms.output_to_file(tmpfile);
+					resolve("rsMultiMSDat").resolve("test2.rsmmsd");
+		multi_ms.output_to_file(tmpfile, 1024);
 				
 		int relposs_mzs_starts[] = multi_ms.relposs_mzs_starts();
 		int relposs_mzs_ends[] = multi_ms.relposs_mzs_ends();

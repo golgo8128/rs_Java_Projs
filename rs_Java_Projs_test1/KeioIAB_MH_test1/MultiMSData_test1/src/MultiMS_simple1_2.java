@@ -38,12 +38,16 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 	}
 	
 	
-	public void output_to_file(Path opath) throws IOException {
+	public void output_to_file(Path opath, int foffset_byte_size) throws IOException {
 		
 		Files.createDirectories(opath.getParent());
 		
 		DataOutputStream fw = new DataOutputStream(
 				new BufferedOutputStream(new FileOutputStream(opath.toString())));
+		
+		this.write_foffset(fw, foffset_byte_size);
+		this.write_header_to_file(fw, foffset_byte_size);
+		
 		
 		for(MassSpec_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
 			mspec.output_to_file(fw);			
@@ -53,11 +57,11 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 	}
 
-	public int get_header_bytes(int foffset)
+	public int get_header_bytes(int foffset_byte_size)
 			throws IllegalArgumentException {
 		
 		if(this.mtimes.size() == 0) {
-			return foffset;
+			return foffset_byte_size;
 		}
 		
 		T_mtime mt_1st = this.mtimes.get(0);
@@ -75,11 +79,65 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 			throw new IllegalArgumentException("Illegal data type for MT's.");
 		}
 			
-		return foffset + mtimes.size() * mtime_byte_size + mtimes.size()
+		return foffset_byte_size + mtimes.size() * mtime_byte_size + mtimes.size()
 			* Integer.BYTES * 4; // <--- Assumes that relative positions are expressed in the type int.
 
 	}
 	
+	public void write_foffset(DataOutputStream fw,
+			int foffset_byte_size) throws IOException {
+		
+		fw.writeInt(foffset_byte_size); // 4 bytes
+		fw.writeInt(0x01020304); // 4 bytes
+		for(int i = 0;i < foffset_byte_size - 8;i ++) {
+			fw.writeChar(0x00);
+		}
+		
+	}
+	
+	public void write_header_to_file(DataOutputStream fw, int foffset_byte_size)
+			throws IOException{
+		
+		int header_bytes = this.get_header_bytes(foffset_byte_size);
+		
+		
+		if(this.mtimes.size() == 0) {
+			return;
+		}
+		
+		T_mtime mt_1st = this.mtimes.get(0);
+		
+		for(T_mtime mt : this.mtimes) {
+			if(Integer.class.isInstance(mt_1st)){
+				fw.writeInt((int)mt);
+			} else if (Float.class.isInstance(mt_1st)) {
+				fw.writeFloat((float)mt);
+			} else if (Double.class.isInstance(mt_1st)) {
+				fw.writeDouble((double)mt);
+			} else if (Long.class.isInstance(mt_1st)) {
+				fw.writeLong((long)mt);
+			} else {
+				throw new IllegalArgumentException("Illegal data type for MT's.");
+			}
+		}
+		
+		for(int relpos : this.relposs_mzs_starts()) {
+			fw.writeInt(relpos + header_bytes);
+		}
+		
+		for(int csize : this.sizes_mzs()) {
+			fw.writeInt(csize);
+		}
+		
+		for(int relpos : this.relposs_intsts_starts()) {
+			fw.writeInt(relpos + header_bytes);
+		}
+		
+		for(int csize : this.sizes_intsts()) {
+			fw.writeInt(csize);
+		}
+		
+	}
 	
 	public int[] relposs_mzs_starts()
 			throws IllegalArgumentException {
