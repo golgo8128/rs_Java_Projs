@@ -2,6 +2,8 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class test1_2 {
 
@@ -30,8 +32,25 @@ public class test1_2 {
 				Paths.get(System.getenv("RS_TMP_DIR")).
 					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
 		multi_ms.output_to_file(tmpfile);
+				
+		int relposs_mzs_starts[] = multi_ms.relposs_mzs_starts();
+		int relposs_mzs_ends[] = multi_ms.relposs_mzs_ends();
+		int relposs_intsts_starts[] = multi_ms.relposs_intsts_starts();
+		int relposs_intsts_ends[] = multi_ms.relposs_intsts_ends();
 		
-		int tmp11[] = multi_ms.relposs_mzs_starts();
+		for(int i = 0; i < relposs_mzs_starts.length;i ++) {
+		
+			int[] relposs = new int[ 4 ];
+			relposs[0] = relposs_mzs_starts[i];
+			relposs[1] = relposs_mzs_ends[i];
+			relposs[2] = relposs_intsts_starts[i];
+			relposs[3] = relposs_intsts_ends[i];
+			
+			System.out.println(Arrays.stream(relposs)
+	        .mapToObj(String::valueOf)
+	        .collect(Collectors.joining(", ")));
+			
+		}
 		System.out.println(tmpfile);
 		
 	}

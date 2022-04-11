@@ -40,7 +40,10 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 				oval = 4 * this.mzs.length;
 			} else if (Double.class.isInstance(mz1st)) {
 				oval = 8 * this.mzs.length;
-			} else {
+			} else if (Long.class.isInstance(mz1st)) {
+				oval = 8 * this.mzs.length;
+			}
+			else {
 				throw new IllegalArgumentException("Illegal data type for m/z's.");
 			}
 		}
@@ -67,6 +70,8 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 					oval = 4 * this.intsts.length;
 				} else if (Double.class.isInstance(intsts1st)) {
 					oval = 8 * this.intsts.length;
+				} else if (Long.class.isInstance(intsts1st)) {
+					oval = 8 * this.intsts.length;
 				} else {
 					throw new IllegalArgumentException("Illegal data type for intensities.");
 				}
@@ -92,6 +97,8 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 			fw.writeFloat((float) val);
 		} else if(Double.class.isInstance(val)) {
 			fw.writeDouble((double) val);
+		} else if(Long.class.isInstance(val)) {
+			fw.writeLong((long) val);
 		} else {
 			throw new IllegalArgumentException("Writing to file failed.");
 		}
@@ -109,6 +116,8 @@ public class MassSpec_simple1_2 <T_mz, T_intst>{
 			fw.writeFloat((float) val);
 		} else if(Double.class.isInstance(val)) {
 			fw.writeDouble((double) val);
+		} else if(Long.class.isInstance(val)) {
+			fw.writeLong((long) val);
 		} else {
 			throw new IllegalArgumentException("Writing to file failed.");
 		}
