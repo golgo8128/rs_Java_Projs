@@ -31,7 +31,7 @@ public class test1_2 {
 					resolve("rsMultiMSDat").resolve("test1.rsmmsd");
 		multi_ms.output_to_file(tmpfile);
 		
-		int tmp11[] = multi_ms.sizes_intsts();
+		int tmp11[] = multi_ms.relposs_mzs_starts();
 		System.out.println(tmpfile);
 		
 	}

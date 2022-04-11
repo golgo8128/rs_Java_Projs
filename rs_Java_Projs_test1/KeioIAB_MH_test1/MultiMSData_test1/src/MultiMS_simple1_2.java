@@ -53,14 +53,78 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 	}
 
-	// public int[] relpos_sizes()
-	//		throws IllegalArgumentException {
+	public int[] relposs_mzs_starts()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		
+		int[] ms_sizes = this.sizes_ms();
+		
+		relposs[ 0 ] = 0;
+		for(int i = 0; i < this.mtimes.size() - 1; i ++) {
+			relposs[ i + 1 ] = relposs[ i ] + ms_sizes[ i ];
+		}
+		
+		return(relposs);
+	}
 	
-		//int re
+	public int[] relposs_mzs_ends()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+
+		int[] relpos_mzs_starts = this.relposs_mzs_starts();
+		int[] mzs_sizes = this.sizes_mzs();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_mzs_starts[ i ] + mzs_sizes[ i ] - 1;
+		}
 		
+		return(relposs);
+	}
+	
+
+	public int[] relposs_intsts_starts()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		int[] relpos_mzs_ends = this.relposs_mzs_ends();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_mzs_ends[ i ] + 1;
+		}
 		
+		return(relposs);
+	}
+	
+	public int[] relposs_intsts_ends()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		int[] relpos_intsts_starts = this.relposs_intsts_starts();
+		int[] intsts_sizes = this.sizes_intsts();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_intsts_starts[ i ] + intsts_sizes[ i ] - 1;
+		}
 		
-	// }
+		return(relposs);
+		
+	}	
+
+	public int[] sizes_ms()
+			throws IllegalArgumentException {
+		
+		int[] osizes = new int[ this.mtimes.size() ];
+		int p = 0;
+		
+		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+			osizes[ p ] = ms.bytesize_ms();	
+			p ++;
+		}
+		
+		return(osizes);
+	}
 		
 	public int[] sizes_mzs()
 			throws IllegalArgumentException {
