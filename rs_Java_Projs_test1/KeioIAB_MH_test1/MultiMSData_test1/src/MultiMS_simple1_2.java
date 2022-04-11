@@ -46,8 +46,8 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 				new BufferedOutputStream(new FileOutputStream(opath.toString())));
 		
 		this.write_foffset(fw, foffset_byte_size);
+		fw.writeInt(this.mtimes.size());
 		this.write_header_to_file(fw, foffset_byte_size);
-		
 		
 		for(MassSpec_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
 			mspec.output_to_file(fw);			
@@ -79,8 +79,10 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 			throw new IllegalArgumentException("Illegal data type for MT's.");
 		}
 			
-		return foffset_byte_size + mtimes.size() * mtime_byte_size + mtimes.size()
-			* Integer.BYTES * 4; // <--- Assumes that relative positions are expressed in the type int.
+		return foffset_byte_size
+				+ 4 // <--- Number of spectra is represented by the type int.
+				+ mtimes.size() * mtime_byte_size
+				+ mtimes.size() * Integer.BYTES * 4; // <--- Assumes that relative positions are expressed in the type int.
 
 	}
 	
@@ -90,7 +92,7 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		fw.writeInt(foffset_byte_size); // 4 bytes
 		fw.writeInt(0x01020304); // 4 bytes
 		for(int i = 0;i < foffset_byte_size - 8;i ++) {
-			fw.writeChar(0x00);
+			fw.writeByte(0x00);
 		}
 		
 	}
