@@ -53,6 +53,34 @@ public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 	}
 
+	public int get_header_bytes(int foffset)
+			throws IllegalArgumentException {
+		
+		if(this.mtimes.size() == 0) {
+			return foffset;
+		}
+		
+		T_mtime mt_1st = this.mtimes.get(0);
+		int mtime_byte_size;
+		
+		if(Integer.class.isInstance(mt_1st)){
+			mtime_byte_size = 4;
+		} else if (Float.class.isInstance(mt_1st)) {
+			mtime_byte_size = 4;
+		} else if (Double.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else if (Long.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else {
+			throw new IllegalArgumentException("Illegal data type for MT's.");
+		}
+			
+		return foffset + mtimes.size() * mtime_byte_size + mtimes.size()
+			* Integer.BYTES * 4; // <--- Assumes that relative positions are expressed in the type int.
+
+	}
+	
+	
 	public int[] relposs_mzs_starts()
 			throws IllegalArgumentException {
 
