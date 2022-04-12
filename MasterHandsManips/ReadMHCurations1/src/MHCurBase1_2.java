@@ -49,6 +49,16 @@ public class MHCurBase1_2 {
 								String.valueOf(alnpkinfo.epeak.getMt())
 								)
 							);
+					
+					
+					// print("Generating electropherogram ...", csession.getName(), caln_peak.getAnnotation())
+				    ElectropherogramInfo chrom
+				    	= this.mh.getElectropherogram(alnpkinfo.sess.getId(), alnpkinfo.epeak_before_align.getId());
+				    // print("Generating electropherogram after alignment ...")
+				    ElectropherogramInfo aln_chrom
+				    	= this.mh.getElectropherogram(alnpkinfo.align.getId(), alnpkinfo.sess.getId(), alnpkinfo.epeak.getId());
+				    // print("Generating electropherogram done.")
+					
 								
 				}
 			}
@@ -60,6 +70,9 @@ public class MHCurBase1_2 {
 		
 	}
 
+
+	
+	
 	private void get_info(){
 		
 		this._set_session_id_peak_id_to_peak_h();
@@ -94,7 +107,8 @@ public class MHCurBase1_2 {
 					
 					if(!alnpkgrpannot_to_pkinfo_h.containsKey(caln_peak_grp.getAnnotation())) {
 						
-						AlnPeakInfo_simple1 align_sess = new AlnPeakInfo_simple1(caln_peak_grp, caln_peak);
+						AlnPeakInfo_simple1 align_sess
+							= new AlnPeakInfo_simple1(calign, csession, caln_peak_grp, caln_peak);
 						PeakInfo peak_before_align =
 							this.session_id_peak_id_to_peak_h
 								.get(csession.getId()).get(caln_peak.getId());
@@ -116,16 +130,7 @@ public class MHCurBase1_2 {
 		}
 			
 	}
-
-	// print("Generating electropherogram ...", csession.getName(), caln_peak.getAnnotation())
-    // ElectropherogramInfo chrom
-    	// = this.mh.getElectropherogram(csession.getId(), caln_peak.getId());
-    // print("Generating electropherogram after alignment ...")
-    // ElectropherogramInfo aln_chrom
-    	// = this.mh.getElectropherogram(calign.getId(), csession.getId(), caln_peak.getId());
-    // print("Generating electropherogram done.")
-	
-	
+		
 	
 	private void _set_session_id_peak_id_to_peak_h() {
 		

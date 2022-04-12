@@ -23,7 +23,8 @@ public class Ephe_to_MSpectra1 {
 		this.mt_mz_to_intsty
 			= new HashMap<Float, HashMap<Float, Integer>>();
 		
-		for(PeakInfo pk : sess.getAnnotationList()) {
+		
+		for(PeakInfo pk : sess.getPeakGroupList()) { // .getAnnotationList()) {
 			
 			ElectropherogramInfo ephe =
 					imh.getElectropherogram(sess.getId(), pk.getId());
