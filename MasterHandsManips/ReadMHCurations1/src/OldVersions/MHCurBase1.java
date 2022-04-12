@@ -1,3 +1,4 @@
+package OldVersions;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import AlnPeakInfo_simple1;
+import Ephe_to_MSpectra1;
 import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
@@ -18,7 +21,7 @@ public class MHCurBase1 {
 	public String mhfile;
 	public MasterHands mh;
 	private HashMap<Integer, HashMap<Integer, PeakInfo>> session_id_peak_id_to_peak_h;
-	private HashMap<String, HashMap<String, HashMap<String, AlignSession1>>> align_sess_pkgrpnam_h;
+	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	// private HashMap<String, HashMap<String, PeakGrp_simple1>> align_pkgrpnam_h;
 	
 	
@@ -44,14 +47,14 @@ public class MHCurBase1 {
 		ArrayList<AlignmentInfo> alist = mh.getAlignmentList();
 		
 		this.align_sess_pkgrpnam_h
-			= new HashMap<String, HashMap<String, HashMap<String, AlignSession1>>>();
+			= new HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>>();
 		// this.align_pkgrpnam_h
 		// 	= new HashMap<String, HashMap<String, PeakGrp_simple1>>();
 		
 		for(AlignmentInfo calign : alist) {
 			
 			this.align_sess_pkgrpnam_h.putIfAbsent(
-					calign.getName(), new HashMap<String, HashMap<String, AlignSession1>>());
+					calign.getName(), new HashMap<String, HashMap<String, AlnPeakInfo_simple1>>());
 			// this.align_pkgrpnam_h.putIfAbsent(
 			// 		calign.getName(), new HashMap<String, PeakGrp_simple1>());
 			
@@ -71,12 +74,12 @@ public class MHCurBase1 {
 					if(caln_peak == null) { continue; } // M.P ... check
 					
 					this.align_sess_pkgrpnam_h.get(calign.getName())
-						.putIfAbsent(csession.getName(), new HashMap<String, AlignSession1>());
+						.putIfAbsent(csession.getName(), new HashMap<String, AlnPeakInfo_simple1>());
 					
 					if(!this.align_sess_pkgrpnam_h.get(calign.getName())
 						.get(csession.getName()).containsKey(caln_peak_grp.getAnnotation())) {
 						
-						AlignSession1 align_sess = new AlignSession1(caln_peak_grp, caln_peak);
+						AlnPeakInfo_simple1 align_sess = new AlnPeakInfo_simple1(caln_peak_grp, caln_peak);
 						
 						/*
 						if(!this.align_pkgrpnam_h.get(calign.getName())
