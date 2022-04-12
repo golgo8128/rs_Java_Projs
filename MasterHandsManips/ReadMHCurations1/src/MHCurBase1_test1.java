@@ -18,7 +18,7 @@ public class MHCurBase1_test1 {
 					resolve("180426_TOF21_checkout").
 					resolve("180426_C_TOF21.mhs");
 
-		MHCurBase1 mhcurbase = new MHCurBase1(tmpmhfile.toString());
+		MHCurBase1_2 mhcurbase = new MHCurBase1_2(tmpmhfile.toString());
 		mhcurbase.mh.closeProject();
 		
 		

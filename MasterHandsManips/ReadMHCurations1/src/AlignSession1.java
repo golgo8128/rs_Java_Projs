@@ -6,5 +6,12 @@ public class AlignSession1 {
 	// public EachPeak_simple1 epeak;
 	public PeakInfo pkgrp;
 	public PeakInfo epeak;
+
+	AlignSession1(PeakInfo ipkgrp, PeakInfo iepeak){
+		
+		this.pkgrp = ipkgrp;
+		this.epeak = iepeak;
+		
+	}
 	
 }

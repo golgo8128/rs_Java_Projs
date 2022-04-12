@@ -13,7 +13,7 @@ import emon2.api.SessionInfo;
 import emon2.api.AlignmentInfo;
 import emon2.api.ElectropherogramInfo;
 
-public class MHCurBase1 {
+public class MHCurBase1_2 {
 
 	public String mhfile;
 	public MasterHands mh;
@@ -22,7 +22,7 @@ public class MHCurBase1 {
 	// private HashMap<String, HashMap<String, PeakGrp_simple1>> align_pkgrpnam_h;
 	
 	
-	MHCurBase1(String imhfile)
+	MHCurBase1_2(String imhfile)
 			throws EmonException, IOException {
 
 		System.out.println("##### MasterHands " + MasterHands.getVersionNumber() + " #####");
