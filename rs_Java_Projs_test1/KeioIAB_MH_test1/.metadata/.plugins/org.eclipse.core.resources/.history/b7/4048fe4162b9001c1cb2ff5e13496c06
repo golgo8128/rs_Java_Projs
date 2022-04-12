@@ -1,0 +1,241 @@
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
+public class MultiMS_simple1_2 <T_mtime, T_mz, T_intst>{
+
+	public ArrayList<T_mtime> mtimes;
+	public ArrayList<MassSpec_simple1_2<T_mz, T_intst>> mspecs;
+	
+	public MultiMS_simple1_2() {
+		
+		this.mtimes   = new ArrayList<T_mtime>();
+		this.mspecs   = new ArrayList<MassSpec_simple1_2<T_mz, T_intst>>();
+		
+	}	
+
+	public void add_ms(T_mtime imt, MassSpec_simple1_2<T_mz, T_intst> ms){
+		
+		this.mtimes.add(imt);
+		this.mspecs.add(ms);
+
+
+	}
+	
+	public void add_ms(T_mtime imt, T_mz[] mzs, T_intst[] intsts){
+		
+		this.mtimes.add(imt);
+		
+		MassSpec_simple1_2<T_mz, T_intst> ms = new MassSpec_simple1_2<T_mz, T_intst>();
+		ms.mzs    = mzs;
+		ms.intsts = intsts;
+		this.mspecs.add(ms);
+
+	}
+	
+	
+	public void output_to_file(Path opath) throws IOException {
+		
+		Files.createDirectories(opath.getParent());
+		
+		DataOutputStream fw = new DataOutputStream(
+				new BufferedOutputStream(new FileOutputStream(opath.toString())));
+		
+		for(MassSpec_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
+			mspec.output_to_file(fw);			
+		}
+		
+		fw.close();
+		
+	}
+
+	public int get_header_bytes(int foffset_byte_size)
+			throws IllegalArgumentException {
+		
+		if(this.mtimes.size() == 0) {
+			return foffset_byte_size;
+		}
+		
+		T_mtime mt_1st = this.mtimes.get(0);
+		int mtime_byte_size;
+		
+		if(Integer.class.isInstance(mt_1st)){
+			mtime_byte_size = 4;
+		} else if (Float.class.isInstance(mt_1st)) {
+			mtime_byte_size = 4;
+		} else if (Double.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else if (Long.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else {
+			throw new IllegalArgumentException("Illegal data type for MT's.");
+		}
+			
+		return foffset_byte_size + mtimes.size() * mtime_byte_size + mtimes.size()
+			* Integer.BYTES * 4; // <--- Assumes that relative positions are expressed in the type int.
+
+	}
+	
+	public void write_foffset(DataOutputStream fw,
+			int foffset_byte_size) throws IOException {
+		
+		fw.writeInt(foffset_byte_size); // 4 bytes
+		fw.writeInt(0x01020304); // 4 bytes
+		for(int i = 0;i < foffset_byte_size - 8;i ++) {
+			fw.writeChar(0);
+		}
+		
+	}
+	
+	public void write_header_to_file(DataOutputStream fw, int foffset_byte_size)
+			throws IOException{
+		
+		int header_bytes = this.get_header_bytes(foffset_byte_size);
+		
+		
+		if(this.mtimes.size() == 0) {
+			return;
+		}
+		
+		T_mtime mt_1st = this.mtimes.get(0);
+		
+		for(T_mtime mt : this.mtimes) {
+			if(Integer.class.isInstance(mt_1st)){
+				fw.writeInt((int)mt);
+			} else if (Float.class.isInstance(mt_1st)) {
+				fw.writeFloat((float)mt);
+			} else if (Double.class.isInstance(mt_1st)) {
+				fw.writeDouble((double)mt);
+			} else if (Long.class.isInstance(mt_1st)) {
+				fw.writeLong((long)mt);
+			} else {
+				throw new IllegalArgumentException("Illegal data type for MT's.");
+			}
+		}
+		
+		for(int relpos : this.relposs_mzs_starts()) {
+			fw.writeInt(relpos + header_bytes);
+		}
+		
+		for(int csize : this.sizes_mzs()) {
+			fw.writeInt(csize);
+		}
+		
+		for(int relpos : this.relposs_intsts_starts()) {
+			fw.writeInt(relpos + header_bytes);
+		}
+		
+		for(int csize : this.sizes_intsts()) {
+			fw.writeInt(csize);
+		}
+		
+	}
+	
+	public int[] relposs_mzs_starts()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		
+		int[] ms_sizes = this.sizes_ms();
+		
+		relposs[ 0 ] = 0;
+		for(int i = 0; i < this.mtimes.size() - 1; i ++) {
+			relposs[ i + 1 ] = relposs[ i ] + ms_sizes[ i ];
+		}
+		
+		return(relposs);
+	}
+	
+	public int[] relposs_mzs_ends()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+
+		int[] relpos_mzs_starts = this.relposs_mzs_starts();
+		int[] mzs_sizes = this.sizes_mzs();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_mzs_starts[ i ] + mzs_sizes[ i ] - 1;
+		}
+		
+		return(relposs);
+	}
+	
+
+	public int[] relposs_intsts_starts()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		int[] relpos_mzs_ends = this.relposs_mzs_ends();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_mzs_ends[ i ] + 1;
+		}
+		
+		return(relposs);
+	}
+	
+	public int[] relposs_intsts_ends()
+			throws IllegalArgumentException {
+
+		int[] relposs = new int[ this.mtimes.size() ];
+		int[] relpos_intsts_starts = this.relposs_intsts_starts();
+		int[] intsts_sizes = this.sizes_intsts();
+
+		for(int i = 0; i < this.mtimes.size(); i ++) {
+			relposs[ i ] = relpos_intsts_starts[ i ] + intsts_sizes[ i ] - 1;
+		}
+		
+		return(relposs);
+		
+	}	
+
+	public int[] sizes_ms()
+			throws IllegalArgumentException {
+		
+		int[] osizes = new int[ this.mtimes.size() ];
+		int p = 0;
+		
+		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+			osizes[ p ] = ms.bytesize_ms();	
+			p ++;
+		}
+		
+		return(osizes);
+	}
+		
+	public int[] sizes_mzs()
+			throws IllegalArgumentException {
+		
+		int[] osizes = new int[ this.mtimes.size() ];
+		int p = 0;
+		
+		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+			osizes[ p ] = ms.bytesize_mzs();	
+			p ++;
+		}
+		
+		return(osizes);
+	}
+	
+	public int[] sizes_intsts()
+			throws IllegalArgumentException {
+		
+		int[] osizes = new int[ this.mtimes.size() ];
+		int p = 0;
+		
+		for(MassSpec_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+			osizes[ p ] = ms.bytesize_intsts();			
+			p ++;
+		}
+		
+		return(osizes);
+	}	
+	
+	
+	
+}
