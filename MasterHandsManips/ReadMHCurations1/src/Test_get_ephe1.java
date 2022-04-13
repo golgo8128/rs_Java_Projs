@@ -2,6 +2,8 @@
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +43,9 @@ public class Test_get_ephe1 {
 		
 		for(SessionInfo sess : slist) {
 			
-			for(PeakInfo pk : sess.getAnnotationList()) {
+			System.out.println(sess.getName());
+			
+			for(PeakInfo pk : sess.getPeakGroupList()) {
 			
 				ElectropherogramInfo ephe =
 						mh.getElectropherogram(sess.getId(), pk.getId());
@@ -60,6 +64,11 @@ public class Test_get_ephe1 {
 				
 			}
 			
+			LocalDateTime date1 = LocalDateTime.now();
+			DateTimeFormatter dtformat = 
+					DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
+			String fdate1 = dtformat.format(date1);
+			System.out.println(fdate1);
 			
 		}
 		
