@@ -69,15 +69,15 @@ public class MHCurBase1_2 {
 		get_spectra_unaligned(){
 		
 		HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
-			session_name_to_RS_MSS
+			session_name_to_RS_MSS_h
 				= new HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>();
 		
 		for(SessionInfo sess : this.mh.getSessionList()) {
 			Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, sess);
-			session_name_to_RS_MSS.put(sess.getName(), ephe_mss.to_RS_MSS());
+			session_name_to_RS_MSS_h.put(sess.getName(), ephe_mss.to_RS_MSS());
 		}
 		
-		return(session_name_to_RS_MSS);
+		return(session_name_to_RS_MSS_h);
 		
 	}
 	
