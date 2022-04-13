@@ -49,8 +49,7 @@ public class MHCurBase1_2 {
 								String.valueOf(alnpkinfo.epeak.getMt())
 								)
 							);
-					
-					
+				
 					// print("Generating electropherogram ...", csession.getName(), caln_peak.getAnnotation())
 				    ElectropherogramInfo chrom
 				    	= this.mh.getElectropherogram(alnpkinfo.sess.getId(), alnpkinfo.epeak_before_align.getId());
@@ -58,20 +57,29 @@ public class MHCurBase1_2 {
 				    ElectropherogramInfo aln_chrom
 				    	= this.mh.getElectropherogram(alnpkinfo.align.getId(), alnpkinfo.sess.getId(), alnpkinfo.epeak.getId());
 				    // print("Generating electropherogram done.")
-					
-								
+			
 				}
 			}
-			
-			
+
 		}
-		
-		
-		
+
 	}
 
-
-	
+	public HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
+		get_spectra_unaligned(){
+		
+		HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
+			session_name_to_RS_MSS
+				= new HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>();
+		
+		for(SessionInfo sess : this.mh.getSessionList()) {
+			Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, sess);
+			session_name_to_RS_MSS.put(sess.getName(), ephe_mss.to_RS_MSS());
+		}
+		
+		return(session_name_to_RS_MSS);
+		
+	}
 	
 	private void get_info(){
 		
@@ -137,7 +145,7 @@ public class MHCurBase1_2 {
 		this.session_id_peak_id_to_peak_h =
 				new HashMap<Integer, HashMap<Integer, PeakInfo>>();
 		
-		ArrayList<SessionInfo> slist = mh.getSessionList();
+		ArrayList<SessionInfo> slist = this.mh.getSessionList();
 		for(SessionInfo sess : slist) {
 			System.out.println("Getting " +
 								sess.getPeakGroupList().size() +
