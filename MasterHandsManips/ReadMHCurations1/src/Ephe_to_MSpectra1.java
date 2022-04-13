@@ -46,7 +46,50 @@ public class Ephe_to_MSpectra1 {
 		
 	}
 	
-	ArrayList<Float> get_nonredu_mzs(){
+	public RS_MassSpectra_simple1_2 <Float, Float, Integer>
+		to_RS_MSS(){
+		
+		RS_MassSpectra_simple1_2<Float, Float, Integer> mss
+			= new RS_MassSpectra_simple1_2<Float, Float, Integer>();
+		
+		ArrayList<Float> mts = 
+				new ArrayList<Float>(this.mt_mz_to_intsty.keySet());
+		Collections.sort(mts);
+		ArrayList<Float> mzs_all = this.get_nonredu_mzs();
+		
+		for(Float mt: mts) {
+
+			ArrayList<Float> mzs_avail = new ArrayList<Float>();
+			ArrayList<Integer> intsts_avail = new ArrayList<Integer>();
+			
+			HashMap<Float, Integer> mz_to_intsty
+				= this.mt_mz_to_intsty.get(mt);
+			for(Float mz: mzs_all) {
+				if(mz_to_intsty.containsKey(mz)) {
+					mzs_avail.add(mz);
+					intsts_avail.add(mz_to_intsty.get(mz));
+				}				
+			}
+			
+			if(mzs_avail.size() > 0) {
+			
+				mss.add_ms(
+						mt,
+						mzs_avail.toArray(new Float[ mzs_avail.size() ]),
+						intsts_avail.toArray(new Integer[ intsts_avail.size() ]));
+				// public T[] toArray(T[] a) ... T is type, doesn't necessary mean generic.
+				// returns reference to allocated memory if possible.
+				
+			}
+			
+		}
+			
+		return mss;
+		
+	}
+	
+	
+	public ArrayList<Float> get_nonredu_mzs(){
 		
 		ArrayList<Float> omzs = new ArrayList<Float>(this.key_mzs);
 		Collections.sort(omzs);

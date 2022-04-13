@@ -55,8 +55,8 @@ public class Test_RS_MassSpectra_simple1_2 {
 			relposs[3] = relposs_intsts_ends[i];
 			
 			System.out.println(Arrays.stream(relposs)
-	        .mapToObj(String::valueOf)
-	        .collect(Collectors.joining(", ")));
+					.mapToObj(String::valueOf)
+					.collect(Collectors.joining(", ")));
 			
 		}
 		System.out.println(tmpfile);
