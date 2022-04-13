@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class test1_2 {
+public class Test_RS_MassSpectra_simple1_2 {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
