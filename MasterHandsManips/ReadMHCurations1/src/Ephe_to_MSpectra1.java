@@ -24,7 +24,7 @@ public class Ephe_to_MSpectra1 {
 			= new HashMap<Float, HashMap<Float, Integer>>();
 		
 		
-		for(PeakInfo pk : sess.getPeakGroupList()) { // .getAnnotationList()) {
+		for(PeakInfo pk : sess.getPeakGroupList()) {
 			
 			ElectropherogramInfo ephe =
 					imh.getElectropherogram(sess.getId(), pk.getId());
