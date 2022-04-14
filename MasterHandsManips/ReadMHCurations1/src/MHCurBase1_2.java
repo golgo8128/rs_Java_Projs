@@ -22,6 +22,7 @@ public class MHCurBase1_2 {
 	private HashMap<Integer, HashMap<Integer, PeakInfo>> session_id_peak_id_to_peak_h;
 	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	
+	final String SPECTRA_FILE_SUFFIX = "_centroided1_6.rsmspra";
 	
 	MHCurBase1_2(String imhfile)
 			throws EmonException, IOException {
@@ -69,7 +70,7 @@ public class MHCurBase1_2 {
 		
 		for(String sessnam : session_name_to_RS_MSS_h.keySet()) {
 			
-			Path basename = Paths.get(sessnam + ".rsmspra");
+			Path basename = Paths.get(sessnam + SPECTRA_FILE_SUFFIX);
 			Path ofile = output_folder.resolve(basename);
 			session_name_to_RS_MSS_h.get(sessnam).output_to_file(ofile, 256);
 			
