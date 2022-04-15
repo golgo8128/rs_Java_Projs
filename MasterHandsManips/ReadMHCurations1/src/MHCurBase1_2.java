@@ -53,8 +53,12 @@ public class MHCurBase1_2 {
 				Path basename = Paths.get(alignam + "_" + sesnam + PEAK_INFO_FILE_SUFFIX);
 				Path ofile = output_folder.resolve(basename);
 				FileWriter fw = new FileWriter(ofile.toFile());
-				
-				
+
+				fw.write(String.join("\t",
+						 "Peak annntation",
+						 "Peak m/z",
+						 "Peak MT top",
+						 "Peak MT top after alignment") + '\n');
 				
 				for(String annot: this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).keySet()) {
 					
@@ -62,18 +66,11 @@ public class MHCurBase1_2 {
 						= this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).get(annot);
 					
 					fw.write(String.join("\t",
-							 annot, 
+							 annot,
+							 String.valueOf(alnpkinfo.epeak.getMz()),
 							 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
 							 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
-							
-					System.out.println(
-						String.join("\t",
-								alignam, sesnam, annot,
-								String.valueOf(alnpkinfo.epeak_before_align.getMt()),
-								String.valueOf(alnpkinfo.epeak.getMt())
-								)
-							);
-					
+												
 				
 				}
 				
