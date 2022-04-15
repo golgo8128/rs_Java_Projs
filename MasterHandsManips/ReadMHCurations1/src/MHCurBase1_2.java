@@ -1,5 +1,9 @@
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +22,7 @@ public class MHCurBase1_2 {
 	private HashMap<Integer, HashMap<Integer, PeakInfo>> session_id_peak_id_to_peak_h;
 	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	
+	final String SPECTRA_FILE_SUFFIX = "_centroided1_6.rsmspra";
 	
 	MHCurBase1_2(String imhfile)
 			throws EmonException, IOException {
@@ -28,7 +33,7 @@ public class MHCurBase1_2 {
 		this.mh     = new MasterHands();
 		this.mh.loadProject(imhfile);
 		
-		this.get_info();
+		this.load_info();
 		
 		// this.mh.closeProject(); Do not close the project until required data are output.
 	}
@@ -49,31 +54,52 @@ public class MHCurBase1_2 {
 								String.valueOf(alnpkinfo.epeak.getMt())
 								)
 							);
-					
-					
-					// print("Generating electropherogram ...", csession.getName(), caln_peak.getAnnotation())
-				    ElectropherogramInfo chrom
-				    	= this.mh.getElectropherogram(alnpkinfo.sess.getId(), alnpkinfo.epeak_before_align.getId());
-				    // print("Generating electropherogram after alignment ...")
-				    ElectropherogramInfo aln_chrom
-				    	= this.mh.getElectropherogram(alnpkinfo.align.getId(), alnpkinfo.sess.getId(), alnpkinfo.epeak.getId());
-				    // print("Generating electropherogram done.")
-					
-								
+				
 				}
 			}
+
+		}
+
+	}
+	
+	
+	public void output_spectra_unaligned(Path output_folder) throws IOException {
+		
+		HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
+			session_name_to_RS_MSS_h = this.get_spectra_unaligned();
+		
+		for(String sessnam : session_name_to_RS_MSS_h.keySet()) {
 			
+			Path basename = Paths.get(sessnam + SPECTRA_FILE_SUFFIX);
+			Path ofile = output_folder.resolve(basename);
+			session_name_to_RS_MSS_h.get(sessnam).output_to_file(ofile, 256);
 			
 		}
 		
 		
-		
 	}
 
-
+	public HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
+		get_spectra_unaligned(){
+		
+		HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
+			session_name_to_RS_MSS_h
+				= new HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>();
+		
+		for(SessionInfo sess : this.mh.getSessionList()) {
+			Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, sess);
+			session_name_to_RS_MSS_h.put(sess.getName(), ephe_mss.to_RS_MSS());
+			
+			System.out.println(ClockSimple1.current_time("yyyy/MM/dd HH:mm:ss.SSS")
+					+ " Generated spectra from " + sess.getName());
+			
+		}
+		
+		return(session_name_to_RS_MSS_h);
+		
+	}
 	
-	
-	private void get_info(){
+	private void load_info(){
 		
 		this._set_session_id_peak_id_to_peak_h();
 		
@@ -137,7 +163,7 @@ public class MHCurBase1_2 {
 		this.session_id_peak_id_to_peak_h =
 				new HashMap<Integer, HashMap<Integer, PeakInfo>>();
 		
-		ArrayList<SessionInfo> slist = mh.getSessionList();
+		ArrayList<SessionInfo> slist = this.mh.getSessionList();
 		for(SessionInfo sess : slist) {
 			System.out.println("Getting " +
 								sess.getPeakGroupList().size() +

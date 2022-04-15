@@ -42,7 +42,17 @@ public class Ephe_to_MSpectra1 {
 				}
 			}
 
-		}		
+		}
+		
+		/*
+		print("Generating electropherogram ...", csession.getName(), caln_peak.getAnnotation())
+	    ElectropherogramInfo chrom
+	    	= this.mh.getElectropherogram(alnpkinfo.sess.getId(), alnpkinfo.epeak_before_align.getId());
+	    print("Generating electropherogram after alignment ...")
+	    ElectropherogramInfo aln_chrom
+	    	= this.mh.getElectropherogram(alnpkinfo.align.getId(), alnpkinfo.sess.getId(), alnpkinfo.epeak.getId());
+	    print("Generating electropherogram done.")
+		*/
 		
 	}
 	
