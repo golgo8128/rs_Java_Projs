@@ -1,5 +1,8 @@
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -22,7 +25,9 @@ public class MHCurBase1_2 {
 	private HashMap<Integer, HashMap<Integer, PeakInfo>> session_id_peak_id_to_peak_h;
 	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	
-	final String SPECTRA_FILE_SUFFIX = "_centroided1_6.rsmspra";
+	final String PEAK_INFO_FILE_SUFFIX = "_peakinfo1_6.tsv";
+	final String SPECTRA_FILE_SUFFIX   = "_centroided1_6.rsmspra";
+	final int OFFSET_BYTE_SIZE = 256;
 	
 	MHCurBase1_2(String imhfile)
 			throws EmonException, IOException {
@@ -38,15 +43,29 @@ public class MHCurBase1_2 {
 		// this.mh.closeProject(); Do not close the project until required data are output.
 	}
 	
-	public void output_test() {
+	public void output_peak_info(Path output_folder) throws IOException {
+		
+		Files.createDirectories(output_folder);
 		
 		for(String alignam: this.align_sess_pkgrpnam_h.keySet()) {
 			for(String sesnam: this.align_sess_pkgrpnam_h.get(alignam).keySet()) {
+				
+				Path basename = Paths.get(alignam + "_" + sesnam + PEAK_INFO_FILE_SUFFIX);
+				Path ofile = output_folder.resolve(basename);
+				FileWriter fw = new FileWriter(ofile.toFile());
+				
+				
+				
 				for(String annot: this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).keySet()) {
 					
 					AlnPeakInfo_simple1 alnpkinfo
 						= this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).get(annot);
 					
+					fw.write(String.join("\t",
+							 annot, 
+							 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
+							 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
+							
 					System.out.println(
 						String.join("\t",
 								alignam, sesnam, annot,
@@ -54,8 +73,12 @@ public class MHCurBase1_2 {
 								String.valueOf(alnpkinfo.epeak.getMt())
 								)
 							);
+					
 				
 				}
+				
+				fw.close();
+				
 			}
 
 		}
@@ -72,7 +95,7 @@ public class MHCurBase1_2 {
 			
 			Path basename = Paths.get(sessnam + SPECTRA_FILE_SUFFIX);
 			Path ofile = output_folder.resolve(basename);
-			session_name_to_RS_MSS_h.get(sessnam).output_to_file(ofile, 256);
+			session_name_to_RS_MSS_h.get(sessnam).output_to_file(ofile, OFFSET_BYTE_SIZE);
 			
 		}
 		

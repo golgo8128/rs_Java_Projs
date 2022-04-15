@@ -23,9 +23,9 @@ public class MHCurBase1_test1 {
 					resolve("rs_MSpectra");
 		
 		MHCurBase1_2 mhcurbase = new MHCurBase1_2(tmpmhfile.toString());
-		mhcurbase.output_test();
+		mhcurbase.output_peak_info(tmpoutfolder);
 		
-		mhcurbase.output_spectra_unaligned(tmpoutfolder);
+		// mhcurbase.output_spectra_unaligned(tmpoutfolder);
 		
 		mhcurbase.mh.closeProject();
 		
