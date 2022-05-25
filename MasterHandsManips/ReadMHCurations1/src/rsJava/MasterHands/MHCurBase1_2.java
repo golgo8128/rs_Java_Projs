@@ -1,3 +1,4 @@
+package rsJava.MasterHands;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,6 +18,9 @@ import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
 import emon2.api.AlignmentInfo;
 import emon2.api.ElectropherogramInfo;
+import rsJava.MassSpec.*;
+
+import rsJava.Usefuls1.*;
 
 public class MHCurBase1_2 {
 
@@ -29,7 +33,7 @@ public class MHCurBase1_2 {
 	final String SPECTRA_FILE_SUFFIX   = "_centroided1_6.rsmspra";
 	final int OFFSET_BYTE_SIZE = 256;
 	
-	MHCurBase1_2(String imhfile)
+	public MHCurBase1_2(String imhfile)
 			throws EmonException, IOException {
 
 		System.out.println("##### MasterHands " + MasterHands.getVersionNumber() + " #####");

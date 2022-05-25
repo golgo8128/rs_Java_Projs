@@ -1,3 +1,5 @@
+package rsJava.MasterHands;
+
 import emon2.api.AlignmentInfo;
 import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;

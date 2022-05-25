@@ -1,9 +1,11 @@
+package rsJava.Usefuls1;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ClockSimple1 {
 
-	static String current_time(String itime_format) {
+	static public String current_time(String itime_format) {
 
 		LocalDateTime date1 = LocalDateTime.now();
 		DateTimeFormatter dtformat = 

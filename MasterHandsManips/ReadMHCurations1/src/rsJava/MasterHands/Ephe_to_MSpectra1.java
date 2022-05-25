@@ -1,3 +1,5 @@
+package rsJava.MasterHands;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import emon2.api.ElectropherogramInfo;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
+import rsJava.MassSpec.*;
 
 public class Ephe_to_MSpectra1 {
 
@@ -16,7 +19,7 @@ public class Ephe_to_MSpectra1 {
 	public Set<Float> key_mzs;
 	private SessionInfo sess;
 	
-	Ephe_to_MSpectra1(MasterHands imh, SessionInfo isess){
+	public Ephe_to_MSpectra1(MasterHands imh, SessionInfo isess){
 		
 		this.sess = isess;
 		this.key_mzs = new HashSet<Float>();
