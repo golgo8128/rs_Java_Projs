@@ -7,7 +7,7 @@ import emon2.EmonException;
 
 import rsJava.MasterHands.MHCurBase1_2;
 
-public class MHCurBase1_test1 {
+public class Test_MHCurBase1_1 {
 		
 	public static void main(String[] args) throws EmonException, IOException {
 		// TODO Auto-generated method stub
