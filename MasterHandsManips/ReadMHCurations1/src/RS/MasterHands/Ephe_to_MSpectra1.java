@@ -1,4 +1,4 @@
-package rsJava.MasterHands;
+package RS.MasterHands;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +11,8 @@ import emon2.api.ElectropherogramInfo;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
-import rsJava.MassSpec.*;
+
+import RS.MassSpec.*;
 
 public class Ephe_to_MSpectra1 {
 

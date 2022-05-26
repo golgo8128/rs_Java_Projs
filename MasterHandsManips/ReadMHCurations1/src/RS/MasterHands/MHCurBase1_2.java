@@ -1,4 +1,4 @@
-package rsJava.MasterHands;
+package RS.MasterHands;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -18,9 +18,9 @@ import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
 import emon2.api.AlignmentInfo;
 import emon2.api.ElectropherogramInfo;
-import rsJava.MassSpec.*;
 
-import rsJava.Usefuls1.*;
+import RS.MassSpec.*;
+import RS.Usefuls1.*;
 
 public class MHCurBase1_2 {
 

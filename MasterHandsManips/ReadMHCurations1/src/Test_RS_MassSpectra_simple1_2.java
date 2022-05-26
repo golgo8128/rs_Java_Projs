@@ -4,7 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import rsJava.MassSpec.*;
+
+import RS.MassSpec.*;
 
 public class Test_RS_MassSpectra_simple1_2 {
 

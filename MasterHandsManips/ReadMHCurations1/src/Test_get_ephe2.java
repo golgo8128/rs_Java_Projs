@@ -11,7 +11,7 @@ import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.SessionInfo;
 
-import rsJava.MasterHands.Ephe_to_MSpectra1;
+import RS.MasterHands.Ephe_to_MSpectra1;
 
 public class Test_get_ephe2 {
 

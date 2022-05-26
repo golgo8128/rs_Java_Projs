@@ -1,5 +1,5 @@
 
-package rsJava.MassSpec;
+package RS.MassSpec;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

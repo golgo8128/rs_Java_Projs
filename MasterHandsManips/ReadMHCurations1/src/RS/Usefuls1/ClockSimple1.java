@@ -1,4 +1,4 @@
-package rsJava.Usefuls1;
+package RS.Usefuls1;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

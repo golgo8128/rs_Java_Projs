@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 import emon2.EmonException;
 
-import rsJava.MasterHands.MHCurBase1_2;
+import RS.MasterHands.MHCurBase1_2;
 
 public class Test_MHCurBase1_1 {
 		

@@ -1,4 +1,4 @@
-package rsJava.MassSpec;
+package RS.MassSpec;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
