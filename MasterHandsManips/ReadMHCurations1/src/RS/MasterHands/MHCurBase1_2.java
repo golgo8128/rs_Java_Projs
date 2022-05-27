@@ -30,6 +30,7 @@ public class MHCurBase1_2 {
 	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	
 	final String PEAK_INFO_FILE_SUFFIX = "_peakinfo1_6.tsv";
+	final String SPECTRA_FILE_MT_ADJUST_PREFIX = "align_";
 	final String SPECTRA_FILE_SUFFIX   = "_centroided1_6.rsmspra";
 	final int OFFSET_BYTE_SIZE = 256;
 	
@@ -102,6 +103,26 @@ public class MHCurBase1_2 {
 		
 	}
 
+	public void output_spectra_aligned(Path output_folder) throws IOException {
+		
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>
+			align_session_name_to_RS_MSS_h = this.get_spectra_aligned();
+		
+		for(String alignnam : align_session_name_to_RS_MSS_h.keySet()) {
+			for(String sessnam : align_session_name_to_RS_MSS_h.get(alignnam).keySet()) {
+				
+				Path basename = Paths.get(SPECTRA_FILE_MT_ADJUST_PREFIX
+						+ alignnam + "_" + sessnam + SPECTRA_FILE_SUFFIX);
+				Path ofile = output_folder.resolve(basename);
+				align_session_name_to_RS_MSS_h.get(alignnam).get(sessnam)
+					.output_to_file(ofile, OFFSET_BYTE_SIZE);
+			
+			}
+		
+		}
+	}
+	
+	
 	public HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>
 		get_spectra_unaligned(){
 		
@@ -124,7 +145,7 @@ public class MHCurBase1_2 {
 	
 	
 	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>
-		get_spectra_naligned(){
+		get_spectra_aligned(){
 	
 		HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>
 			align_session_name_to_RS_MSS_h
