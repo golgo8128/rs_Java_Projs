@@ -42,7 +42,7 @@ public class Test_get_ephe2 {
 			
 			System.out.println(sess.getName());
 			
-			Ephe_to_MSpectra1 ephe_to_mss = new Ephe_to_MSpectra1(mh, sess);
+			Ephe_to_MSpectra1 ephe_to_mss = new Ephe_to_MSpectra1(mh, null, sess);
 			
 			LocalDateTime date1 = LocalDateTime.now();
 			DateTimeFormatter dtformat = 

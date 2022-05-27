@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import emon2.api.ElectropherogramInfo;
+import emon2.api.AlignmentInfo;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
@@ -20,7 +21,7 @@ public class Ephe_to_MSpectra1 {
 	public Set<Float> key_mzs;
 	private SessionInfo sess;
 	
-	public Ephe_to_MSpectra1(MasterHands imh, SessionInfo isess){
+	public Ephe_to_MSpectra1(MasterHands imh, AlignmentInfo iainfo, SessionInfo isess){
 		
 		this.sess = isess;
 		this.key_mzs = new HashSet<Float>();
@@ -30,8 +31,12 @@ public class Ephe_to_MSpectra1 {
 		
 		for(PeakInfo pk : sess.getPeakGroupList()) {
 			
-			ElectropherogramInfo ephe =
-					imh.getElectropherogram(sess.getId(), pk.getId());
+			ElectropherogramInfo ephe;
+			if(iainfo == null) {
+				ephe = imh.getElectropherogram(sess.getId(), pk.getId());
+			} else {
+				ephe = imh.getElectropherogram(iainfo.getId(), sess.getId(), pk.getId());
+			}
 
 			float mz = ephe.getMz();
 			List<Float>   mts    = ephe.getMtList();

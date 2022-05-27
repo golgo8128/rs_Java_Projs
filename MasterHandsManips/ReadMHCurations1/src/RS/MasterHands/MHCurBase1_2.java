@@ -59,7 +59,7 @@ public class MHCurBase1_2 {
 				FileWriter fw = new FileWriter(ofile.toFile());
 
 				fw.write(String.join("\t",
-						 "Peak annntation",
+						 "Peak annotation",
 						 "Peak m/z",
 						 "Peak MT top",
 						 "Peak MT top after alignment") + '\n');
@@ -74,8 +74,7 @@ public class MHCurBase1_2 {
 							 String.valueOf(alnpkinfo.epeak.getMz()),
 							 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
 							 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
-												
-				
+
 				}
 				
 				fw.close();
@@ -111,7 +110,7 @@ public class MHCurBase1_2 {
 				= new HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>();
 		
 		for(SessionInfo sess : this.mh.getSessionList()) {
-			Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, sess);
+			Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, null, sess);
 			session_name_to_RS_MSS_h.put(sess.getName(), ephe_mss.to_RS_MSS());
 			
 			System.out.println(ClockSimple1.current_time("yyyy/MM/dd HH:mm:ss.SSS")
@@ -131,6 +130,7 @@ public class MHCurBase1_2 {
 		
 		this.align_sess_pkgrpnam_h
 			= new HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>>();
+		// alignment name -> session name -> peak group name : AlnPeakInfo_simple
 		
 		for(AlignmentInfo calign : alist) {
 			
@@ -142,6 +142,8 @@ public class MHCurBase1_2 {
 			for(PeakInfo caln_peak_grp : calign.getPeakGroupList()) {
 				
 				List<PeakInfo> peaknode_list = caln_peak_grp.getPeakNodeList();
+				// peaknode_list : peaks from list of sessions.
+				// The peaks correspond to a single metabolite.
 				
 				for(int i = 0; i < calign.getSessionList().size(); i ++) {
 					SessionInfo csession = session_list.get(i);
