@@ -122,6 +122,37 @@ public class MHCurBase1_2 {
 		
 	}
 	
+	
+	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>
+		get_spectra_naligned(){
+	
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>
+			align_session_name_to_RS_MSS_h
+				= new HashMap<String, HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>>();
+		
+		for(AlignmentInfo align : this.mh.getAlignmentList()) {
+			
+			align_session_name_to_RS_MSS_h.putIfAbsent(
+					align.getName(),
+					new HashMap<String, RS_MassSpectra_simple1_2<Float, Float, Integer>>());
+			
+			for(SessionInfo sess : align.getSessionList()) {
+				Ephe_to_MSpectra1 ephe_mss = new Ephe_to_MSpectra1(this.mh, align, sess);
+				align_session_name_to_RS_MSS_h.get(align.getName()).put(sess.getName(), ephe_mss.to_RS_MSS());
+				
+				System.out.println(ClockSimple1.current_time("yyyy/MM/dd HH:mm:ss.SSS")
+						+ " Generated spectra with MT adjusted from " + 
+						align.getName() + " " +	sess.getName());
+				
+			}
+		}
+	
+		return(align_session_name_to_RS_MSS_h);
+	
+	}
+	
+	
+	
 	private void load_info(){
 		
 		this._set_session_id_peak_id_to_peak_h();
