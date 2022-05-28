@@ -62,7 +62,11 @@ public class MHCurBase1_2 {
 				fw.write(String.join("\t",
 						 "Peak annotation",
 						 "Peak m/z",
+						 "Peak MT start",
+						 "Peak MT end",
 						 "Peak MT top",
+						 "Peak MT start after alignment",
+						 "Peak MT end after alignment",
 						 "Peak MT top after alignment") + '\n');
 				
 				for(String annot: this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).keySet()) {
@@ -72,8 +76,13 @@ public class MHCurBase1_2 {
 					
 					fw.write(String.join("\t",
 							 annot,
-							 String.valueOf(alnpkinfo.epeak.getMz()),
+							 String.valueOf(alnpkinfo.epeak_before_align.getMz()),
+							 String.valueOf(alnpkinfo.epeak_before_align.getLeftmt()),
+							 String.valueOf(alnpkinfo.epeak_before_align.getRightmt()),
 							 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
+
+							 String.valueOf(alnpkinfo.epeak.getLeftmt()),
+							 String.valueOf(alnpkinfo.epeak.getRightmt()),
 							 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
 
 				}
