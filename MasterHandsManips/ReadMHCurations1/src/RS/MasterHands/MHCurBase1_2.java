@@ -74,16 +74,32 @@ public class MHCurBase1_2 {
 					AlnPeakInfo_simple1 alnpkinfo
 						= this.align_sess_pkgrpnam_h.get(alignam).get(sesnam).get(annot);
 					
-					fw.write(String.join("\t",
-							 annot,
-							 String.valueOf(alnpkinfo.epeak_before_align.getMz()),
-							 String.valueOf(alnpkinfo.epeak_before_align.getLeftmt()),
-							 String.valueOf(alnpkinfo.epeak_before_align.getRightmt()),
-							 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
-
-							 String.valueOf(alnpkinfo.epeak.getLeftmt()),
-							 String.valueOf(alnpkinfo.epeak.getRightmt()),
-							 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
+					if(alnpkinfo.epeak_before_align.getMt() > 0) {
+						fw.write(String.join("\t",
+								 annot,
+								 String.valueOf(alnpkinfo.epeak_before_align.getMz()),
+								 String.valueOf(alnpkinfo.epeak_before_align.getLeftmt()),
+								 String.valueOf(alnpkinfo.epeak_before_align.getRightmt()),
+								 String.valueOf(alnpkinfo.epeak_before_align.getMt()),
+	
+								 String.valueOf(alnpkinfo.epeak.getLeftmt()),
+								 String.valueOf(alnpkinfo.epeak.getRightmt()),
+								 String.valueOf(alnpkinfo.epeak.getMt())) + '\n');
+					} else {
+						
+						fw.write(String.join("\t",
+									 annot,
+									 String.valueOf(alnpkinfo.epeak_before_align.getMz()),
+									 "",
+									 "",
+									 "",
+		
+									 "",
+									 "",
+								 	 "") + '\n');						
+						
+					}
+					
 
 				}
 				
