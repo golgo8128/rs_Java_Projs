@@ -32,7 +32,7 @@ public class MHCurBase1_2 {
 	final String PEAK_INFO_FILE_SUFFIX = "_peakinfo1_6.tsv";
 	final String SPECTRA_FILE_MT_ADJUST_PREFIX = "align_";
 	final String SPECTRA_FILE_SUFFIX   = "_centroided1_6.rsmspra";
-	final String ANNOT_FILE_PREFIX = "annotinfo_";
+	final String ANNOT_FILE_PREFIX = "annotinfo_MHout_";
 	final int OFFSET_BYTE_SIZE = 256;
 	
 	public MHCurBase1_2(String imhfile)
