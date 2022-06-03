@@ -44,13 +44,13 @@ public class Ephe_to_MSpectra1 {
 			
 			this.key_mzs.add(mz);
 			
-			for(Float mt: mts) {
+			for(int i = 0;i < mts.size();i ++) {
+				Float mt = mts.get(i);
+				Integer intsty = intsts.get(i);
 				this.mt_mz_to_intsty.putIfAbsent(mt, new HashMap<Float, Integer>());
-				for(Integer intsty : intsts) {
-					this.mt_mz_to_intsty.get(mt).put(mz, intsty);
-				}
+				this.mt_mz_to_intsty.get(mt).put(mz, intsty);
 			}
-
+			
 		}
 		
 		/*
