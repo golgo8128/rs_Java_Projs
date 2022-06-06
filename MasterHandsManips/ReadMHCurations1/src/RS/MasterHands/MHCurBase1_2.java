@@ -29,9 +29,9 @@ public class MHCurBase1_2 {
 	private HashMap<Integer, HashMap<Integer, PeakInfo>> session_id_peak_id_to_peak_h;
 	private HashMap<String, HashMap<String, HashMap<String, AlnPeakInfo_simple1>>> align_sess_pkgrpnam_h;
 	
-	final String PEAK_INFO_FILE_SUFFIX = "_peakinfo1_6.tsv";
+	final String PEAK_INFO_FILE_SUFFIX = "_peakinfo1_7.tsv";
 	final String SPECTRA_FILE_MT_ADJUST_PREFIX = "align_";
-	final String SPECTRA_FILE_SUFFIX   = "_centroided1_6.rsmspra";
+	final String SPECTRA_FILE_SUFFIX   = "_centroided1_7.rsmspra";
 	final String ANNOT_FILE_PREFIX = "annotinfo_MHout_";
 	final int OFFSET_BYTE_SIZE = 256;
 	
