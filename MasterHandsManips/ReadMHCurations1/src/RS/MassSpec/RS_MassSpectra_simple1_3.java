@@ -170,7 +170,7 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		}
 		
 		for(T_rpos relpos : this.relposs_mzs_starts()) {
-			fw.writeInt(relpos.intValue() + header_bytes); // <---
+			fw.writeInt(relpos.intValue() + header_bytes); // <--- !!!!!
 		}
 		
 		for(int csize : this.sizes_mzs()) {
@@ -188,7 +188,7 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 	}
 	
 	public T_rpos[] relposs_mzs_starts()
-			throws IllegalArgumentException {
+			throws IllegalArgumentException { // Maybe use List instead of array
 
 		T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
 		
