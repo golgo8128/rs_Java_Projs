@@ -93,7 +93,26 @@ public class RS_MassSpectra_simple1_2 <T_mtime, T_mz, T_intst>{
 		
 		fw.writeInt(foffset_byte_size); // 4 bytes
 		fw.writeInt(0x01020304); // 4 bytes
-		for(int i = 0;i < foffset_byte_size - 8;i ++) {
+		
+		// 1 byte
+		T_mtime mt_1st = this.mtimes.get(0);
+		if(Integer.class.isInstance(mt_1st)){
+			fw.writeByte('i');
+		} else if (Float.class.isInstance(mt_1st)) {
+			fw.writeByte('f');
+		} else if (Double.class.isInstance(mt_1st)) {
+			fw.writeByte('d');
+		} else if (Long.class.isInstance(mt_1st)) {
+			fw.writeByte('x');
+		} else {
+			throw new IllegalArgumentException("Illegal data type for MT's.");
+		}
+		
+		T_mz mz_1st1st = this.mspecs.get(0).mzs[0];
+		
+		
+		
+		for(int i = 8;i < foffset_byte_size;i ++) {
 			fw.writeByte(0x00);
 		}
 		
