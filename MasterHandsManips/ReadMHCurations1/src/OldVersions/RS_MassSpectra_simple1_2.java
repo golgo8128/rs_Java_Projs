@@ -107,12 +107,37 @@ public class RS_MassSpectra_simple1_2 <T_mtime, T_mz, T_intst>{
 		} else {
 			throw new IllegalArgumentException("Illegal data type for MT's.");
 		}
-		
+
+		// 1 byte
 		T_mz mz_1st1st = this.mspecs.get(0).mzs[0];
+		if(Integer.class.isInstance(mz_1st1st)){
+			fw.writeByte('i');
+		} else if (Float.class.isInstance(mz_1st1st)) {
+			fw.writeByte('f');
+		} else if (Double.class.isInstance(mz_1st1st)) {
+			fw.writeByte('d');
+		} else if (Long.class.isInstance(mz_1st1st)) {
+			fw.writeByte('x');
+		} else {
+			throw new IllegalArgumentException("Illegal data type for m/z's.");
+		}		
+
+		// 1 byte
+		T_intst intst_1st1st = this.mspecs.get(0).intsts[0];
+		if(Integer.class.isInstance(intst_1st1st)){
+			fw.writeByte('i');
+		} else if (Float.class.isInstance(intst_1st1st)) {
+			fw.writeByte('f');
+		} else if (Double.class.isInstance(intst_1st1st)) {
+			fw.writeByte('d');
+		} else if (Long.class.isInstance(intst_1st1st)) {
+			fw.writeByte('x');
+		} else {
+			throw new IllegalArgumentException("Illegal data type for intensities.");
+		}	
 		
 		
-		
-		for(int i = 8;i < foffset_byte_size;i ++) {
+		for(int i = 12;i < foffset_byte_size;i ++) { // BE CAREFUL ... Number of bytes
 			fw.writeByte(0x00);
 		}
 		

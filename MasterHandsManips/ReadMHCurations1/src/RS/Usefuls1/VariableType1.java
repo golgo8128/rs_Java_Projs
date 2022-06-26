@@ -18,6 +18,7 @@ public class VariableType1 {
 	
 	}
 
+	/*
 	static void Main()
 	{
 	
@@ -27,6 +28,6 @@ public class VariableType1 {
 	    Console.ReadKey();
 	
 	}
-	
+	*/
 
 }
