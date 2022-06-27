@@ -7,24 +7,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
-public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Number>{
+public class RS_MassSpectra_simple1_4 <T_mtime, T_mz, T_intst, T_rpos extends Number>{
 
 	public ArrayList<T_mtime> mtimes;
 	public ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>> mspecs;
-	private T_rpos calibr_pos_zero;
 	
-	public RS_MassSpectra_simple1_3(T_rpos ipos_zero) {
+	public RS_MassSpectra_simple1_4() {
 		
 		this.mtimes   = new ArrayList<T_mtime>();
 		this.mspecs   = new ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>>();
-		
-		if(ipos_zero.longValue() != 0) {
-			throw new IllegalArgumentException(
-					String.format("Calibrated position not zero: %d", ipos_zero.longValue()));
-		}
-		
-		this.calibr_pos_zero = ipos_zero;
 		
 	}	
 
@@ -102,47 +95,61 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		fw.writeInt(foffset_byte_size); // 4 bytes
 		fw.writeInt(0x01020304); // 4 bytes
 		
-		// 1 byte
-		T_mtime mt_1st = this.mtimes.get(0);
-		if(Integer.class.isInstance(mt_1st)){
-			fw.writeByte('i');
-		} else if (Float.class.isInstance(mt_1st)) {
-			fw.writeByte('f');
-		} else if (Double.class.isInstance(mt_1st)) {
-			fw.writeByte('d');
-		} else if (Long.class.isInstance(mt_1st)) {
-			fw.writeByte('x');
-		} else {
-			throw new IllegalArgumentException("Illegal data type for MT's.");
+		if(this.mtimes.size() > 0) {
+		
+			// 1 byte
+			T_mtime mt_1st = this.mtimes.get(0);
+			if(Integer.class.isInstance(mt_1st)){
+				fw.writeByte('i');
+			} else if (Float.class.isInstance(mt_1st)) {
+				fw.writeByte('f');
+			} else if (Double.class.isInstance(mt_1st)) {
+				fw.writeByte('d');
+			} else if (Long.class.isInstance(mt_1st)) {
+				fw.writeByte('x');
+			} else {
+				throw new IllegalArgumentException("Illegal data type for MT's.");
+			}
+	
+			// 1 byte
+			T_mz mz_1st1st = this.mspecs.get(0).mzs[0];
+			if(Integer.class.isInstance(mz_1st1st)){
+				fw.writeByte('i');
+			} else if (Float.class.isInstance(mz_1st1st)) {
+				fw.writeByte('f');
+			} else if (Double.class.isInstance(mz_1st1st)) {
+				fw.writeByte('d');
+			} else if (Long.class.isInstance(mz_1st1st)) {
+				fw.writeByte('x');
+			} else {
+				throw new IllegalArgumentException("Illegal data type for m/z's.");
+			}		
+	
+			// 1 byte
+			T_intst intst_1st1st = this.mspecs.get(0).intsts[0];
+			if(Integer.class.isInstance(intst_1st1st)){
+				fw.writeByte('i');
+			} else if (Float.class.isInstance(intst_1st1st)) {
+				fw.writeByte('f');
+			} else if (Double.class.isInstance(intst_1st1st)) {
+				fw.writeByte('d');
+			} else if (Long.class.isInstance(intst_1st1st)) {
+				fw.writeByte('x');
+			} else {
+				throw new IllegalArgumentException("Illegal data type for intensities.");
+			}	
+			
+			// 1 byte
+			T_rpos testrpos = (T_rpos)new Integer(0);
+			if(Integer.class.isInstance(testrpos)){
+				fw.writeByte('i');
+			} else if (Long.class.isInstance(testrpos)) {
+				fw.writeByte('x');
+			} else {
+				throw new IllegalArgumentException("Illegal data type for intensities.");
+			}	
+		
 		}
-
-		// 1 byte
-		T_mz mz_1st1st = this.mspecs.get(0).mzs[0];
-		if(Integer.class.isInstance(mz_1st1st)){
-			fw.writeByte('i');
-		} else if (Float.class.isInstance(mz_1st1st)) {
-			fw.writeByte('f');
-		} else if (Double.class.isInstance(mz_1st1st)) {
-			fw.writeByte('d');
-		} else if (Long.class.isInstance(mz_1st1st)) {
-			fw.writeByte('x');
-		} else {
-			throw new IllegalArgumentException("Illegal data type for m/z's.");
-		}		
-
-		// 1 byte
-		T_intst intst_1st1st = this.mspecs.get(0).intsts[0];
-		if(Integer.class.isInstance(intst_1st1st)){
-			fw.writeByte('i');
-		} else if (Float.class.isInstance(intst_1st1st)) {
-			fw.writeByte('f');
-		} else if (Double.class.isInstance(intst_1st1st)) {
-			fw.writeByte('d');
-		} else if (Long.class.isInstance(intst_1st1st)) {
-			fw.writeByte('x');
-		} else {
-			throw new IllegalArgumentException("Illegal data type for intensities.");
-		}	
 		
 		
 		for(int i = 12;i < foffset_byte_size;i ++) { // BE CAREFUL ... Number of bytes
@@ -207,61 +214,72 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		
 	}
 	
-	public T_rpos[] relposs_mzs_starts()
+	public List<T_rpos> relposs_mzs_starts()
 			throws IllegalArgumentException { // Maybe use List instead of array
 
-		T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
-		
 		int[] ms_sizes = this.sizes_ms();
+		List<T_rpos>relposs = new ArrayList<T_rpos>();
+		// T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
 		
-		relposs[ 0 ] = (T_rpos)new Integer(0); // (this.calibr_pos_zero;
-		
+		relposs.add((T_rpos)new Integer(0)); // Integer.valueOf(0)
+		// relposs index 0
 		
 		for(int i = 0; i < this.mtimes.size() - 1; i ++) {
-			relposs[ i + 1 ] = relposs[ i ] + ms_sizes[ i ];
+			relposs.add((T_rpos)new Long(relposs.get(i).longValue() + ms_sizes[ i ]));
+			// relposs[ i + 1 ] = (T_rpos)new Long(relposs[ i ].longValue() + ms_sizes[ i ]);
+			// relposs index i + 1
 		}
 		
 		return(relposs);
 	}
 	
-	public T_rpos[] relposs_mzs_ends()
+	public List<T_rpos> relposs_mzs_ends()
 			throws IllegalArgumentException {
 
-		T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
+		List<T_rpos>relposs = new ArrayList<T_rpos>();
+		// T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
 
-		T_rpos[] relpos_mzs_starts = this.relposs_mzs_starts();
+		List<T_rpos>relpos_mzs_starts = this.relposs_mzs_starts();
 		int[] mzs_sizes = this.sizes_mzs();
 
 		for(int i = 0; i < this.mtimes.size(); i ++) {
-			relposs[ i ] = relpos_mzs_starts[ i ] + mzs_sizes[ i ] - 1;
+			relposs.add((T_rpos)new Long(relpos_mzs_starts.get(i).longValue() + mzs_sizes[ i ] - 1));
+			// relposs[ i ] = relpos_mzs_starts[ i ] + mzs_sizes[ i ] - 1;
 		}
 		
 		return(relposs);
 	}
 	
 
-	public T_rpos[] relposs_intsts_starts()
+	public List<T_rpos> relposs_intsts_starts()
 			throws IllegalArgumentException {
 
-		T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
-		T_rpos[] relpos_mzs_ends = this.relposs_mzs_ends();
-
+		// T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
+		List<T_rpos> relposs = new ArrayList<T_rpos>();
+		// T_rpos[] relpos_mzs_ends = this.relposs_mzs_ends();
+		List<T_rpos> relpos_mzs_ends = new ArrayList<T_rpos>();
+		
 		for(int i = 0; i < this.mtimes.size(); i ++) {
-			relposs[ i ] = relpos_mzs_ends[ i ] + 1;
+			relposs.add((T_rpos)new Long(relpos_mzs_ends.get(i).longValue() + 1));
+			// relposs[ i ] = relpos_mzs_ends[ i ] + 1;
 		}
 		
 		return(relposs);
 	}
 	
-	public T_rpos[] relposs_intsts_ends()
+	public List<T_rpos> relposs_intsts_ends()
 			throws IllegalArgumentException {
 
-		T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
-		T_rpos[] relpos_intsts_starts = this.relposs_intsts_starts();
+		// T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
+		List<T_rpos> relposs = new ArrayList<T_rpos>();
+		// T_rpos[] relpos_intsts_starts = this.relposs_intsts_starts();
+		List<T_rpos> relpos_intsts_starts = this.relposs_intsts_starts();
+		
 		int[] intsts_sizes = this.sizes_intsts();
 
 		for(int i = 0; i < this.mtimes.size(); i ++) {
-			relposs[ i ] = relpos_intsts_starts[ i ] + intsts_sizes[ i ] - 1;
+			relposs.add((T_rpos)new Long(relpos_intsts_starts.get(i).longValue() + intsts_sizes[ i ] - 1));
+			// relposs[ i ] = relpos_intsts_starts[ i ] + intsts_sizes[ i ] - 1;
 		}
 		
 		return(relposs);
