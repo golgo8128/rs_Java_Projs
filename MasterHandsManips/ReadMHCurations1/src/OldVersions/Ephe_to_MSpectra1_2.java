@@ -15,13 +15,13 @@ import emon2.api.SessionInfo;
 
 import RS.MassSpec.*;
 
-public class Ephe_to_MSpectra1 {
+public class Ephe_to_MSpectra1_2 {
 
 	public HashMap<Float, HashMap<Float, Integer>> mt_mz_to_intsty;
 	public Set<Float> key_mzs;
 	private SessionInfo sess;
 	
-	public Ephe_to_MSpectra1(MasterHands imh, AlignmentInfo iainfo, SessionInfo isess){
+	public Ephe_to_MSpectra1_2(MasterHands imh, AlignmentInfo iainfo, SessionInfo isess){
 		
 		this.sess = isess;
 		this.key_mzs = new HashSet<Float>();
@@ -65,11 +65,11 @@ public class Ephe_to_MSpectra1 {
 		
 	}
 	
-	public RS_MassSpectra_simple1_2 <Float, Float, Integer>
+	public RS_MassSpectra_simple1_4 <Float, Float, Integer, Integer>
 		to_RS_MSS(){
 		
-		RS_MassSpectra_simple1_2<Float, Float, Integer> mss
-			= new RS_MassSpectra_simple1_2<Float, Float, Integer>();
+		RS_MassSpectra_simple1_4<Float, Float, Integer, Integer> mss
+			= new RS_MassSpectra_simple1_4<Float, Float, Integer, Integer>();
 		
 		ArrayList<Float> mts = 
 				new ArrayList<Float>(this.mt_mz_to_intsty.keySet());

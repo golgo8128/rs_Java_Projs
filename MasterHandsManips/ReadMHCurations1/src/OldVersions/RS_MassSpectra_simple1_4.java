@@ -257,7 +257,7 @@ public class RS_MassSpectra_simple1_4 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		// T_rpos[] relposs = new T_rpos[ this.mtimes.size() ];
 		List<T_rpos> relposs = new ArrayList<T_rpos>();
 		// T_rpos[] relpos_mzs_ends = this.relposs_mzs_ends();
-		List<T_rpos> relpos_mzs_ends = new ArrayList<T_rpos>();
+		List<T_rpos> relpos_mzs_ends = this.relposs_mzs_ends();
 		
 		for(int i = 0; i < this.mtimes.size(); i ++) {
 			relposs.add((T_rpos)new Long(relpos_mzs_ends.get(i).longValue() + 1));
