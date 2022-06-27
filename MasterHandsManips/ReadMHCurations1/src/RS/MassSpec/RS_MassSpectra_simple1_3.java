@@ -12,11 +12,19 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 
 	public ArrayList<T_mtime> mtimes;
 	public ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>> mspecs;
+	private T_rpos calibr_pos_zero;
 	
-	public RS_MassSpectra_simple1_3() {
+	public RS_MassSpectra_simple1_3(T_rpos ipos_zero) {
 		
 		this.mtimes   = new ArrayList<T_mtime>();
 		this.mspecs   = new ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>>();
+		
+		if(ipos_zero.longValue() != 0) {
+			throw new IllegalArgumentException(
+					String.format("Calibrated position not zero: %d", ipos_zero.longValue()));
+		}
+		
+		this.calibr_pos_zero = ipos_zero;
 		
 	}	
 
@@ -170,7 +178,13 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		}
 		
 		for(T_rpos relpos : this.relposs_mzs_starts()) {
-			fw.writeInt(relpos.intValue() + header_bytes); // <--- !!!!!
+			if(Integer.class.isInstance(relpos)){
+				fw.writeInt(relpos.intValue() + header_bytes);
+			} else if (Long.class.isInstance(relpos)) {
+				fw.writeLong(relpos.longValue() + header_bytes);
+			} else {
+				throw new IllegalArgumentException("Illegal data type for relative positions.");
+			}
 		}
 		
 		for(int csize : this.sizes_mzs()) {
@@ -178,7 +192,13 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		}
 		
 		for(T_rpos relpos : this.relposs_intsts_starts()) {
-			fw.writeInt(relpos + header_bytes);
+			if(Integer.class.isInstance(relpos)){
+				fw.writeInt(relpos.intValue() + header_bytes);
+			} else if (Long.class.isInstance(relpos)) {
+				fw.writeLong(relpos.longValue() + header_bytes);
+			} else {
+				throw new IllegalArgumentException("Illegal data type for relative positions.");
+			}
 		}
 		
 		for(int csize : this.sizes_intsts()) {
@@ -194,7 +214,9 @@ public class RS_MassSpectra_simple1_3 <T_mtime, T_mz, T_intst, T_rpos extends Nu
 		
 		int[] ms_sizes = this.sizes_ms();
 		
-		relposs[ 0 ] = 0;
+		relposs[ 0 ] = (T_rpos)new Integer(0); // (this.calibr_pos_zero;
+		
+		
 		for(int i = 0; i < this.mtimes.size() - 1; i ++) {
 			relposs[ i + 1 ] = relposs[ i ] + ms_sizes[ i ];
 		}
