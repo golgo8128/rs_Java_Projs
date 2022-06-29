@@ -11,7 +11,7 @@ import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.SessionInfo;
 
-import RS.MasterHands.Ephe_to_MSpectra1;
+import RS.MasterHands.Ephe_to_MSpectra1_3;
 
 public class Test_get_ephe2 {
 
@@ -42,7 +42,7 @@ public class Test_get_ephe2 {
 			
 			System.out.println(sess.getName());
 			
-			Ephe_to_MSpectra1 ephe_to_mss = new Ephe_to_MSpectra1(mh, null, sess);
+			Ephe_to_MSpectra1_3 ephe_to_mss = new Ephe_to_MSpectra1_3(mh, null, sess);
 			
 			LocalDateTime date1 = LocalDateTime.now();
 			DateTimeFormatter dtformat = 

@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 import emon2.EmonException;
 
-import RS.MasterHands.MHCurBase1_2;
+import RS.MasterHands.MHCurBase1_4;
 
 public class Test_MHCurBase1_1 {
 		
@@ -34,7 +34,7 @@ public class Test_MHCurBase1_1 {
 				Paths.get(System.getenv("RS_TMP_DIR")).
 					resolve("rs_MSpectra").resolve("J06_0101_plasma");
 		
-		MHCurBase1_2 mhcurbase = new MHCurBase1_2(tmpmhfile.toString());
+		MHCurBase1_4 mhcurbase = new MHCurBase1_4(tmpmhfile.toString());
 		mhcurbase.output_peak_info(tmpoutfolder);
 		mhcurbase.output_annot_info(tmpoutfolder);
 		mhcurbase.output_spectra_unaligned(tmpoutfolder);
