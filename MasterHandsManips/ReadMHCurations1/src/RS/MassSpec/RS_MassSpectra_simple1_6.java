@@ -74,43 +74,6 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
 		
 	}
 
-	public int get_header_bytes(int foffset_byte_size)
-			throws IllegalArgumentException {
-		
-		if(this.mtimes.size() == 0) {
-			return foffset_byte_size;
-		}
-		
-		T_mtime mt_1st = this.mtimes.get(0);
-		int mtime_byte_size;
-		
-		if(Integer.class.isInstance(mt_1st)){
-			mtime_byte_size = 4;
-		} else if (Float.class.isInstance(mt_1st)) {
-			mtime_byte_size = 4;
-		} else if (Double.class.isInstance(mt_1st)) {
-			mtime_byte_size = 8;
-		} else if (Long.class.isInstance(mt_1st)) {
-			mtime_byte_size = 8;
-		} else {
-			throw new IllegalArgumentException("Illegal data type for MT's.");
-		}
-			
-		int relposs_size;
-		if(this.vartype_symb_relpos == 'i') {
-			relposs_size = mtimes.size() * Integer.BYTES * 2;
-		} else {
-			relposs_size = mtimes.size() * Long.BYTES * 2;
-		}
-		
-		return foffset_byte_size
-				+ Integer.BYTES // <--- Number of spectra is represented by the type int.
-				+ mtimes.size() * mtime_byte_size
-				+ relposs_size
-				+ mtimes.size() * Integer.BYTES * 2; // <--- Sizes are expressed in the type int.
-
-	}
-	
 	public void write_foffset(DataOutputStream fw,
 			long flex_header_byte_size) throws IOException {
 
@@ -173,6 +136,48 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
 		}
 		
 	}
+	
+	
+	
+	
+	public int get_header_bytes(int foffset_byte_size)
+			throws IllegalArgumentException {
+		
+		if(this.mtimes.size() == 0) {
+			return foffset_byte_size;
+		}
+		
+		T_mtime mt_1st = this.mtimes.get(0);
+		int mtime_byte_size;
+		
+		if(Integer.class.isInstance(mt_1st)){
+			mtime_byte_size = 4;
+		} else if (Float.class.isInstance(mt_1st)) {
+			mtime_byte_size = 4;
+		} else if (Double.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else if (Long.class.isInstance(mt_1st)) {
+			mtime_byte_size = 8;
+		} else {
+			throw new IllegalArgumentException("Illegal data type for MT's.");
+		}
+			
+		int relposs_size;
+		if(this.vartype_symb_relpos == 'i') {
+			relposs_size = mtimes.size() * Integer.BYTES * 2;
+		} else {
+			relposs_size = mtimes.size() * Long.BYTES * 2;
+		}
+		
+		return foffset_byte_size
+				+ Integer.BYTES // <--- Number of spectra is represented by the type int.
+				+ mtimes.size() * mtime_byte_size
+				+ relposs_size
+				+ mtimes.size() * Integer.BYTES * 2; // <--- Sizes are expressed in the type int.
+
+	}
+	
+
 	
 	public void write_header_to_file(DataOutputStream fw, int foffset_byte_size)
 			throws IOException{
