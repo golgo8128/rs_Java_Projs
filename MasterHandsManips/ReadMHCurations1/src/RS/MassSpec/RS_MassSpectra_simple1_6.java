@@ -8,20 +8,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
+public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
+	T_numMTs, T_msdat_bsize, T_offspos>{
 
 	public ArrayList<T_mtime> mtimes;
-	public ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>> mspecs;
+	public ArrayList<MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>> mspecs;
 	private char vartype_symb_relpos;
 	
 	public RS_MassSpectra_simple1_6() {
 		
 		this.mtimes   = new ArrayList<T_mtime>();
-		this.mspecs   = new ArrayList<MassSpecrum_simple1_2<T_mz, T_intst>>();
-		this.vartype_symb_relpos = 'i';
+		this.mspecs   = new ArrayList<MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>>();
+		// this.vartype_symb_relpos = 'i';
 		
 	}	
 
+	/*
 	public void set_vartype_symb_relpos(char ivartype_symb_relpos) {
 		
 		if(ivartype_symb_relpos != 'i' && ivartype_symb_relpos != 'x'){
@@ -32,8 +34,9 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 		
 		this.vartype_symb_relpos = ivartype_symb_relpos;
 	}
+	*/
 	
-	public void add_ms(T_mtime imt, MassSpecrum_simple1_2<T_mz, T_intst> ms){
+	public void add_ms(T_mtime imt, MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms){
 		
 		this.mtimes.add(imt);
 		this.mspecs.add(ms);
@@ -44,7 +47,7 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 		
 		this.mtimes.add(imt);
 		
-		MassSpecrum_simple1_2<T_mz, T_intst> ms = new MassSpecrum_simple1_2<T_mz, T_intst>();
+		MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms = new MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>();
 		ms.mzs    = mzs;
 		ms.intsts = intsts;
 		this.mspecs.add(ms);
@@ -52,18 +55,18 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 	}
 	
 	
-	public void output_to_file(Path opath, int foffset_byte_size) throws IOException {
+	public void output_to_file(Path opath, T_offspos flex_header_byte_size) throws IOException {
 		
 		Files.createDirectories(opath.getParent());
 		
 		DataOutputStream fw = new DataOutputStream(
 				new BufferedOutputStream(new FileOutputStream(opath.toString())));
 		
-		this.write_foffset(fw, foffset_byte_size);
+		this.write_foffset(fw, flex_header_byte_size);
 		fw.writeInt(this.mtimes.size());
 		this.write_header_to_file(fw, foffset_byte_size);
 		
-		for(MassSpecrum_simple1_2<T_mz, T_intst>mspec : this.mspecs) {
+		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>mspec : this.mspecs) {
 			mspec.output_to_file(fw);			
 		}
 		
@@ -109,7 +112,7 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 	}
 	
 	public void write_foffset(DataOutputStream fw,
-			int foffset_byte_size) throws IOException {
+			T_offspos flex_header_byte_size) throws IOException {
 		
 		fw.writeInt(foffset_byte_size); // 4 bytes
 		fw.writeInt(0x01020304); // 4 bytes
@@ -284,10 +287,10 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 	public int[] sizes_ms()
 			throws IllegalArgumentException {
 		
-		int[] osizes = new int[ this.mtimes.size() ];
+		T_msdat_bsize[] osizes = new T_msdat_bsize[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_ms();	
 			p ++;
 		}
@@ -301,7 +304,7 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 		int[] osizes = new int[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_mzs();	
 			p ++;
 		}
@@ -315,7 +318,7 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 		int[] osizes = new int[ this.mtimes.size() ];
 		int p = 0;
 		
-		for(MassSpecrum_simple1_2<T_mz, T_intst> ms : this.mspecs) {
+		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.mspecs) {
 			osizes[ p ] = ms.bytesize_intsts();			
 			p ++;
 		}
@@ -323,6 +326,5 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst>{
 		return(osizes);
 	}	
 	
-	
-	
+
 }
