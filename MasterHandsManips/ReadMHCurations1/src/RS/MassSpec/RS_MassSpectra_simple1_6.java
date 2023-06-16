@@ -55,7 +55,7 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
 	}
 	
 	
-	public void output_to_file(Path opath, T_offspos flex_header_byte_size) throws IOException {
+	public void output_to_file(Path opath, long flex_header_byte_size) throws IOException {
 		
 		Files.createDirectories(opath.getParent());
 		
@@ -112,10 +112,11 @@ public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
 	}
 	
 	public void write_foffset(DataOutputStream fw,
-			T_offspos flex_header_byte_size) throws IOException {
-		
-		fw.writeInt(foffset_byte_size); // 4 bytes
+			long flex_header_byte_size) throws IOException {
+
 		fw.writeInt(0x01020304); // 4 bytes
+		fw.writeLong(flex_header_byte_sizee); // 8 bytes
+
 		
 		if(this.mtimes.size() > 0) {
 			// 1 byte
