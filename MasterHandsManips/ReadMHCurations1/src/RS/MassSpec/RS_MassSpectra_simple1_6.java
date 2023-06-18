@@ -8,8 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-public class RS_MassSpectra_simple1_6 <T_mtime, T_mz, T_intst,
-	T_numMTs, T_msdat_bsize, T_offspos>{
+public class RS_MassSpectra_simple1_6 <
+	T_mtime extends Number, T_mz extends Number, T_intst extends Number,
+	T_numMTs extends Number, T_msdat_bsize extends Number, T_offspos extends Number>{
 
 	public ArrayList<T_mtime> mtimes;
 	public ArrayList<MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>> mspecs;
