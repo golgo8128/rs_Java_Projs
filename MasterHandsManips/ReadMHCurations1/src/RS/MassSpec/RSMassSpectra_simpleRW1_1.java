@@ -108,6 +108,13 @@ public class RSMassSpectra_simpleRW1_1<
 		
 		long header_bytes = this.flex_header_byte_size + this.get_spectra_header_bsize();
 		
+		if(Integer.class.isInstance(rsmspectr.example_nummts)){
+			fw.writeInt(this.rsmspectr.mtimes.size());
+		} else {
+			fw.writeLong((long)this.rsmspectr.mtimes.size());
+		}
+		
+		
 		for(T_mtime mt : this.rsmspectr.mtimes) {
 			VariableType1.write_single_binary_val_to_file(fw, mt);
 		}
@@ -149,18 +156,17 @@ public class RSMassSpectra_simpleRW1_1<
 	}
 	
 	
-	public void output_to_file(Path opath, long flex_header_byte_size) throws IOException {
+	public void output_to_file(Path opath) throws IOException {
 		
 		Files.createDirectories(opath.getParent());
 		
 		DataOutputStream fw = new DataOutputStream(
 				new BufferedOutputStream(new FileOutputStream(opath.toString())));
 		
-		this.write_foffset(fw, flex_header_byte_size);
-		fw.writeInt(this.mtimes.size());
-		this.write_header_to_file(fw, foffset_byte_size);
+		this.write_flex_header_to_file(fw);
+		this.write_spectra_header_to_file(fw);
 		
-		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>mspec : this.mspecs) {
+		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>mspec : this.rsmspectr.mspecs) {
 			mspec.output_to_file(fw);			
 		}
 		
