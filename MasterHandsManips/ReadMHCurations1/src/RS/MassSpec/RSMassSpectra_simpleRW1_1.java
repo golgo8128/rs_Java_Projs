@@ -107,22 +107,9 @@ public class RSMassSpectra_simpleRW1_1<
 			throws IOException{
 		
 		long header_bytes = this.flex_header_byte_size + this.get_spectra_header_bsize();
-	
-		
-		T_mtime mt_dummy;
 		
 		for(T_mtime mt : this.rsmspectr.mtimes) {
-			if(Integer.class.isInstance(mt_dummy)){
-				fw.writeInt((int)mt);
-			} else if (Float.class.isInstance(mt_dummy)) {
-				fw.writeFloat((float)mt);
-			} else if (Double.class.isInstance(mt_dummy)) {
-				fw.writeDouble((double)mt);
-			} else if (Long.class.isInstance(mt_dummy)) {
-				fw.writeLong((long)mt);
-			} else {
-				throw new IllegalArgumentException("Illegal data type for MT's.");
-			}
+			VariableType1.write_single_binary_val_to_file(fw, mt);
 		}
 		
 		for(long relpos : this.relposs_mzs_starts()) {
@@ -143,15 +130,20 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_intsts_starts()) {
-			if(this.vartype_symb_relpos == 'i') {
+			if(Integer.class.isInstance(rsmspectr.example_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
-			} else  {
+			} else {
 				fw.writeLong(relpos + header_bytes);
 			}
+			
 		}
 		
-		for(int csize : this.sizes_intsts()) {
-			fw.writeInt(csize);
+		for(T_msdat_bsize csize : this.sizes_intsts()) {
+			if(Integer.class.isInstance(csize)) {
+				fw.writeInt((int)(csize));
+			} else {
+				fw.writeLong((long)csize);
+			} 	
 		}
 		
 	}
