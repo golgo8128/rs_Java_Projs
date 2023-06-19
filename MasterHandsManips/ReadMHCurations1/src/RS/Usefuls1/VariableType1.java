@@ -1,5 +1,7 @@
 package RS.Usefuls1;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class VariableType1 {
@@ -21,6 +23,27 @@ public class VariableType1 {
 	*/
 	
 	
+	public static byte get_char_symb_from_vartype(Number inumobj) {
+		
+		byte ochar;
+		
+		if(Integer.class.isInstance(inumobj)){
+			ochar = 'i';
+		} else if (Float.class.isInstance(inumobj)) {
+			ochar = 'f';
+		} else if (Double.class.isInstance(inumobj)) {
+			ochar = 'd';
+		} else if (Long.class.isInstance(inumobj)) {
+			ochar = 'x';
+		} else {
+			throw new IllegalArgumentException("Illegal data type for finding corresponding char.");
+		}
+		
+		return ochar;
+		
+	}
+	
+	
 	public static int get_bsize_vartype(Number iobj)
 			throws IllegalArgumentException {
 
@@ -37,12 +60,31 @@ public class VariableType1 {
 			o_bsize = 8;
 		}
 		else {
-			throw new IllegalArgumentException("Illegal data type for m/z's.");
+			throw new IllegalArgumentException("Illegal data type for getting byte size.");
 		}
 		
 		return o_bsize;
 		
 	}
+	
+	public static void write_single_binary_val_to_file(
+			DataOutputStream fw,
+			Number iobj) throws IOException {
+		
+		if(Integer.class.isInstance(iobj)){
+			fw.writeInt((int) iobj);
+		} else if(Float.class.isInstance(iobj)) {
+			fw.writeFloat((float) iobj);
+		} else if(Double.class.isInstance(iobj)) {
+			fw.writeDouble((double) iobj);
+		} else if(Long.class.isInstance(iobj)) {
+			fw.writeLong((long) iobj);
+		} else {
+			throw new IllegalArgumentException("Illegal data type for file writing.");
+		}
+		
+	}
+	
 	
 
 	/*

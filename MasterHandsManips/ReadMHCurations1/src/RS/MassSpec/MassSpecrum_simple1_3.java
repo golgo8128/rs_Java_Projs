@@ -11,6 +11,16 @@ public class MassSpecrum_simple1_3
 	public T_mz[] mzs;
 	public T_intst[] intsts;
 
+	private T_mz example_mz = null;
+	private T_intst example_intst = null;
+
+	public void set_example_instances(T_mz iexample_mz, T_intst iexample_intst){
+		
+		this.example_mz = iexample_mz;
+		this.example_intst = iexample_intst;
+		
+	}
+
 	
 	public T_msdat_bsize bytesize_ms() {
 		
@@ -31,8 +41,7 @@ public class MassSpecrum_simple1_3
 	
 	public T_msdat_bsize bytesize_mzs(){
 			
-		T_mz mz1st_dummy = null;
-		Long oval = (long)(VariableType1.get_bsize_vartype(mz1st_dummy) * this.mzs.length);
+		Long oval = (long)(VariableType1.get_bsize_vartype(this.example_mz) * this.mzs.length);
 		return (T_msdat_bsize)oval;
 		
 	}
@@ -50,8 +59,7 @@ public class MassSpecrum_simple1_3
 
 	public T_msdat_bsize bytesize_intsts(){
 	
-		T_intst intsts1st_dummy = null;
-		Long oval = (long)VariableType1.get_bsize_vartype(intsts1st_dummy) * this.mzs.length;
+		Long oval = (long)VariableType1.get_bsize_vartype(this.example_intst) * this.mzs.length;
 		return (T_msdat_bsize)oval;
 				
 	}
@@ -83,6 +91,9 @@ public class MassSpecrum_simple1_3
 			T_mz val)
 			throws IOException, IllegalArgumentException {
 		
+		VariableType1.write_single_binary_val_to_file(fw, val);
+		
+		/*
 		if(Integer.class.isInstance(val)){
 			fw.writeInt((int) val);
 		} else if(Float.class.isInstance(val)) {
@@ -94,6 +105,7 @@ public class MassSpecrum_simple1_3
 		} else {
 			throw new IllegalArgumentException("Writing to file failed.");
 		}
+		*/
 		
 	}
 	
@@ -103,6 +115,9 @@ public class MassSpecrum_simple1_3
 			T_intst val)
 			throws IOException, IllegalArgumentException {
 		
+		VariableType1.write_single_binary_val_to_file(fw, val);
+		
+		/*
 		if(Integer.class.isInstance(val)){
 			fw.writeInt((int) val);
 		} else if(Float.class.isInstance(val)) {
@@ -114,6 +129,7 @@ public class MassSpecrum_simple1_3
 		} else {
 			throw new IllegalArgumentException("Writing to file failed.");
 		}
+		*/
 		
 	}
 	
