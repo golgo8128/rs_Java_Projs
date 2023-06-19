@@ -92,18 +92,12 @@ public class RSMassSpectra_simpleRW1_1<
 	
 	public long get_spectra_header_bsize()
 			throws IllegalArgumentException {
-		
-		
-		T_numMTs nummts_dummy = null;
-		T_mtime mt_dummy = null;
-		T_offspos offspos_dummy = null;
-		T_msdat_bsize msdat_bsize_dummy = null;
-		
+			
 		return 
-				+ VariableType1.get_bsize_vartype(nummts_dummy)
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(mt_dummy)
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(offspos_dummy) * 2
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(msdat_bsize_dummy) * 2;		
+				+ VariableType1.get_bsize_vartype(this.rsmspectr.example_nummts)
+				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_mtime)
+				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_offspos) * 2
+				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_msdat_bsize) * 2;		
 
 	}
 	
@@ -132,15 +126,20 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_mzs_starts()) {
-			if(this.vartype_symb_relpos == 'i') {
+			if(Integer.class.isInstance(rsmspectr.example_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
 			} else {
 				fw.writeLong(relpos + header_bytes);
 			} 
 		}
 		
-		for(int csize : this.sizes_mzs()) {
-			fw.writeInt(csize);
+		for(T_msdat_bsize csize : this.sizes_mzs()) {
+			if(Integer.class.isInstance(csize)) {
+				fw.writeInt((int)(csize));
+			} else {
+				fw.writeLong((long)csize);
+			} 			
+			
 		}
 		
 		for(long relpos : this.relposs_intsts_starts()) {
