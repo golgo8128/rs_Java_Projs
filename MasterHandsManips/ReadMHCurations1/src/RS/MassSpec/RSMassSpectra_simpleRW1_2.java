@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 
-public class RSMassSpectra_simpleRW1_1<
+public class RSMassSpectra_simpleRW1_2<
 	T_mtime extends Number, T_mz extends Number, T_intst extends Number,
 	T_numMTs extends Number, T_msdat_bsize extends Number, T_offspos extends Number> {
 	
@@ -19,7 +19,7 @@ public class RSMassSpectra_simpleRW1_1<
 	final int VERSION_RS_MULTISPECTRA_DATASTRUCT = 0x00000502;
 	
 	
-	private RS_MassSpectra_simple1_6<T_mtime, T_mz, T_intst,
+	private RS_MassSpectra_simple1_7<T_mtime, T_mz, T_intst,
 		T_numMTs, T_msdat_bsize, T_offspos> rsmspectr;
 	long flex_header_byte_size;
 		
@@ -27,8 +27,8 @@ public class RSMassSpectra_simpleRW1_1<
 
 	
 	// Constructor
-	public RSMassSpectra_simpleRW1_1(
-			RS_MassSpectra_simple1_6<T_mtime, T_mz, T_intst,
+	public RSMassSpectra_simpleRW1_2(
+			RS_MassSpectra_simple1_7<T_mtime, T_mz, T_intst,
 				T_numMTs, T_msdat_bsize, T_offspos> irsmspectr, long iflex_header_byte_size){
 		
 		this.rsmspectr = irsmspectr;
@@ -56,22 +56,22 @@ public class RSMassSpectra_simpleRW1_1<
 		cflex_head_size += Long.BYTES;
 		
 		/* ----- Variable types ----- */
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_mtime));
+		fw.writeByte(VariableType1.<T_mtime>get_char_symb_from_vartype(this.rsmspectr.klass_T_mtime));
 		cflex_head_size += Byte.BYTES;
 		
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_mz));
+		fw.writeByte(VariableType1.<T_mz>get_char_symb_from_vartype(this.rsmspectr.klass_T_mz));
 		cflex_head_size += Byte.BYTES;
 		
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_intst));
+		fw.writeByte(VariableType1.<T_intst>get_char_symb_from_vartype(this.rsmspectr.klass_T_intst));
 		cflex_head_size += Byte.BYTES;
 		
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_nummts));
+		fw.writeByte(VariableType1.<T_numMTs>get_char_symb_from_vartype(this.rsmspectr.klass_T_numMTs));
 		cflex_head_size += Byte.BYTES;
 		
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_msdat_bsize));
+		fw.writeByte(VariableType1.<T_msdat_bsize>get_char_symb_from_vartype(this.rsmspectr.klass_T_msdat_bsize));
 		cflex_head_size += Byte.BYTES;		
 		
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_offspos));
+		fw.writeByte(VariableType1.<T_offspos>get_char_symb_from_vartype(this.rsmspectr.klass_T_offspos));
 		cflex_head_size += Byte.BYTES;				
 		
 		
@@ -88,10 +88,10 @@ public class RSMassSpectra_simpleRW1_1<
 			throws IllegalArgumentException {
 			
 		return 
-				+ VariableType1.get_bsize_vartype(this.rsmspectr.example_nummts)
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_mtime)
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_offspos) * 2
-				+ this.rsmspectr.mtimes.size() * VariableType1.get_bsize_vartype(this.rsmspectr.example_msdat_bsize) * 2;		
+				+ VariableType1.<T_numMTs>get_bsize_vartype(this.rsmspectr.klass_T_numMTs)
+				+ this.rsmspectr.mtimes.size() * VariableType1.<T_mtime>get_bsize_vartype(this.rsmspectr.klass_T_mtime)
+				+ this.rsmspectr.mtimes.size() * VariableType1.<T_offspos>get_bsize_vartype(this.rsmspectr.klass_T_offspos) * 2
+				+ this.rsmspectr.mtimes.size() * VariableType1.<T_msdat_bsize>get_bsize_vartype(this.rsmspectr.klass_T_msdat_bsize) * 2;		
 
 	}
 	
@@ -102,7 +102,7 @@ public class RSMassSpectra_simpleRW1_1<
 		
 		long header_bytes = this.flex_header_byte_size + this.get_spectra_header_bsize();
 		
-		if(Integer.class.isInstance(rsmspectr.example_nummts)){
+		if(Integer.class.equals(rsmspectr.klass_T_numMTs)){
 			fw.writeInt(this.rsmspectr.mtimes.size());
 		} else {
 			fw.writeLong((long)this.rsmspectr.mtimes.size());
@@ -114,15 +114,15 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_mzs_starts()) {
-			if(Integer.class.isInstance(this.rsmspectr.example_offspos)) {
+			if(Integer.class.equals(this.rsmspectr.klass_T_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
 			} else {
 				fw.writeLong(relpos + header_bytes);
 			} 
 		}
 		
-		for(T_msdat_bsize csize : this.sizes_mzs()) {
-			if(Integer.class.isInstance(this.rsmspectr.example_msdat_bsize)) {
+		for(long csize : this.sizes_mzs()) {
+			if(Integer.class.equals(this.rsmspectr.klass_T_msdat_bsize)) {
 				// .isInstance(csize) does not work
 				fw.writeInt((int)(csize));
 			} else {
@@ -132,7 +132,7 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_intsts_starts()) {
-			if(Integer.class.isInstance(this.rsmspectr.example_offspos)) {
+			if(Integer.class.equals(this.rsmspectr.klass_T_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
 			} else {
 				fw.writeLong(relpos + header_bytes);
@@ -140,8 +140,8 @@ public class RSMassSpectra_simpleRW1_1<
 			
 		}
 		
-		for(T_msdat_bsize csize : this.sizes_intsts()) {
-			if(Integer.class.isInstance(this.rsmspectr.example_msdat_bsize)) {
+		for(long csize : this.sizes_intsts()) {
+			if(Integer.class.equals(this.rsmspectr.klass_T_msdat_bsize)) {
 				// .isInstance(csize) does not work
 				fw.writeInt((int)(csize));
 			} else {
@@ -162,7 +162,7 @@ public class RSMassSpectra_simpleRW1_1<
 		this.write_flex_header_to_file(fw);
 		this.write_spectra_header_to_file(fw);
 		
-		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize>mspec : this.rsmspectr.mspecs) {
+		for(MassSpecrum_simple1_4<T_mz, T_intst>mspec : this.rsmspectr.mspecs) {
 			mspec.output_to_file(fw);			
 		}
 		
@@ -230,36 +230,37 @@ public class RSMassSpectra_simpleRW1_1<
 		
 	}	
 
-	public ArrayList<T_msdat_bsize> sizes_ms()
+
+	public ArrayList<Long> sizes_ms()
 			throws IllegalArgumentException {
 		
-		ArrayList<T_msdat_bsize> osizes = new ArrayList<T_msdat_bsize>();
+		ArrayList<Long> osizes = new ArrayList<Long>();
 		
-		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.rsmspectr.mspecs) {
+		for(MassSpecrum_simple1_4<T_mz, T_intst> ms : this.rsmspectr.mspecs) {
 			osizes.add(ms.bytesize_ms());
 		}
 		
 		return(osizes);
 	}
 		
-	public ArrayList<T_msdat_bsize> sizes_mzs()
+	public ArrayList<Long> sizes_mzs()
 			throws IllegalArgumentException {
 		
-		ArrayList<T_msdat_bsize> osizes = new ArrayList<T_msdat_bsize>();
+		ArrayList<Long> osizes = new ArrayList<Long>();
 		
-		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.rsmspectr.mspecs) {
+		for(MassSpecrum_simple1_4<T_mz, T_intst> ms : this.rsmspectr.mspecs) {
 			osizes.add(ms.bytesize_mzs());	
 		}
 		
 		return(osizes);
 	}
 	
-	public ArrayList<T_msdat_bsize> sizes_intsts()
+	public ArrayList<Long> sizes_intsts()
 			throws IllegalArgumentException {
 		
-		ArrayList<T_msdat_bsize> osizes = new ArrayList<T_msdat_bsize>();
+		ArrayList<Long> osizes = new ArrayList<Long>();
 		
-		for(MassSpecrum_simple1_3<T_mz, T_intst, T_msdat_bsize> ms : this.rsmspectr.mspecs) {
+		for(MassSpecrum_simple1_4<T_mz, T_intst> ms : this.rsmspectr.mspecs) {
 			osizes.add(ms.bytesize_intsts());			
 		}
 		
@@ -267,4 +268,5 @@ public class RSMassSpectra_simpleRW1_1<
 		
 	}	
 
+	
 }

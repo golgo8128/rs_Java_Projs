@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import OldVersions.RS_MassSpectra_simple1_6;
 import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;

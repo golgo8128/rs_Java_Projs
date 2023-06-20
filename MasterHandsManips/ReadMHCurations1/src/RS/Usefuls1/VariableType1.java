@@ -44,6 +44,28 @@ public class VariableType1 {
 	}
 	
 	
+	public static <T> byte get_char_symb_from_vartype(Class<T> iklass) {
+		
+		byte ochar;
+		
+		if(Integer.class.equals(iklass)){
+			ochar = 'i';
+		} else if (Float.class.equals(iklass)) {
+			ochar = 'f';
+		} else if (Double.class.equals(iklass)) {
+			ochar = 'd';
+		} else if (Long.class.equals(iklass)) {
+			ochar = 'x';
+		} else {
+			throw new IllegalArgumentException("Illegal data type for finding corresponding char.");
+		}
+		
+		return ochar;
+		
+	}
+	
+	
+	
 	public static int get_bsize_vartype(Number iobj)
 			throws IllegalArgumentException {
 
@@ -66,6 +88,32 @@ public class VariableType1 {
 		return o_bsize;
 		
 	}
+	
+	public static <T> int get_bsize_vartype(Class<T> iklass)
+			throws IllegalArgumentException {
+
+		int o_bsize;
+		
+		if(Integer.class.equals(iklass)){
+			o_bsize = Integer.BYTES;
+		} else if (Float.class.equals(iklass)) {
+			o_bsize = Float.BYTES;
+		} else if (Double.class.equals(iklass)) {
+			o_bsize = Double.BYTES;
+		} else if (Long.class.equals(iklass)) {
+			o_bsize = Long.BYTES;
+		}
+		else {
+			throw new IllegalArgumentException("Illegal data type for getting byte size.");
+		}
+		
+		return o_bsize;
+		
+	}
+	
+	
+	
+	
 	
 	public static void write_single_binary_val_to_file(
 			DataOutputStream fw,
