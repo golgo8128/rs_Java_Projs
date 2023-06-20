@@ -1,8 +1,10 @@
+package RS.MassSpec;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import RS.MassSpec.*;
 
@@ -27,20 +29,10 @@ public class Test_RS_MassSpectra_simple1_4 {
 		Long[] intsts4 = { 2L, 3L, 1L, 3L, 7L };
 		
 		Float[] mts = { 0.1f, 0.2f, 0.3f, 0.5f, 0.9f };
-			
-		
-		Float example_mtime = 0.0f;
-		Float example_mz = 0.0f;
-		Long example_intst = 0L;
-		Long example_nummts = 0L;
-		Long example_msdat_bsize = 0L;
-		Long example_offspos = 0L;
-		
-		RS_MassSpectra_simple1_6<Float, Float, Long, Long, Long, Long> multi_ms
-			= new RS_MassSpectra_simple1_6<Float, Float, Long, Long, Long, Long>(
-					example_mtime, example_mz, example_intst,
-					example_nummts, example_msdat_bsize, example_offspos);
-		
+				
+		RS_MassSpectra_simple1_5<Float, Float, Long> multi_ms
+			= new RS_MassSpectra_simple1_5<Float, Float, Long>();
+		multi_ms.set_vartype_symb_relpos('i');
 		multi_ms.add_ms(mts[ 0 ], mzs0, intsts0);
 		multi_ms.add_ms(mts[ 1 ], mzs1, intsts1);		
 		multi_ms.add_ms(mts[ 2 ], mzs2, intsts2);
@@ -49,14 +41,27 @@ public class Test_RS_MassSpectra_simple1_4 {
 		
 		Path tmpfile = 
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rs_MSpectra").resolve("test_Java11.rsmspra");
+					resolve("rs_MSpectra").resolve("test11.rsmspra");
+		multi_ms.output_to_file(tmpfile, 256);
 				
-		RSMassSpectra_simpleRW1_1<Float, Float, Long,
-			Long, Long, Long>
-			multi_ms_w = new RSMassSpectra_simpleRW1_1<Float, Float, Long,
-					Long, Long, Long>(multi_ms, 256);
-		multi_ms_w.output_to_file(tmpfile);	
-
+		long relposs_mzs_starts[]    = multi_ms.relposs_mzs_starts();
+		long relposs_mzs_ends[]      = multi_ms.relposs_mzs_ends();
+		long relposs_intsts_starts[] = multi_ms.relposs_intsts_starts();
+		long relposs_intsts_ends[]   = multi_ms.relposs_intsts_ends();
+		
+		for(int i = 0; i < relposs_mzs_starts.length;i ++) {
+		
+			long[] relposs = new long[ 4 ];
+			relposs[0] = relposs_mzs_starts[i];
+			relposs[1] = relposs_mzs_ends[i];
+			relposs[2] = relposs_intsts_starts[i];
+			relposs[3] = relposs_intsts_ends[i];
+			
+			System.out.println(Arrays.stream(relposs)
+					.mapToObj(String::valueOf)
+					.collect(Collectors.joining(", ")));
+			
+		}
 		System.out.println(tmpfile);
 		
 	}

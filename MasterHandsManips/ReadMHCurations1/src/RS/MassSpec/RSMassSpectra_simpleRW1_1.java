@@ -27,10 +27,9 @@ public class RSMassSpectra_simpleRW1_1<
 
 	
 	// Constructor
-	RSMassSpectra_simpleRW1_1(
+	public RSMassSpectra_simpleRW1_1(
 			RS_MassSpectra_simple1_6<T_mtime, T_mz, T_intst,
-				T_numMTs, T_msdat_bsize, T_offspos> irsmspectr, long iflex_header_byte_size,
-				T_mtime iexample_mtime){
+				T_numMTs, T_msdat_bsize, T_offspos> irsmspectr, long iflex_header_byte_size){
 		
 		this.rsmspectr = irsmspectr;
 		this.flex_header_byte_size = iflex_header_byte_size;
@@ -56,28 +55,23 @@ public class RSMassSpectra_simpleRW1_1<
 		fw.writeLong(this.flex_header_byte_size); // 8 bytes
 		cflex_head_size += Long.BYTES;
 		
-		// Variable types
+		/* ----- Variable types ----- */
 		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_mtime));
 		cflex_head_size += Byte.BYTES;
 		
-		T_mz mz_dummy = null;
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(mz_dummy));
+		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_mz));
 		cflex_head_size += Byte.BYTES;
 		
-		T_intst intst_dummy = null;
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(intst_dummy));
+		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_intst));
 		cflex_head_size += Byte.BYTES;
 		
-		T_numMTs nummts_dummy = null;
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(nummts_dummy));
+		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_nummts));
 		cflex_head_size += Byte.BYTES;
 		
-		T_msdat_bsize msdat_bsize_dummy = null;
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(msdat_bsize_dummy));
+		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_msdat_bsize));
 		cflex_head_size += Byte.BYTES;		
 		
-		T_offspos offspos_dummy = null;
-		fw.writeByte(VariableType1.get_char_symb_from_vartype(offspos_dummy));
+		fw.writeByte(VariableType1.get_char_symb_from_vartype(this.rsmspectr.example_offspos));
 		cflex_head_size += Byte.BYTES;				
 		
 		
