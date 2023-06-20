@@ -114,7 +114,7 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_mzs_starts()) {
-			if(Integer.class.isInstance(rsmspectr.example_offspos)) {
+			if(Integer.class.isInstance(this.rsmspectr.example_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
 			} else {
 				fw.writeLong(relpos + header_bytes);
@@ -122,7 +122,8 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(T_msdat_bsize csize : this.sizes_mzs()) {
-			if(Integer.class.isInstance(csize)) {
+			if(Integer.class.isInstance(this.rsmspectr.example_msdat_bsize)) {
+				// .isInstance(csize) does not work
 				fw.writeInt((int)(csize));
 			} else {
 				fw.writeLong((long)csize);
@@ -131,7 +132,7 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(long relpos : this.relposs_intsts_starts()) {
-			if(Integer.class.isInstance(rsmspectr.example_offspos)) {
+			if(Integer.class.isInstance(this.rsmspectr.example_offspos)) {
 				fw.writeInt((int)(relpos + header_bytes));
 			} else {
 				fw.writeLong(relpos + header_bytes);
@@ -140,7 +141,8 @@ public class RSMassSpectra_simpleRW1_1<
 		}
 		
 		for(T_msdat_bsize csize : this.sizes_intsts()) {
-			if(Integer.class.isInstance(csize)) {
+			if(Integer.class.isInstance(this.rsmspectr.example_msdat_bsize)) {
+				// .isInstance(csize) does not work
 				fw.writeInt((int)(csize));
 			} else {
 				fw.writeLong((long)csize);
