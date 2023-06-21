@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import OldVersions.RS_MassSpectra_simple1_6;
 import RS.MassSpec.*;
 
 public class Test_RS_MassSpectra_simple1_5 {
