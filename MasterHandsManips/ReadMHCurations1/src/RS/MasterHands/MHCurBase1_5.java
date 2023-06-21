@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import OldVersions.RS_MassSpectra_simple1_6;
 import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
@@ -118,7 +117,7 @@ public class MHCurBase1_5 {
 		
 		Files.createDirectories(output_folder);
 		
-		HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>
+		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
 			session_name_to_RS_MSS_h = this.get_spectra_unaligned();
 		
 		for(String sessnam : session_name_to_RS_MSS_h.keySet()) {
@@ -136,7 +135,7 @@ public class MHCurBase1_5 {
 		
 		Files.createDirectories(output_folder);
 		
-		HashMap<String, HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>>
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
 			align_session_name_to_RS_MSS_h = this.get_spectra_aligned();
 		
 		for(String alignnam : align_session_name_to_RS_MSS_h.keySet()) {
@@ -201,12 +200,12 @@ public class MHCurBase1_5 {
 	}
 	
 	
-	public HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>
+	public HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
 		get_spectra_unaligned(){
 		
-		HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>
+		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
 			session_name_to_RS_MSS_h
-				= new HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>();
+				= new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>();
 		
 		for(SessionInfo sess : this.mh.getSessionList()) {
 			Ephe_to_MSpectra1_3 ephe_mss = new Ephe_to_MSpectra1_3(this.mh, null, sess);
@@ -222,18 +221,18 @@ public class MHCurBase1_5 {
 	}
 	
 	
-	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>>
+	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
 		get_spectra_aligned(){
 	
-		HashMap<String, HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>>
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
 			align_session_name_to_RS_MSS_h
-				= new HashMap<String, HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>>();
+				= new HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>();
 		
 		for(AlignmentInfo align : this.mh.getAlignmentList()) {
 			
 			align_session_name_to_RS_MSS_h.putIfAbsent(
 					align.getName(),
-					new HashMap<String, RS_MassSpectra_simple1_6<Float, Float, Integer>>());
+					new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>());
 			
 			for(SessionInfo sess : align.getSessionList()) {
 				Ephe_to_MSpectra1_3 ephe_mss = new Ephe_to_MSpectra1_3(this.mh, align, sess);

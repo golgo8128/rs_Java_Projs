@@ -10,7 +10,6 @@ public class Test_RS_MassSpectra_simple1_5 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
-		/*
 		Float[] mzs0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
 		Integer[] intsts0 = { 1, 7, 3, 4, 5 };
 
@@ -49,8 +48,8 @@ public class Test_RS_MassSpectra_simple1_5 {
 			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Integer,
 					Integer, Integer, Integer>(multi_ms, 256);
 		
-		*/
-		
+
+		/*
 		Float[] mzs0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
 		Long[] intsts0 = { 1L, 7L, 3L, 4L, 5L };
 
@@ -68,13 +67,6 @@ public class Test_RS_MassSpectra_simple1_5 {
 		
 		Float[] mts = { 0.1f, 0.2f, 0.3f, 0.5f, 0.9f };
 			
-		
-		Float example_mtime = 0.0f;
-		Float example_mz = 0.0f;
-		Long example_intst = 0L;
-		Long example_nummts = 0L;
-		Long example_msdat_bsize = 0L;
-		Long example_offspos = 0L;
 		
 		RS_MassSpectra_simple1_7<Float, Float, Long, Long, Long, Long> multi_ms
 			= new RS_MassSpectra_simple1_7<Float, Float, Long, Long, Long, Long>(
@@ -95,6 +87,9 @@ public class Test_RS_MassSpectra_simple1_5 {
 			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Long,
 					Long, Long, Long>(multi_ms, 256);
 
+		*/
+
+		
 		multi_ms_w.output_to_file(tmpfile);	
 
 		System.out.println(tmpfile);
