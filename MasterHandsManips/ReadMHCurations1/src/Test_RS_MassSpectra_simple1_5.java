@@ -41,12 +41,13 @@ public class Test_RS_MassSpectra_simple1_5 {
 		
 		Path tmpfile = 
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rs_MSpectra").resolve("test_Java12.rsmspra");
-				
-		RSMassSpectra_simpleRW1_2<Float, Float, Integer,
-			Integer, Integer, Integer>
-			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Integer,
-					Integer, Integer, Integer>(multi_ms, 256);
+					resolve("rs_MSpectra").resolve("test_Java12.rsmspra");				
+		multi_ms.output_to_file(tmpfile, 256);
+		
+//		RSMassSpectra_simpleRW1_2<Float, Float, Integer,
+//			Integer, Integer, Integer>
+//			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Integer,
+//					Integer, Integer, Integer>(multi_ms, 256);
 		
 
 		/*
@@ -87,10 +88,12 @@ public class Test_RS_MassSpectra_simple1_5 {
 			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Long,
 					Long, Long, Long>(multi_ms, 256);
 
+		multi_ms_w.output_to_file(tmpfile);	
+		
 		*/
 
 		
-		multi_ms_w.output_to_file(tmpfile);	
+
 
 		System.out.println(tmpfile);
 		

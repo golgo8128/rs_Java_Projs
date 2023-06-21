@@ -1,13 +1,13 @@
 package RS.MasterHands;
 
-import java.io.File;
+// import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+// import java.time.LocalDateTime;
+// import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +17,7 @@ import emon2.api.MasterHands;
 import emon2.api.PeakInfo;
 import emon2.api.SessionInfo;
 import emon2.api.AlignmentInfo;
-import emon2.api.ElectropherogramInfo;
+// import emon2.api.ElectropherogramInfo;
 
 import RS.MassSpec.*;
 import RS.Usefuls1.*;
@@ -117,7 +117,7 @@ public class MHCurBase1_5 {
 		
 		Files.createDirectories(output_folder);
 		
-		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
+		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>
 			session_name_to_RS_MSS_h = this.get_spectra_unaligned();
 		
 		for(String sessnam : session_name_to_RS_MSS_h.keySet()) {
@@ -135,7 +135,7 @@ public class MHCurBase1_5 {
 		
 		Files.createDirectories(output_folder);
 		
-		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>>
 			align_session_name_to_RS_MSS_h = this.get_spectra_aligned();
 		
 		for(String alignnam : align_session_name_to_RS_MSS_h.keySet()) {
@@ -200,15 +200,15 @@ public class MHCurBase1_5 {
 	}
 	
 	
-	public HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
+	public HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>
 		get_spectra_unaligned(){
 		
-		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>
+		HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>
 			session_name_to_RS_MSS_h
-				= new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>();
+				= new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>();
 		
 		for(SessionInfo sess : this.mh.getSessionList()) {
-			Ephe_to_MSpectra1_3 ephe_mss = new Ephe_to_MSpectra1_3(this.mh, null, sess);
+			Ephe_to_MSpectra1_4 ephe_mss = new Ephe_to_MSpectra1_4(this.mh, null, sess);
 			session_name_to_RS_MSS_h.put(sess.getName(), ephe_mss.to_RS_MSS());
 			
 			System.out.println(ClockSimple1.current_time("yyyy/MM/dd HH:mm:ss.SSS")
@@ -221,21 +221,21 @@ public class MHCurBase1_5 {
 	}
 	
 	
-	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
+	public HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>>
 		get_spectra_aligned(){
 	
-		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>
+		HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>>
 			align_session_name_to_RS_MSS_h
-				= new HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>>();
+				= new HashMap<String, HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>>();
 		
 		for(AlignmentInfo align : this.mh.getAlignmentList()) {
 			
 			align_session_name_to_RS_MSS_h.putIfAbsent(
 					align.getName(),
-					new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer>>());
+					new HashMap<String, RS_MassSpectra_simple1_7<Float, Float, Integer, Integer, Integer, Integer>>());
 			
 			for(SessionInfo sess : align.getSessionList()) {
-				Ephe_to_MSpectra1_3 ephe_mss = new Ephe_to_MSpectra1_3(this.mh, align, sess);
+				Ephe_to_MSpectra1_4 ephe_mss = new Ephe_to_MSpectra1_4(this.mh, align, sess);
 				align_session_name_to_RS_MSS_h.get(align.getName()).put(sess.getName(), ephe_mss.to_RS_MSS());
 				
 				System.out.println(ClockSimple1.current_time("yyyy/MM/dd HH:mm:ss.SSS")

@@ -1,5 +1,7 @@
 package RS.MassSpec;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class RS_MassSpectra_simple1_7 <
@@ -57,6 +59,18 @@ public class RS_MassSpectra_simple1_7 <
 		
 		this.mspecs.add(ms);
 
+	}
+	
+	public void output_to_file(Path ipath_out, long iflex_header_byte_size)
+			throws IOException {
+		
+		RSMassSpectra_simpleRW1_2<T_mtime, T_mz, T_intst,
+			T_numMTs, T_msdat_bsize, T_offspos> writer =
+				new RSMassSpectra_simpleRW1_2<T_mtime, T_mz, T_intst,
+				T_numMTs, T_msdat_bsize, T_offspos>(this, iflex_header_byte_size);
+
+		writer.output_to_file(ipath_out);		
+		
 	}
 
 }
