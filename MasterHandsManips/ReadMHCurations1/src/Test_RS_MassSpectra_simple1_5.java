@@ -10,6 +10,7 @@ public class Test_RS_MassSpectra_simple1_5 {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
+		/*
 		Float[] mzs0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
 		Integer[] intsts0 = { 1, 7, 3, 4, 5 };
 
@@ -48,9 +49,8 @@ public class Test_RS_MassSpectra_simple1_5 {
 			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Integer,
 					Integer, Integer, Integer>(multi_ms, 256);
 		
+		*/
 		
-		
-		/*
 		Float[] mzs0 = { 1.1f, 2.2f, 3.3f, 4.4f, 5.5f };
 		Long[] intsts0 = { 1L, 7L, 3L, 4L, 5L };
 
@@ -64,7 +64,7 @@ public class Test_RS_MassSpectra_simple1_5 {
 		Long[] intsts3 = { 2L, 6L, 4L };
 		
 		Float[] mzs4 = {  0.2f, 2.5f, 3.4f, 3.5f, 3.8f };
-		Long[] intsts4 = { 2L, 3L, 1L, 3L, 7L };
+		Long[] intsts4 = { 2L, 3L, 8L, 3L, 7L };
 		
 		Float[] mts = { 0.1f, 0.2f, 0.3f, 0.5f, 0.9f };
 			
@@ -76,10 +76,9 @@ public class Test_RS_MassSpectra_simple1_5 {
 		Long example_msdat_bsize = 0L;
 		Long example_offspos = 0L;
 		
-		RS_MassSpectra_simple1_6<Float, Float, Long, Long, Long, Long> multi_ms
-			= new RS_MassSpectra_simple1_6<Float, Float, Long, Long, Long, Long>(
-					example_mtime, example_mz, example_intst,
-					example_nummts, example_msdat_bsize, example_offspos);
+		RS_MassSpectra_simple1_7<Float, Float, Long, Long, Long, Long> multi_ms
+			= new RS_MassSpectra_simple1_7<Float, Float, Long, Long, Long, Long>(
+					Float.class, Float.class, Long.class, Long.class, Long.class, Long.class);
 		
 		multi_ms.add_ms(mts[ 0 ], mzs0, intsts0);
 		multi_ms.add_ms(mts[ 1 ], mzs1, intsts1);		
@@ -91,13 +90,11 @@ public class Test_RS_MassSpectra_simple1_5 {
 				Paths.get(System.getenv("RS_TMP_DIR")).
 					resolve("rs_MSpectra").resolve("test_Java11.rsmspra");
 				
-		RSMassSpectra_simpleRW1_1<Float, Float, Long,
+		RSMassSpectra_simpleRW1_2<Float, Float, Long,
 			Long, Long, Long>
-			multi_ms_w = new RSMassSpectra_simpleRW1_1<Float, Float, Long,
+			multi_ms_w = new RSMassSpectra_simpleRW1_2<Float, Float, Long,
 					Long, Long, Long>(multi_ms, 256);
-		*/
-		
-		
+
 		multi_ms_w.output_to_file(tmpfile);	
 
 		System.out.println(tmpfile);
