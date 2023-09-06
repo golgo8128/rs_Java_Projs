@@ -1,4 +1,6 @@
 
+package Test;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,7 +13,7 @@ import emon2.EmonException;
 import emon2.api.MasterHands;
 import emon2.api.SessionInfo;
 
-import RS.MasterHands.Ephe_to_MSpectra1_3;
+import RS.MasterHands.Ephe_to_MSpectra1_4;
 
 public class Test_get_ephe2 {
 
@@ -42,7 +44,7 @@ public class Test_get_ephe2 {
 			
 			System.out.println(sess.getName());
 			
-			Ephe_to_MSpectra1_3 ephe_to_mss = new Ephe_to_MSpectra1_3(mh, null, sess);
+			Ephe_to_MSpectra1_4 ephe_to_mss = new Ephe_to_MSpectra1_4(mh, null, sess);
 			
 			LocalDateTime date1 = LocalDateTime.now();
 			DateTimeFormatter dtformat = 
