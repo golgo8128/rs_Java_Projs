@@ -16,11 +16,12 @@ public class Test_MHCurBase1_2 {
 
 		System.out.println(System.getenv("RS_TMP_DIR"));
 		
+		/*
 		Path tmpmhfile = 
 				// Paths.get("D:\\Data\\Metabolome\\Test\\J06_0101_plasma\\101_Plasma.mhs");
-				Paths.get("D:\\Alt_DataSpace\\Metabolome\\Examples\\MasterHands\\J06_0101_plasma\\101_Plasma.mhs");
-
-		/*
+				// Paths.get("D:\\Alt_DataSpace\\Metabolome\\Examples\\MasterHands\\J06_0101_plasma\\101_Plasma.mhs");
+		 */
+		
 		Path tmpmhfile = 
 				Paths.get(System.getenv("RS_PROJ_DIR")).
 				resolve("MasterHands").
@@ -28,7 +29,7 @@ public class Test_MHCurBase1_2 {
 				resolve("samplefiles1").
 				resolve("J06_0101_plasma").
 				resolve("101_Plasma.mhs");
-		*/
+		
 		/*
 		Path tmpmhfile = 
 				Paths.get(System.getenv("RS_PROJ_DIR")).
