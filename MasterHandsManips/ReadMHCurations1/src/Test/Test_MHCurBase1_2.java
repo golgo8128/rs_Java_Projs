@@ -45,7 +45,7 @@ public class Test_MHCurBase1_2 {
 		
 		Path tmpoutfolder =
 				Paths.get(System.getenv("RS_TMP_DIR")).
-					resolve("rs_MSpectra").resolve("MHout_J06_0101_plasma");
+					resolve("rs_MSpectra").resolve("MHands_out_J06_0101_plasma");
 		
 		MHCurBase1_5 mhcurbase = new MHCurBase1_5(tmpmhfile.toString());
 		mhcurbase.output_peak_info(tmpoutfolder);
