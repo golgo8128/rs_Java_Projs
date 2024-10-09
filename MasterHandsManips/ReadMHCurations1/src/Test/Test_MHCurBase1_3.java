@@ -23,13 +23,13 @@ public class Test_MHCurBase1_3 {
 		Path input_mhfile;
 		
 		if(args.length > 0) {
-			
-			input_mhfile = Paths.get(args[0]);
+						
+			input_mhfile = Paths.get(args[0].replaceAll("^['\"]", "").replaceAll("['\"]$", ""));
 			
 		} else {
 
 			System.out.print("Input full path of input mhs file : ");
-			input_mhfile = Paths.get(scanner_user_input.nextLine());	
+			input_mhfile = Paths.get(scanner_user_input.nextLine().replaceAll("^['\"]", "").replaceAll("['\"]$", ""));	
 			
 			/*
 			Path input_mhfile = 
@@ -47,12 +47,12 @@ public class Test_MHCurBase1_3 {
 		
 		if(args.length > 1) {
 			
-			output_folder = Paths.get(args[1]);
+			output_folder = Paths.get(args[1].replaceAll("^['\"]", "").replaceAll("['\"]$", ""));
 			
 		} else {
 		
 			System.out.print("Input full path of output folder  : ");
-			output_folder = Paths.get(scanner_user_input.nextLine());	
+			output_folder = Paths.get(scanner_user_input.nextLine().replaceAll("^['\"]", "").replaceAll("['\"]$", ""));	
 			
 			/*
 			Path output_folder =
